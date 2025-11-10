@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Your Name">
+<meta name="dcterms.date" content="2025-11-10">
+
+<title>CyVerse Tutorial: Getting Started</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="getting_started_cyverse_kbase_files/libs/clipboard/clipboard.min.js"></script>
+<script src="getting_started_cyverse_kbase_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="getting_started_cyverse_kbase_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="getting_started_cyverse_kbase_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="getting_started_cyverse_kbase_files/libs/quarto-html/popper.min.js"></script>
+<script src="getting_started_cyverse_kbase_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="getting_started_cyverse_kbase_files/libs/quarto-html/anchor.min.js"></script>
+<link href="getting_started_cyverse_kbase_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="getting_started_cyverse_kbase_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="getting_started_cyverse_kbase_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="getting_started_cyverse_kbase_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="getting_started_cyverse_kbase_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-cyverse" id="toc-what-is-cyverse" class="nav-link active" data-scroll-target="#what-is-cyverse">What is CyVerse?</a>
+  <ul class="collapse">
+  <li><a href="#why-use-cyverse" id="toc-why-use-cyverse" class="nav-link" data-scroll-target="#why-use-cyverse">Why Use CyVerse?</a></li>
+  <li><a href="#core-cyverse-platforms" id="toc-core-cyverse-platforms" class="nav-link" data-scroll-target="#core-cyverse-platforms">Core CyVerse Platforms</a></li>
+  </ul></li>
+  <li><a href="#how-to-create-a-cyverse-account" id="toc-how-to-create-a-cyverse-account" class="nav-link" data-scroll-target="#how-to-create-a-cyverse-account">How to Create a CyVerse Account</a>
+  <ul class="collapse">
+  <li><a href="#step-1" id="toc-step-1" class="nav-link" data-scroll-target="#step-1">Step 1: Go to CyVerse Website</a></li>
+  <li><a href="#step-2" id="toc-step-2" class="nav-link" data-scroll-target="#step-2">Step 2: Start Registration</a></li>
+  <li><a href="#step-3" id="toc-step-3" class="nav-link" data-scroll-target="#step-3">Step 3: Fill Out Registration Form</a></li>
+  <li><a href="#step-4" id="toc-step-4" class="nav-link" data-scroll-target="#step-4">Step 4: Agree to Terms</a></li>
+  <li><a href="#step-5" id="toc-step-5" class="nav-link" data-scroll-target="#step-5">Step 5: Verify Your Email</a></li>
+  <li><a href="#step-6" id="toc-step-6" class="nav-link" data-scroll-target="#step-6">Step 6: Complete Your Profile</a></li>
+  </ul></li>
+  <li><a href="#discovery-environment" id="toc-discovery-environment" class="nav-link" data-scroll-target="#discovery-environment">Getting Started with the Discovery Environment</a>
+  <ul class="collapse">
+  <li><a href="#step-1-access-the-discovery-environment" id="toc-step-1-access-the-discovery-environment" class="nav-link" data-scroll-target="#step-1-access-the-discovery-environment">Step 1: Access the Discovery Environment</a></li>
+  <li><a href="#de-tour" id="toc-de-tour" class="nav-link" data-scroll-target="#de-tour">Step 2: Take a Tour</a></li>
+  <li><a href="#step-3-navigate-your-data-store" id="toc-step-3-navigate-your-data-store" class="nav-link" data-scroll-target="#step-3-navigate-your-data-store">Step 3: Navigate Your Data Store</a></li>
+  </ul></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Getting Help and Resources</a>
+  <ul class="collapse">
+  <li><a href="#cyverse-learning-resources" id="toc-cyverse-learning-resources" class="nav-link" data-scroll-target="#cyverse-learning-resources">CyVerse Learning Resources</a></li>
+  <li><a href="#community-support" id="toc-community-support" class="nav-link" data-scroll-target="#community-support">Community Support</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">CyVerse Tutorial: Getting Started</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Your Name </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 10, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-is-cyverse" class="level1">
+<h1>What is CyVerse?</h1>
+<p><strong>CyVerse</strong> (formerly iPlant Collaborative) is a cyberinfrastructure platform designed to handle huge datasets and complex analyses for life sciences research. Think of it as:</p>
+<ul>
+<li><strong>A data management system</strong> - Store, organize, and share large datasets</li>
+<li><strong>A computational platform</strong> - Run analyses without owning expensive hardware</li>
+<li><strong>A collaborative workspace</strong> - Share data and analyses with colleagues</li>
+<li><strong>An integrated ecosystem</strong> - Multiple tools working together seamlessly</li>
+<li><strong>A learning community</strong> - Extensive tutorials, webinars, and support</li>
+</ul>
+<p>CyVerse is particularly powerful for genomics, bioinformatics, and image analysis, providing researchers with the tools needed for data-intensive science.</p>
+<section id="why-use-cyverse" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-cyverse">Why Use CyVerse?</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Benefits of Using CyVerse
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Free storage</strong> - 100 GB base allocation, with options to request more</li>
+<li><strong>Powerful computing</strong> - Access to high-performance computing resources</li>
+<li><strong>Scalability</strong> - Handle datasets from gigabytes to terabytes</li>
+<li><strong>Reproducibility</strong> - Document and share complete workflows</li>
+<li><strong>No software installation</strong> - Cloud-based tools ready to use</li>
+<li><strong>Data sharing</strong> - Easy collaboration and data publication</li>
+<li><strong>FAIR principles</strong> - Supports Findable, Accessible, Interoperable, and Reusable data</li>
+<li><strong>Community support</strong> - Active user community and extensive documentation</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="core-cyverse-platforms" class="level2">
+<h2 class="anchored" data-anchor-id="core-cyverse-platforms">Core CyVerse Platforms</h2>
+<p>CyVerse consists of several integrated platforms:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 31%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Platform</th>
+<th>Purpose</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Data Store</strong></td>
+<td>Store and manage data</td>
+<td>Long-term data storage, sharing</td>
+</tr>
+<tr class="even">
+<td><strong>Discovery Environment (DE)</strong></td>
+<td>Visual analysis platform</td>
+<td>Interactive analyses, workflows</td>
+</tr>
+<tr class="odd">
+<td><strong>VICE</strong></td>
+<td>Interactive computing</td>
+<td>Jupyter, RStudio, VS Code</td>
+</tr>
+<tr class="even">
+<td><strong>Atmosphere</strong></td>
+<td>Virtual machines</td>
+<td>Custom computing environments</td>
+</tr>
+<tr class="odd">
+<td><strong>DNA Subway</strong></td>
+<td>Educational platform</td>
+<td>Teaching genomics, beginners</td>
+</tr>
+<tr class="even">
+<td><strong>BisQue</strong></td>
+<td>Image analysis</td>
+<td>Microscopy, image datasets</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="how-to-create-a-cyverse-account" class="level1">
+<h1>How to Create a CyVerse Account</h1>
+<section id="step-1" class="level2">
+<h2 class="anchored" data-anchor-id="step-1">Step 1: Go to CyVerse Website</h2>
+<p>Navigate to <a href="https://cyverse.org">https://cyverse.org</a> in your web browser.</p>
+</section>
+<section id="step-2" class="level2">
+<h2 class="anchored" data-anchor-id="step-2">Step 2: Start Registration</h2>
+<ol type="1">
+<li>Click <strong>“Get Started”</strong> or <strong>“Sign Up”</strong> button</li>
+<li>You’ll be directed to the CyVerse User Portal</li>
+<li>Click <strong>“Sign Up”</strong> or <strong>“Register”</strong></li>
+</ol>
+</section>
+<section id="step-3" class="level2">
+<h2 class="anchored" data-anchor-id="step-3">Step 3: Fill Out Registration Form</h2>
+<p>Provide the following information:</p>
+<ol type="1">
+<li><strong>Username</strong> - Choose a unique username (lowercase, no spaces)</li>
+<li><strong>Password</strong> - Create a strong password</li>
+<li><strong>Email address</strong> - Your valid email (institutional preferred)</li>
+<li><strong>First and Last Name</strong> - Your full name</li>
+<li><strong>Institution</strong> - Your university, company, or organization</li>
+<li><strong>Department</strong> - Your specific department or unit</li>
+<li><strong>Position</strong> - Student, Postdoc, Faculty, etc.</li>
+<li><strong>Country</strong> - Your location</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Use your institutional email if possible</li>
+<li>Remember your username - you’ll use it to log in to all CyVerse services</li>
+<li>Choose a username you’ll be comfortable sharing (it may be visible to collaborators)</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="step-4" class="level2">
+<h2 class="anchored" data-anchor-id="step-4">Step 4: Agree to Terms</h2>
+<ol type="1">
+<li>Read the Terms of Service and Acceptable Use Policy</li>
+<li>Check the box to agree</li>
+<li>Complete any CAPTCHA verification</li>
+<li>Click <strong>“Register”</strong> or <strong>“Submit”</strong></li>
+</ol>
+</section>
+<section id="step-5" class="level2">
+<h2 class="anchored" data-anchor-id="step-5">Step 5: Verify Your Email</h2>
+<ol type="1">
+<li>Check your email for a verification message from CyVerse</li>
+<li>Click the verification link in the email</li>
+<li>This confirms your email address and activates your account</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The verification email may take a few minutes to arrive. Check your spam folder if you don’t see it.</p>
+</div>
+</div>
+</section>
+<section id="step-6" class="level2">
+<h2 class="anchored" data-anchor-id="step-6">Step 6: Complete Your Profile</h2>
+<p>After email verification:</p>
+<ol type="1">
+<li>Log in to the CyVerse User Portal</li>
+<li>Complete additional profile information (optional but recommended):
+<ul>
+<li>Research interests</li>
+<li>ORCID iD (links your research identity)</li>
+<li>Profile picture</li>
+<li>Bio or description</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="discovery-environment" class="level1">
+<h1>Getting Started with the Discovery Environment</h1>
+<p>The <strong>Discovery Environment (DE)</strong> is CyVerse’s primary interface for data analysis. It’s a web-based platform where you can manage data, run analyses, and create workflows.</p>
+<section id="step-1-access-the-discovery-environment" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-access-the-discovery-environment">Step 1: Access the Discovery Environment</h2>
+<ol type="1">
+<li>Go to <a href="https://de.cyverse.org">https://de.cyverse.org</a></li>
+<li>Click <strong>“Login”</strong></li>
+<li>Enter your CyVerse username and password</li>
+<li>Click <strong>“Sign In”</strong></li>
+</ol>
+</section>
+<section id="de-tour" class="level2">
+<h2 class="anchored" data-anchor-id="de-tour">Step 2: Take a Tour</h2>
+<p>When you first log in, you’ll see:</p>
+<ul>
+<li><strong>Top Menu Bar</strong> - Access different DE sections</li>
+<li><strong>Data</strong> - File and folder management</li>
+<li><strong>Apps</strong> - Available analysis tools</li>
+<li><strong>Analyses</strong> - Track your running and completed jobs</li>
+<li><strong>Teams</strong> - Collaborate with research groups</li>
+<li><strong>Collections</strong> - Curated datasets and apps</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>First-Time Users
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The DE offers an interactive tour. Click the <strong>“?”</strong> icon or <strong>“Help”</strong> menu to start it!</p>
+</div>
+</div>
+</section>
+<section id="step-3-navigate-your-data-store" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-navigate-your-data-store">Step 3: Navigate Your Data Store</h2>
+<ol type="1">
+<li>Click <strong>“Data”</strong> in the top menu</li>
+<li>You’ll see your personal folder structure:
+<ul>
+<li><strong>/username</strong> - Your home directory (private by default)</li>
+<li><strong>/username/analyses</strong> - Output from your analyses</li>
+<li><strong>Community Data</strong> - Public datasets shared by others</li>
+<li><strong>Shared With Me</strong> - Data others have shared with you</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="resources" class="level1">
+<h1>Getting Help and Resources</h1>
+<section id="cyverse-learning-resources" class="level2">
+<h2 class="anchored" data-anchor-id="cyverse-learning-resources">CyVerse Learning Resources</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>Description</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Learning Center</strong></td>
+<td>Tutorials and guides</td>
+<td><a href="https://learning.cyverse.org">learning.cyverse.org</a></td>
+</tr>
+<tr class="even">
+<td><strong>Documentation</strong></td>
+<td>Complete documentation</td>
+<td><a href="https://cyverse.org/documentation">cyverse.org/documentation</a></td>
+</tr>
+<tr class="odd">
+<td><strong>Webinars</strong></td>
+<td>Live and recorded training</td>
+<td><a href="https://cyverse.org/webinars">cyverse.org/webinars</a></td>
+</tr>
+<tr class="even">
+<td><strong>FAQ</strong></td>
+<td>Common questions</td>
+<td><a href="https://cyverse.org/faq">cyverse.org/faq</a></td>
+</tr>
+<tr class="odd">
+<td><strong>Intercom</strong></td>
+<td>Live chat support</td>
+<td>Click chat bubble in DE</td>
+</tr>
+<tr class="even">
+<td><strong>Email Support</strong></td>
+<td>support@cyverse.org</td>
+<td>For detailed issues</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="community-support" class="level2">
+<h2 class="anchored" data-anchor-id="community-support">Community Support</h2>
+<ul>
+<li><strong>User Forum</strong> - Ask questions and share tips</li>
+<li><strong>Office Hours</strong> - Weekly drop-in sessions with CyVerse staff</li>
+<li><strong>Slack Workspace</strong> - Real-time community chat</li>
+<li><strong>Newsletter</strong> - Monthly updates on new features</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

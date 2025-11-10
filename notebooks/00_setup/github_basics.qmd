@@ -1,0 +1,274 @@
+---
+title: "GitHub Tutorial: Getting Started"
+author: "Mery Touceda-Suárez"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+---
+> Note: This tutorial has been generated in combination with Claude-AI
+
+
+# What is GitHub?
+
+**GitHub** is a web-based platform for version control and collaboration. Think of it as a combination of:
+
+- **A code storage platform** - Like a cloud drive specifically designed for code
+- **A collaboration tool** - Where developers can work together on projects
+- **A portfolio** - Where you can showcase your work to potential employers
+- **A social network for developers** - Where you can follow projects, contribute to open source, and learn from others
+
+GitHub is built on **Git**, a version control system that tracks changes to files over time. This means you can see the entire history of a project, revert to previous versions, and work on different features simultaneously without conflicts.
+
+## Why Use GitHub?
+
+::: {.callout-tip}
+## Benefits of Using GitHub
+
+- **Track changes** - See who changed what, when, and why
+- **Collaborate safely** - Multiple people can work on the same project without overwriting each other's work
+- **Backup your code** - Your projects are safely stored in the cloud
+- **Open source contribution** - Contribute to thousands of public projects
+- **Learn from others** - Explore code from experienced developers
+- **Build your reputation** - Employers often check GitHub profiles when hiring developers
+:::
+
+# How to Create a GitHub Account
+
+## Step 1: Go to GitHub's Website {#step-1}
+
+Navigate to [https://github.com](https://github.com) in your web browser.
+
+## Step 2: Sign Up {#step-2}
+
+1. Click the **"Sign up"** button in the top-right corner
+2. Enter your email address and click **"Continue"**
+3. Create a strong password and click **"Continue"**
+4. Choose a unique username (this will be part of your profile URL: `github.com/yourusername`)
+5. You may be asked if you want to receive product updates via email (optional)
+
+::: {.callout-warning}
+## Choose Your Username Carefully
+Your username will be visible to everyone and is hard to change later. Pick something professional if you plan to use GitHub for career purposes.
+:::
+
+## Step 3: Verify Your Account {#step-3}
+
+1. GitHub will send a verification code to your email
+2. Check your email inbox for the code
+3. Enter the code on the GitHub verification page
+
+## Step 4: Personalize Your Experience {#step-4}
+
+GitHub will ask you a few questions to personalize your experience:
+
+- How many team members will be working with you?
+- Are you a student or teacher?
+- What features are you interested in?
+
+You can skip these questions or answer them - they just help GitHub customize your experience.
+
+## Step 5: Choose Your Plan {#step-5}
+
+GitHub offers:
+
+- **Free plan** - Unlimited public and private repositories, perfect for getting started
+- **Paid plans** - Additional features for teams and enterprises
+
+::: {.callout-note}
+For beginners, the free plan is more than sufficient. Click **"Continue for free"**.
+:::
+
+## Step 6: Complete Your Profile (Optional but Recommended) {#step-6}
+
+1. Click on your profile picture (top-right corner)
+2. Select **"Settings"**
+3. Add information like:
+   - Profile picture
+   - Bio
+   - Location
+   - Website or social media links
+
+## Step 7: Create Your First Repository (Optional) {#step-7}
+
+A repository (or "repo") is like a project folder. To create one:
+
+1. Click the **"+"** icon in the top-right corner
+2. Select **"New repository"**
+3. Name your repository
+4. Add a description (optional)
+5. Choose **Public** (anyone can see) or **Private** (only you and collaborators can see)
+6. Check **"Add a README file"** - this creates a description file for your project
+7. Click **"Create repository"**
+
+::: {.callout-important}
+## Public vs Private Repositories
+- **Public repositories** are visible to everyone on the internet
+- **Private repositories** are only visible to you and people you explicitly grant access to
+:::
+
+# Next Steps {#next-steps}
+
+Once you have your account set up:
+
+1. **Explore GitHub** - Browse popular repositories to see what others are building
+2. **Learn Git basics** - Understanding Git commands will help you use GitHub effectively
+3. **Start a project** - Create a repository for a personal project
+4. **Contribute to open source** - Find beginner-friendly projects to contribute to
+5. **Connect with others** - Follow developers and star repositories you find interesting
+
+## Helpful Resources
+
+| Resource | Description | Link |
+|----------|-------------|------|
+| GitHub Docs | Official documentation | [docs.github.com](https://docs.github.com) |
+| GitHub Skills | Interactive tutorials | [skills.github.com](https://skills.github.com) |
+| Git Documentation | Learn Git commands | [git-scm.com/doc](https://git-scm.com/doc) |
+
+::: {.callout-tip icon="false"}
+## 🎉 Welcome to GitHub!
+You're now part of a global community of millions of developers. Happy coding!
+:::
+
+# GitHub Desktop: A Beginner-Friendly Alternative {#github-desktop}
+
+If you're not comfortable using command-line tools, **GitHub Desktop** is a free application that provides a visual interface for working with Git and GitHub.
+
+## What is GitHub Desktop?
+
+GitHub Desktop is a graphical user interface (GUI) application that allows you to:
+
+- Clone repositories with a few clicks
+- Commit changes visually
+- Create and switch between branches
+- Push and pull changes
+- Resolve merge conflicts with visual tools
+- View your repository's history
+
+::: {.callout-tip}
+## Perfect for Beginners
+GitHub Desktop is ideal if you're new to version control or prefer visual tools over command-line interfaces.
+:::
+
+## Installing GitHub Desktop {#install-desktop}
+
+### Step 1: Download GitHub Desktop
+
+1. Visit [desktop.github.com](https://desktop.github.com)
+2. Click **"Download for [Your Operating System]"**
+   - Available for Windows, macOS, and Linux (unofficial)
+3. Run the installer and follow the installation prompts
+
+### Step 2: Sign In to GitHub
+
+1. Open GitHub Desktop
+2. Click **"Sign in to GitHub.com"**
+3. Enter your GitHub username and password
+4. Authorize GitHub Desktop to access your account
+
+### Step 3: Configure Git
+
+GitHub Desktop will prompt you to configure your Git settings:
+
+- **Name** - Your name as it will appear in commits
+- **Email** - The email associated with your GitHub account
+
+::: {.callout-warning}
+Make sure the email matches the one you used for your GitHub account to ensure your contributions are properly attributed.
+:::
+
+## Using GitHub Desktop {#using-desktop}
+
+### Cloning a Repository
+
+1. Click **"File"** → **"Clone repository"**
+2. Choose from:
+   - Your GitHub repositories
+   - Repositories by URL
+   - Repositories from GitHub.com search
+3. Select where to save it on your computer
+4. Click **"Clone"**
+
+### Making Changes and Committing
+
+1. **Make changes** to files in your repository using your preferred editor
+2. **View changes** in GitHub Desktop - it will automatically detect modified files
+3. **Review changes** - See line-by-line what was added or removed
+4. **Write a commit message** in the "Summary" field (required)
+5. Optionally add a longer description
+6. Click **"Commit to main"** (or whatever branch you're on)
+
+### Pushing Changes to GitHub
+
+After committing locally:
+
+1. Click **"Push origin"** in the top bar
+2. Your changes are now uploaded to GitHub.com
+
+### Creating a New Branch
+
+1. Click **"Current Branch"** in the top bar
+2. Click **"New Branch"**
+3. Name your branch
+4. Click **"Create Branch"**
+
+### Pulling Changes from GitHub
+
+If others have made changes to the repository:
+
+1. Click **"Fetch origin"** to check for updates
+2. If updates are available, click **"Pull origin"**
+
+## GitHub Desktop vs Command Line {#desktop-vs-cli}
+
+| Feature | GitHub Desktop | Command Line |
+|---------|----------------|--------------|
+| **Learning Curve** | Easy, visual interface | Steeper, requires memorizing commands |
+| **Speed** | Good for basic operations | Faster for advanced users |
+| **Power** | Handles most common tasks | Access to all Git features |
+| **Visualization** | Built-in visual diff and history | Requires additional tools |
+| **Best For** | Beginners, visual learners | Advanced users, automation |
+
+::: {.callout-note}
+## You Can Use Both!
+Many developers use both GitHub Desktop for visual tasks and the command line for advanced operations. Choose what works best for you.
+:::
+
+# Common Git Commands Reference {#git-commands}
+
+Here are some essential Git commands you'll use frequently:
+
+```bash
+# Clone a repository
+git clone https://github.com/username/repository.git
+
+# Check status of your files
+git status
+
+# Add files to staging
+git add filename.txt
+git add .  # Add all changed files
+
+# Commit changes
+git commit -m "Your commit message"
+
+# Push changes to GitHub
+git push origin main
+
+# Pull latest changes
+git pull origin main
+
+# Create a new branch
+git checkout -b new-branch-name
+
+# Switch between branches
+git checkout branch-name
+```
+
+::: {.callout-note}
+## Note on Default Branch Names
+GitHub now uses `main` as the default branch name instead of `master`. You may see either in older repositories.
+:::

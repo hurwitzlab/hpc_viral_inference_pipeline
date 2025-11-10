@@ -1,0 +1,168 @@
+---
+title: "CyVerse Tutorial: Getting Started"
+author: "Your Name"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+---
+> Note: This tutorial has been generated in combination with Claude-AI
+
+# What is CyVerse?
+
+**CyVerse** (formerly iPlant Collaborative) is a cyberinfrastructure platform designed to handle huge datasets and complex analyses for life sciences research. Think of it as:
+
+- **A data management system** - Store, organize, and share large datasets
+- **A computational platform** - Run analyses without owning expensive hardware
+- **A collaborative workspace** - Share data and analyses with colleagues
+- **An integrated ecosystem** - Multiple tools working together seamlessly
+- **A learning community** - Extensive tutorials, webinars, and support
+
+CyVerse is particularly powerful for genomics, bioinformatics, and image analysis, providing researchers with the tools needed for data-intensive science.
+
+## Why Use CyVerse?
+
+::: {.callout-tip}
+## Benefits of Using CyVerse
+
+- **Free storage** - 100 GB base allocation, with options to request more
+- **Powerful computing** - Access to high-performance computing resources
+- **Scalability** - Handle datasets from gigabytes to terabytes
+- **Reproducibility** - Document and share complete workflows
+- **No software installation** - Cloud-based tools ready to use
+- **Data sharing** - Easy collaboration and data publication
+- **FAIR principles** - Supports Findable, Accessible, Interoperable, and Reusable data
+- **Community support** - Active user community and extensive documentation
+:::
+
+## Core CyVerse Platforms
+
+CyVerse consists of several integrated platforms:
+
+| Platform | Purpose | Best For |
+|----------|---------|----------|
+| **Data Store** | Store and manage data | Long-term data storage, sharing |
+| **Discovery Environment (DE)** | Visual analysis platform | Interactive analyses, workflows |
+| **VICE** | Interactive computing | Jupyter, RStudio, VS Code |
+| **Atmosphere** | Virtual machines | Custom computing environments |
+| **DNA Subway** | Educational platform | Teaching genomics, beginners |
+| **BisQue** | Image analysis | Microscopy, image datasets |
+
+# How to Create a CyVerse Account
+
+## Step 1: Go to CyVerse Website {#step-1}
+
+Navigate to [https://cyverse.org](https://cyverse.org) in your web browser.
+
+## Step 2: Start Registration {#step-2}
+
+1. Click **"Get Started"** or **"Sign Up"** button
+2. You'll be directed to the CyVerse User Portal
+3. Click **"Sign Up"** or **"Register"**
+
+## Step 3: Fill Out Registration Form {#step-3}
+
+Provide the following information:
+
+1. **Username** - Choose a unique username (lowercase, no spaces)
+2. **Password** - Create a strong password
+3. **Email address** - Your valid email (institutional preferred)
+4. **First and Last Name** - Your full name
+5. **Institution** - Your university, company, or organization
+6. **Department** - Your specific department or unit
+7. **Position** - Student, Postdoc, Faculty, etc.
+8. **Country** - Your location
+
+::: {.callout-warning}
+## Important
+- Use your institutional email if possible
+- Remember your username - you'll use it to log in to all CyVerse services
+- Choose a username you'll be comfortable sharing (it may be visible to collaborators)
+:::
+
+## Step 4: Agree to Terms {#step-4}
+
+1. Read the Terms of Service and Acceptable Use Policy
+2. Check the box to agree
+3. Complete any CAPTCHA verification
+4. Click **"Register"** or **"Submit"**
+
+## Step 5: Verify Your Email {#step-5}
+
+1. Check your email for a verification message from CyVerse
+2. Click the verification link in the email
+3. This confirms your email address and activates your account
+
+::: {.callout-note}
+The verification email may take a few minutes to arrive. Check your spam folder if you don't see it.
+:::
+
+## Step 6: Complete Your Profile {#step-6}
+
+After email verification:
+
+1. Log in to the CyVerse User Portal
+2. Complete additional profile information (optional but recommended):
+   - Research interests
+   - ORCID iD (links your research identity)
+   - Profile picture
+   - Bio or description
+
+# Getting Started with the Discovery Environment {#discovery-environment}
+
+The **Discovery Environment (DE)** is CyVerse's primary interface for data analysis. It's a web-based platform where you can manage data, run analyses, and create workflows.
+
+## Step 1: Access the Discovery Environment
+
+1. Go to [https://de.cyverse.org](https://de.cyverse.org)
+2. Click **"Login"**
+3. Enter your CyVerse username and password
+4. Click **"Sign In"**
+
+## Step 2: Take a Tour {#de-tour}
+
+When you first log in, you'll see:
+
+- **Top Menu Bar** - Access different DE sections
+- **Data** - File and folder management
+- **Apps** - Available analysis tools
+- **Analyses** - Track your running and completed jobs
+- **Teams** - Collaborate with research groups
+- **Collections** - Curated datasets and apps
+
+::: {.callout-tip}
+## First-Time Users
+The DE offers an interactive tour. Click the **"?"** icon or **"Help"** menu to start it!
+:::
+
+## Step 3: Navigate Your Data Store
+
+1. Click **"Data"** in the top menu
+2. You'll see your personal folder structure:
+   - **/username** - Your home directory (private by default)
+   - **/username/analyses** - Output from your analyses
+   - **Community Data** - Public datasets shared by others
+   - **Shared With Me** - Data others have shared with you
+
+# Getting Help and Resources {#resources}
+
+## CyVerse Learning Resources
+
+| Resource | Description | Link |
+|----------|-------------|------|
+| **Learning Center** | Tutorials and guides | [learning.cyverse.org](https://learning.cyverse.org) |
+| **Documentation** | Complete documentation | [cyverse.org/documentation](https://cyverse.org/documentation) |
+| **Webinars** | Live and recorded training | [cyverse.org/webinars](https://cyverse.org/webinars) |
+| **FAQ** | Common questions | [cyverse.org/faq](https://cyverse.org/faq) |
+| **Intercom** | Live chat support | Click chat bubble in DE |
+| **Email Support** | support@cyverse.org | For detailed issues |
+
+## Community Support
+
+- **User Forum** - Ask questions and share tips
+- **Office Hours** - Weekly drop-in sessions with CyVerse staff
+- **Slack Workspace** - Real-time community chat
+- **Newsletter** - Monthly updates on new features
