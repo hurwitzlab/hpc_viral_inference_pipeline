@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Mery Touceda-Suárez">
+<meta name="dcterms.date" content="2025-11-11">
 
-<title>readme</title>
+<title>Unix Commands and Concepts Glossary</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,192 +22,107 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="README_files/libs/clipboard/clipboard.min.js"></script>
-<script src="README_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="README_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="README_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="README_files/libs/quarto-html/popper.min.js"></script>
-<script src="README_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="README_files/libs/quarto-html/anchor.min.js"></script>
-<link href="README_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="README_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="README_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="README_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="unix_commands_concepts_glossary_files/libs/clipboard/clipboard.min.js"></script>
+<script src="unix_commands_concepts_glossary_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="unix_commands_concepts_glossary_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="unix_commands_concepts_glossary_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="unix_commands_concepts_glossary_files/libs/quarto-html/popper.min.js"></script>
+<script src="unix_commands_concepts_glossary_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="unix_commands_concepts_glossary_files/libs/quarto-html/anchor.min.js"></script>
+<link href="unix_commands_concepts_glossary_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="unix_commands_concepts_glossary_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="unix_commands_concepts_glossary_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="unix_commands_concepts_glossary_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="unix_commands_concepts_glossary_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#core-commands-for-navigation-and-file-management" id="toc-core-commands-for-navigation-and-file-management" class="nav-link active" data-scroll-target="#core-commands-for-navigation-and-file-management">Core commands for navigation and file management</a></li>
+  <li><a href="#essential-concepts-for-analysis-and-automation" id="toc-essential-concepts-for-analysis-and-automation" class="nav-link" data-scroll-target="#essential-concepts-for-analysis-and-automation">Essential concepts for analysis and automation</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
-
-
-
-<section id="hpc-viral-inference-pipeline" class="level1">
-<h1>HPC Viral Inference Pipeline</h1>
-<p>This repository contains training materials and scripts for running a viral metagenomic analysis pipeline based on the workflow from <a href="https://kbase.us/n/126189/27/">KBase narrative 126189/27</a>.</p>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">🔬 Overview</h2>
-<p>This pipeline demonstrates how to process metagenomic datasets to identify, classify, and annotate viral sequences using bioinformatics tools. It serves as both a learning resource and a practical implementation guide for viral metagenomics on high-performance computing (HPC) systems.</p>
-</section>
-<section id="pipeline-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="pipeline-workflow">⚙️ Pipeline Workflow</h2>
-<p>The pipeline processes a single metagenomic dataset from the Global Ocean Viromes collection through the following steps:</p>
-<ol type="1">
-<li><strong>Data Download</strong>: Download metagenomic data from NCBI SRA and check quality with FastQC</li>
-<li><strong>Quality Control</strong>: Perform quality trimming and filtering with trimmomatic, followed by quality assessment using FastQC</li>
-<li><strong>Assembly</strong>: Assemble reads using metaSPAdes</li>
-<li><strong>Viral Genome Inference</strong>: Identify viral sequences with VirSorter2</li>
-<li><strong>Viral Genome Quality Control</strong>: Assess viral genome quality using CheckV</li>
-<li><strong>Annotation</strong>: Annotate sequences with:
-<ul>
-<li>Prokka (gene prediction and functional annotation)</li>
-<li>DRAM-v (viral metabolic annotation, and annotation of AMGs)</li>
-<li>vConTACT2 (viral clustering and taxonomic assignment)</li>
-</ul></li>
-</ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="viral_inference_pipeline_2025.png" class="img-fluid figure-img"></p>
-<figcaption><strong>Computational workflow for viral genome identification and annotation from NCBI-SRA data.</strong> Software tools are shown in black text, while pipeline processes are indicated in gray boxes.</figcaption>
-</figure>
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Unix Commands and Concepts Glossary</h1>
 </div>
-</section>
-<section id="contents" class="level2">
-<h2 class="anchored" data-anchor-id="contents">📁 Contents</h2>
-<pre><code>├── scripts/               # Pipeline execution scripts
-├── data/                  # Sample data and test datasets
-├── configs/               # Configuration files for tools
-├── notebooks/             # Training notebooks and tutorials
-   ├── 00_setup            # NOTE TO SELF: these notebooks could be sent as a pre to kbase?
-   ├── 01_unix             # Basic UNIX training
-   ├── 02_hpc              # HPC job scheduling and Apptainer/Singularity usage
-   └── 03_viral_pipeline   # Viral inference pipeline walkthrough
-└── docs/                  # Additional documentation</code></pre>
-</section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">✅ Prerequisites</h2>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mery Touceda-Suárez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 11, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="core-commands-for-navigation-and-file-management" class="level2">
+<h2 class="anchored" data-anchor-id="core-commands-for-navigation-and-file-management">Core commands for navigation and file management</h2>
 <ul>
-<li>GitHub account to clone the repository</li>
-<li>Access to an HPC cluster with job scheduling (e.g., SLURM, PBS)</li>
-<li>Apptainer or Singularity installed for containerized execution</li>
-<li>Basic knowledge of command-line operations and bioinformatics tools (See [link to training on UNIX])</li>
+<li><code>pwd</code>: Print the current working directory.</li>
+<li><code>ls</code>: List the contents of a directory. Use ls -l for a detailed list.</li>
+<li><code>cd &lt;directory&gt;</code>: Change the current directory. Use cd .. to move up one directory, and cd ~ or cd to go to your home directory.</li>
+<li><code>mkdir &lt;dirname&gt;</code>: Create a new directory.</li>
+<li><code>cp &lt;source&gt; &lt;destination&gt;</code>: Copy a file or directory.</li>
+<li><code>mv &lt;source&gt; &lt;destination&gt;</code>: Move or rename a file or directory.</li>
+<li><code>rm &lt;file&gt;</code>: Delete a file. Use rm -r <directory> to remove a directory and its contents, but be extremely careful as this is irreversible.</directory></li>
+<li><code>cat &lt;file&gt;</code>: Display the contents of a file.</li>
+<li><code>less &lt;file&gt;</code>: View a file page by page, allowing you to scroll through its content.</li>
+<li><code>nano &lt;file</code>&gt;: Open a simple text editor to edit files.</li>
 </ul>
-<hr>
 </section>
-<section id="getting-started" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started">🚀 Getting Started</h2>
-<ol type="1">
-<li><p>Clone or download this repository:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/hurwitzlab/hpc_viral_inference_pipeline.git</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> hpc_viral_inference_pipeline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Choose your preferred viewing method from the options below</p></li>
-<li><p>Open the training materials and follow along with the exercises</p></li>
-</ol>
-</section>
-<section id="viewing-the-training-materials" class="level2">
-<h2 class="anchored" data-anchor-id="viewing-the-training-materials">👀 Viewing the Training Materials</h2>
-<p>There are several ways to view and interact with the training materials:</p>
-<section id="option-1-view-pre-rendered-html-files-easiest" class="level3">
-<h3 class="anchored" data-anchor-id="option-1-view-pre-rendered-html-files-easiest">Option 1: View Pre-rendered HTML Files (Easiest)</h3>
-<ol type="1">
-<li>Download the HTML files from the repository</li>
-<li>Open them directly in your web browser</li>
-<li>No additional software required</li>
-</ol>
-</section>
-<section id="option-2-use-vs-code-with-quarto-extension-recommended-for-editing" class="level3">
-<h3 class="anchored" data-anchor-id="option-2-use-vs-code-with-quarto-extension-recommended-for-editing">Option 2: Use VS Code with Quarto Extension (Recommended for Editing)</h3>
-<p>If you want to edit or preview the materials while working on them:</p>
-<ol type="1">
-<li>Install <a href="https://code.visualstudio.com/">VS Code</a></li>
-<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=quarto.quarto">Quarto extension</a> for VS Code</li>
-<li>Open the <code>.qmd</code> files in VS Code</li>
-<li>Use the preview pane to see rendered output alongside your code</li>
-<li>Press <code>Ctrl+Shift+K</code> (or <code>Cmd+Shift+K</code> on Mac) to render the document</li>
-</ol>
-</section>
-<section id="option-3-render-with-quarto-cli" class="level3">
-<h3 class="anchored" data-anchor-id="option-3-render-with-quarto-cli">Option 3: Render with Quarto CLI</h3>
-<p>To render the Quarto documents yourself:</p>
-<ol type="1">
-<li><p>Install <a href="https://quarto.org/docs/get-started/">Quarto</a></p></li>
-<li><p>Clone this repository:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/hurwitzlab/brc_hazel_training.git</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> brc_hazel_training</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Render individual documents:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render document.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Or render all documents:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Open the generated HTML files in your browser</p></li>
-</ol>
-</section>
-<section id="option-4-use-rstudio" class="level3">
-<h3 class="anchored" data-anchor-id="option-4-use-rstudio">Option 4: Use RStudio</h3>
-<p>If you’re familiar with RStudio:</p>
-<ol type="1">
-<li>Install <a href="https://posit.co/download/rstudio-desktop/">RStudio</a> (version 2022.07 or later includes Quarto)</li>
-<li>Open the <code>.qmd</code> files in RStudio</li>
-<li>Click the “Render” button to preview documents</li>
-</ol>
-</section>
-<section id="option-5-view-raw-files-on-github" class="level3">
-<h3 class="anchored" data-anchor-id="option-5-view-raw-files-on-github">Option 5: View raw files on GitHub</h3>
-<p>You can view the raw Quarto markdown files directly on GitHub, though formatting and code output won’t be rendered.</p>
-<hr>
-</section>
-</section>
-<section id="contributing" class="level2">
-<h2 class="anchored" data-anchor-id="contributing">🤝 Contributing</h2>
-<p>If you find issues or have suggestions for improvements, please open an issue or submit a pull request.</p>
-</section>
-<section id="contact" class="level2">
-<h2 class="anchored" data-anchor-id="contact">📧 Contact</h2>
-<p>For questions about the training materials, please contact the Hurwitz Lab (Mery Touceda-Suárez: mtouced@ncsu.edu or Bonnie Hurwitz: blhurwit@ncsu.edu) or the Sullivan Lab (Ben Bolduc: bolduc.10@osu.edu)</p>
-<hr>
-</section>
+<section id="essential-concepts-for-analysis-and-automation" class="level2">
+<h2 class="anchored" data-anchor-id="essential-concepts-for-analysis-and-automation">Essential concepts for analysis and automation</h2>
+<ul>
+<li><strong>Pipes</strong> (|): Connect the output of one command to the input of another. This is fundamental for building analysis pipelines without creating intermediate files.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Example: <code>cat data.txt | grep "pattern" | sort | uniq</code> (filters, sorts, and counts unique lines from data.txt).</p>
+</blockquote>
+<ul>
+<li><strong>Redirection</strong>(&gt;, &gt;&gt;): Redirect command output to a file. &gt; overwrites the file, while &gt;&gt; appends to it.</li>
+</ul>
+<blockquote class="blockquote">
+<p>Example: <code>ls -l &gt; file_list.txt</code>saves the detailed listing to file_list.txt.</p>
+</blockquote>
+<ul>
+<li><p><strong>Flags:</strong> Options that modify a command’s behavior. They typically start with a hyphen (e.g., <code>ls -l</code> shows a long listing, <code>grep -i</code> performs a case-insensitive search).</p></li>
+<li><p><code>man &lt;command&gt;</code>: Display the manual page for a command to learn about its usage and options.</p></li>
+<li><p><code>ssh</code>: Securely connect to a remote server, such as a high-performance computing (HPC) cluster.</p></li>
+<li><p><code>&amp;</code>: Run a command in the background. Use jobs to see background processes.</p></li>
+<li><p><code>$(command)</code>: Include the output of a command within a string.</p></li>
+</ul>
 </section>
 
 </main>

@@ -1,0 +1,42 @@
+---
+title: "Unix Commands and Concepts Glossary"
+author: "Mery Touceda-Suárez"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+---
+
+## Core commands for navigation and file management 
+- `pwd`: Print the current working directory.
+- `ls`: List the contents of a directory. Use ls -l for a detailed list.
+- `cd <directory>`: Change the current directory. Use cd .. to move up one directory, and cd ~ or cd to go to your home directory.
+- `mkdir <dirname>`: Create a new directory.
+- `cp <source> <destination>`: Copy a file or directory.
+- `mv <source> <destination>`: Move or rename a file or directory.
+- `rm <file>`: Delete a file. Use rm -r <directory> to remove a directory and its contents, but be extremely careful as this is irreversible.
+- `cat <file>`: Display the contents of a file.
+- `less <file>`: View a file page by page, allowing you to scroll through its content.
+- `nano <file`>: Open a simple text editor to edit files. 
+
+## Essential concepts for analysis and automation
+- **Pipes** (|): Connect the output of one command to the input of another. This is fundamental for building analysis pipelines without creating intermediate files.
+
+> Example: `cat data.txt | grep "pattern" | sort | uniq` (filters, sorts, and counts unique lines from data.txt).
+
+- **Redirection**(>, >>): Redirect command output to a file. > overwrites the file, while >> appends to it.
+
+> Example: `ls -l > file_list.txt `saves the detailed listing to file_list.txt.
+
+- **Flags:** Options that modify a command's behavior. They typically start with a hyphen (e.g., `ls -l` shows a long listing, `grep -i` performs a case-insensitive search).
+
+- `man <command>`: Display the manual page for a command to learn about its usage and options.
+
+- `ssh`: Securely connect to a remote server, such as a high-performance computing (HPC) cluster.
+
+- `&`: Run a command in the background. Use jobs to see background processes.
+
+- `$(command)`: Include the output of a command within a string. 

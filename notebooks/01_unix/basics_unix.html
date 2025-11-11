@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Mery Touceda-Suárez">
+<meta name="dcterms.date" content="2025-11-11">
 
-<title>readme</title>
+<title>Basics of Unix</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,192 +22,173 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="README_files/libs/clipboard/clipboard.min.js"></script>
-<script src="README_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="README_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="README_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="README_files/libs/quarto-html/popper.min.js"></script>
-<script src="README_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="README_files/libs/quarto-html/anchor.min.js"></script>
-<link href="README_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="README_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="README_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="README_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="basics_unix_files/libs/clipboard/clipboard.min.js"></script>
+<script src="basics_unix_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="basics_unix_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="basics_unix_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="basics_unix_files/libs/quarto-html/popper.min.js"></script>
+<script src="basics_unix_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="basics_unix_files/libs/quarto-html/anchor.min.js"></script>
+<link href="basics_unix_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="basics_unix_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="basics_unix_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="basics_unix_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="basics_unix_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-unix" id="toc-what-is-unix" class="nav-link active" data-scroll-target="#what-is-unix">What is Unix</a>
+  <ul class="collapse">
+  <li><a href="#accessing-the-command-line" id="toc-accessing-the-command-line" class="nav-link" data-scroll-target="#accessing-the-command-line">Accessing the Command Line</a></li>
+  </ul></li>
+  <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices">Best Practices</a></li>
+  <li><a href="#common-pitfalls-to-avoid" id="toc-common-pitfalls-to-avoid" class="nav-link" data-scroll-target="#common-pitfalls-to-avoid">Common Pitfalls to Avoid</a></li>
+  </ul>
+</nav>
+</div>
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Basics of Unix</h1>
+</div>
 
 
 
-<section id="hpc-viral-inference-pipeline" class="level1">
-<h1>HPC Viral Inference Pipeline</h1>
-<p>This repository contains training materials and scripts for running a viral metagenomic analysis pipeline based on the workflow from <a href="https://kbase.us/n/126189/27/">KBase narrative 126189/27</a>.</p>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">🔬 Overview</h2>
-<p>This pipeline demonstrates how to process metagenomic datasets to identify, classify, and annotate viral sequences using bioinformatics tools. It serves as both a learning resource and a practical implementation guide for viral metagenomics on high-performance computing (HPC) systems.</p>
-</section>
-<section id="pipeline-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="pipeline-workflow">⚙️ Pipeline Workflow</h2>
-<p>The pipeline processes a single metagenomic dataset from the Global Ocean Viromes collection through the following steps:</p>
-<ol type="1">
-<li><strong>Data Download</strong>: Download metagenomic data from NCBI SRA and check quality with FastQC</li>
-<li><strong>Quality Control</strong>: Perform quality trimming and filtering with trimmomatic, followed by quality assessment using FastQC</li>
-<li><strong>Assembly</strong>: Assemble reads using metaSPAdes</li>
-<li><strong>Viral Genome Inference</strong>: Identify viral sequences with VirSorter2</li>
-<li><strong>Viral Genome Quality Control</strong>: Assess viral genome quality using CheckV</li>
-<li><strong>Annotation</strong>: Annotate sequences with:
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mery Touceda-Suárez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 11, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p>Note: This tutorial draws heavily from the <a href="https://astrobiomike.github.io/unix/unix-intro">Happy Belly Bioinformatics Unix Crash Course</a>. Thank you … . Other resources can be found at the end of the tutorial.</p>
+</blockquote>
+<p>Unix is very likely the most foundational skillset we can develop for bioinformatics. Many of the most common and powerful bioinformatics approaches happen in this text-based environment, and having a solid foundation here can make everything we’re trying to learn and do much easier. Additionally, unix is the language used by most High Performance Clusters (HPCs) and cloud computing, which is where we will be performing most of our computation going forward. Learning unix is essential for the process and analysis of large metagenomics datasets.</p>
+<p>Other reasons to learn Unix:</p>
 <ul>
-<li>Prokka (gene prediction and functional annotation)</li>
-<li>DRAM-v (viral metabolic annotation, and annotation of AMGs)</li>
-<li>vConTACT2 (viral clustering and taxonomic assignment)</li>
-</ul></li>
-</ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="viral_inference_pipeline_2025.png" class="img-fluid figure-img"></p>
-<figcaption><strong>Computational workflow for viral genome identification and annotation from NCBI-SRA data.</strong> Software tools are shown in black text, while pipeline processes are indicated in gray boxes.</figcaption>
-</figure>
+<li>it’s the foundation for most of bioinformatics (and much more)</li>
+<li>enables the use of non-GUI (Graphical User Interface) tools</li>
+<li>improves reproducibility (GUI’s are super-convenient for lots of things, but they are not ideal when it comes to reproducibility)</li>
+<li>enables things like quickly performing operations on large files (without needing to read them into memory)</li>
+<li>can allow us to programmatically access data</li>
+<li>helps automate repetitive tasks (need to rename 1,000 files?)</li>
+<li>enables use of higher-powered computers elsewhere (servers/cloud-computing)</li>
+</ul>
+<section id="what-is-unix" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-unix">What is Unix</h2>
+<p>UNIX is a family of innovative <strong>operating systema</strong> developed in the 1970s, designed for developers, with a command-line interface and a core kernel, or the fundamental code which allows software to manage hardware (handling critical functions like process scheduling, memory management, and device management). Like a lot of success sotories in programming (I am looking at you R), Unix spread due to its portability and through open community development and collaboration.</p>
+<p>Many successful offshoots of Unix have been developed, which is why we might see the term “Unix-like”, in order to encompass all the systems that aren’t technically “Unix”.</p>
+<p>Here are some terms that are often used interchangeably:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 66%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>shell</code></td>
+<td>what we use to talk to the computer; anything where we are pointing and clicking with a mouse is a Graphical User Interface (GUI) shell; something with text only is a Command Line Interface (CLI) shell</td>
+</tr>
+<tr class="even">
+<td><code>command line/</code><br><code>terminal</code></td>
+<td>a text-based environment capable of taking input and providing output</td>
+</tr>
+<tr class="odd">
+<td><code>bash</code></td>
+<td>(Bourne Again SHell) is a specific type of shell – a command-line interpreter – that runs on UNIX-like operating systems. OR: the most common programming language used at a Unix command-line.</td>
+</tr>
+<tr class="even">
+<td><code>Unix</code></td>
+<td>a family of operating systems</td>
+</tr>
+</tbody>
+</table>
+<section id="accessing-the-command-line" class="level3">
+<h3 class="anchored" data-anchor-id="accessing-the-command-line">Accessing the Command Line</h3>
+<p><strong>On Mac/Linux:</strong></p>
+<ul>
+<li>Open the Terminal application (Applications &gt; Utilities &gt; Terminal on Mac)</li>
+<li>You’re already on a Unix-like system!</li>
+</ul>
+<p><strong>On Windows:</strong></p>
+<p>Windows uses a different operating system architecture and is not Unix-based. Its native command-line interface (Command Prompt or PowerShell) uses different commands and syntax. However, you can still access a Unix environment on Windows through:</p>
+<ul>
+<li>Install Windows Subsystem for Linux (WSL)</li>
+<li>Or use Git Bash</li>
+<li>Or access a remote server</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For our training, to avoid any problems accessing the terminal, we are going to use <strong>GitHub Codespaces</strong>. We will learn more about GitHub Codespaces in the next tutorial.</p>
+</div>
 </div>
 </section>
-<section id="contents" class="level2">
-<h2 class="anchored" data-anchor-id="contents">📁 Contents</h2>
-<pre><code>├── scripts/               # Pipeline execution scripts
-├── data/                  # Sample data and test datasets
-├── configs/               # Configuration files for tools
-├── notebooks/             # Training notebooks and tutorials
-   ├── 00_setup            # NOTE TO SELF: these notebooks could be sent as a pre to kbase?
-   ├── 01_unix             # Basic UNIX training
-   ├── 02_hpc              # HPC job scheduling and Apptainer/Singularity usage
-   └── 03_viral_pipeline   # Viral inference pipeline walkthrough
-└── docs/                  # Additional documentation</code></pre>
 </section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">✅ Prerequisites</h2>
+<section id="best-practices" class="level2">
+<h2 class="anchored" data-anchor-id="best-practices">Best Practices</h2>
+<ol type="1">
+<li><strong>Use tab completion</strong>: Press Tab to autocomplete file and directory names</li>
+<li><strong>Check before deleting</strong>: Use <code>ls</code> to verify what files match your pattern before using <code>rm</code></li>
+<li><strong>Use descriptive names</strong>: Avoid spaces in filenames (use underscores or hyphens)</li>
+<li><strong>Keep backups</strong>: Always keep copies of original data files</li>
+<li><strong>Document your work</strong>: Keep notes or use comments in scripts (<code>#</code> for comments)</li>
+<li><strong>Test on small datasets</strong>: Before running commands on large files, test on a subset</li>
+</ol>
+</section>
+<section id="common-pitfalls-to-avoid" class="level2">
+<h2 class="anchored" data-anchor-id="common-pitfalls-to-avoid">Common Pitfalls to Avoid</h2>
 <ul>
-<li>GitHub account to clone the repository</li>
-<li>Access to an HPC cluster with job scheduling (e.g., SLURM, PBS)</li>
-<li>Apptainer or Singularity installed for containerized execution</li>
-<li>Basic knowledge of command-line operations and bioinformatics tools (See [link to training on UNIX])</li>
+<li><strong>Case sensitivity</strong>: <code>File.txt</code> and <code>file.txt</code> are different files</li>
+<li><strong>Spaces in names</strong>: Use quotes or escape spaces: <code>"my file.txt"</code> or <code>my\ file.txt</code></li>
+<li><strong>No undo button</strong>: Be very careful with <code>rm</code> - deleted files are gone!</li>
+<li><strong>Overwriting files</strong>: <code>&gt;</code> overwrites; use <code>&gt;&gt;</code> to append</li>
+<li><strong>Hidden files</strong>: Files starting with <code>.</code> are hidden (use <code>ls -a</code> to see them)</li>
 </ul>
-<hr>
-</section>
-<section id="getting-started" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started">🚀 Getting Started</h2>
-<ol type="1">
-<li><p>Clone or download this repository:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/hurwitzlab/hpc_viral_inference_pipeline.git</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> hpc_viral_inference_pipeline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Choose your preferred viewing method from the options below</p></li>
-<li><p>Open the training materials and follow along with the exercises</p></li>
-</ol>
-</section>
-<section id="viewing-the-training-materials" class="level2">
-<h2 class="anchored" data-anchor-id="viewing-the-training-materials">👀 Viewing the Training Materials</h2>
-<p>There are several ways to view and interact with the training materials:</p>
-<section id="option-1-view-pre-rendered-html-files-easiest" class="level3">
-<h3 class="anchored" data-anchor-id="option-1-view-pre-rendered-html-files-easiest">Option 1: View Pre-rendered HTML Files (Easiest)</h3>
-<ol type="1">
-<li>Download the HTML files from the repository</li>
-<li>Open them directly in your web browser</li>
-<li>No additional software required</li>
-</ol>
-</section>
-<section id="option-2-use-vs-code-with-quarto-extension-recommended-for-editing" class="level3">
-<h3 class="anchored" data-anchor-id="option-2-use-vs-code-with-quarto-extension-recommended-for-editing">Option 2: Use VS Code with Quarto Extension (Recommended for Editing)</h3>
-<p>If you want to edit or preview the materials while working on them:</p>
-<ol type="1">
-<li>Install <a href="https://code.visualstudio.com/">VS Code</a></li>
-<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=quarto.quarto">Quarto extension</a> for VS Code</li>
-<li>Open the <code>.qmd</code> files in VS Code</li>
-<li>Use the preview pane to see rendered output alongside your code</li>
-<li>Press <code>Ctrl+Shift+K</code> (or <code>Cmd+Shift+K</code> on Mac) to render the document</li>
-</ol>
-</section>
-<section id="option-3-render-with-quarto-cli" class="level3">
-<h3 class="anchored" data-anchor-id="option-3-render-with-quarto-cli">Option 3: Render with Quarto CLI</h3>
-<p>To render the Quarto documents yourself:</p>
-<ol type="1">
-<li><p>Install <a href="https://quarto.org/docs/get-started/">Quarto</a></p></li>
-<li><p>Clone this repository:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/hurwitzlab/brc_hazel_training.git</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> brc_hazel_training</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Render individual documents:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render document.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Or render all documents:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Open the generated HTML files in your browser</p></li>
-</ol>
-</section>
-<section id="option-4-use-rstudio" class="level3">
-<h3 class="anchored" data-anchor-id="option-4-use-rstudio">Option 4: Use RStudio</h3>
-<p>If you’re familiar with RStudio:</p>
-<ol type="1">
-<li>Install <a href="https://posit.co/download/rstudio-desktop/">RStudio</a> (version 2022.07 or later includes Quarto)</li>
-<li>Open the <code>.qmd</code> files in RStudio</li>
-<li>Click the “Render” button to preview documents</li>
-</ol>
-</section>
-<section id="option-5-view-raw-files-on-github" class="level3">
-<h3 class="anchored" data-anchor-id="option-5-view-raw-files-on-github">Option 5: View raw files on GitHub</h3>
-<p>You can view the raw Quarto markdown files directly on GitHub, though formatting and code output won’t be rendered.</p>
-<hr>
-</section>
-</section>
-<section id="contributing" class="level2">
-<h2 class="anchored" data-anchor-id="contributing">🤝 Contributing</h2>
-<p>If you find issues or have suggestions for improvements, please open an issue or submit a pull request.</p>
-</section>
-<section id="contact" class="level2">
-<h2 class="anchored" data-anchor-id="contact">📧 Contact</h2>
-<p>For questions about the training materials, please contact the Hurwitz Lab (Mery Touceda-Suárez: mtouced@ncsu.edu or Bonnie Hurwitz: blhurwit@ncsu.edu) or the Sullivan Lab (Ben Bolduc: bolduc.10@osu.edu)</p>
-<hr>
-</section>
 </section>
 
 </main>
