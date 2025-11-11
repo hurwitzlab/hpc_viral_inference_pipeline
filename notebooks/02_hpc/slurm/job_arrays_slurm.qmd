@@ -1,0 +1,122 @@
+# 00: Getting started (SLURM)
+
+## Job Arrays
+All the notebooks in this repository show you how to run the analysis using **job arrays**. Job arrays are a way to run the same job multiple times with different input files. This is useful for running the same analysis on multiple samples, as is often the case in bioinformatics. 
+ 
+Our basic **job array submission structure** requires the following files: 
+
+- A text file (e.g. `sample_list.txt`) that contains a list of input files, one per line. Each line corresponds to a different sample.
+- A job script (e.g. `process.slurm`) that contains the commands to be run. This script will be executed multiple times, once for each sample. Note that **"process"** can be any analysis you want to run (e.g. `fastqc`, `multiqc`, `kraken2`, etc.).
+- A configuration file  (e.g. `config.sh`) that contains parameters, variables, and settings for the job script.
+- A job submission script, or launcher script, (e.g. `run_process.sh`) that submits the job array to the scheduler. It specifies the range of job indices to be run, which corresponds to the number of lines in the text file.
+
+
+## Scheduler
+A scheduler is a software that manages the resources of a computer cluster and allocates them to users. It is responsible for scheduling jobs, managing queues, and monitoring the status of jobs.
+
+::: {.callout-note}
+All the notebooks in this repository assume you are using a **SLURM** (`fastqc.slurm`) or **LSF** (`fastqc.lsf`)  scheduler. If you are using a different scheduler, you will need to modify the job scripts and submission scripts accordingly.
+:::
+
+## Job script
+The job script is a bash script that contains the commands to be run. It is executed by the scheduler. Here we provide a template job script that you can modify for your own analysis. 
+
+A few important points:
+
+1. We are using the variables from the config file via the `source ./config.sh` command in the script.
+2. Our process runs on each of the fastq files in the $FASTQ_DIR
+3. We will copy the reports to our home directory to visualize these results (via ondemand Jupyter)
+4. Array is the number of samples, counting from zero   
+
+##### Template
+```bash
+#!/bin/bash
+# --------------------------------------------------
+# Request resources here
+# --------------------------------------------------
+#SBATCH --job-name=process              # job name
+#SBATCH --ntasks=1                      # number of CPUs required 
+#SBATCH --cpus-per-task=1               # number of CPU cores per task 
+#SBATCH --nodes=1                       # number of nodes
+#SBATCH --mem-per-cpu=4000              # memory per CPU core in MB (see also --mem) 
+#SBATCH --time=10:00:00                 # time limit hrs:min:sec
+#SBATCH --partition=standard            # partition name (i.e. standard, windfall)
+#SBATCH --account=your_account          # account name (name of your group)                     
+#SBATCH --output=process-%j.out         # standard output file name (%j expands to jobID)
+#SBATCH --error=process-%j.err          # standard error file name (%j expands to jobID)
+                        
+# --------------------------------------------------
+# Load modules here
+# --------------------------------------------------
+
+
+# --------------------------------------------------
+# Execute commands here
+# --------------------------------------------------
+
+# echo for log
+echo "job started"; pwd; hostname; date
+
+# source the config file
+source ./config.sh
+
+# get sample ID
+export SAMPLE=`head -n +${SLURM_ARRAY_TASK_ID} $IN_LIST | tail -n 1`
+
+# execute process
+# insert the command to execute your process here
+
+# echo for log
+echo "job done"; date
+
+```
+
+## Config file
+All the jobs scripts in this repository use a configuration file (`config.sh`) to store parameters, variables, and settings. This file is sourced in the job scripts to make the variables available. Here we provide a template config file that you can modify for your own analysis.
+
+##### Template
+```bash
+#!/bin/bash
+IN_LIST=/path_to_my_file/sample_list.txt
+FASTQC=/path_to_containers/container
+WORK_DIR=/my_dir_path/MY_ID/
+
+# Add more variables as needed
+# e.g. IN_DIR, OUT_DIR, etc.
+
+```
+
+
+## Launcher script
+The launcher script is a bash script that submits the job array to the scheduler. It specifies the range of job indices to be run, which corresponds to the number of lines in the text file. Here we provide a template launcher script that you can modify for your own analysis.
+
+##### Template
+
+```bash
+#!/bin/bash -l
+
+# load job configuration
+source ./config.sh
+
+#
+# make sure sample file is in the right place
+#
+if [[ ! -f "$IN_LIST" ]]; then
+    echo "$IN_LIST does not exist. Please provide the path for a list of datasets to process. Job terminated."
+    exit 1
+fi
+
+# get number of samples to process
+# the number of samples will be used to set the range of the job array
+export NUM_JOB=$(wc -l < "$IN_LIST")
+
+# submit job array
+echo "launching process.slurm as a job."
+
+JOB_ID=`sbatch --job-name process -a 1-$NUM_JOB process.slurm`
+
+```
+
+::: {.callout-important}
+Remember that in all these templates you will need to modify the word **"process"** to the name of the process you are running (e.g. `fastqc`, `multiqc`, `kraken2`, etc.)
+:::

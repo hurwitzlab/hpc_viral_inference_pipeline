@@ -75,6 +75,8 @@ For our training, to avoid any problems accessing the terminal, we are going to 
 - **Hidden files**: Files starting with `.` are hidden (use `ls -a` to see them)
 
 
+## Other sources
+- https://bioinformatics.ccr.cancer.gov/docs/unix-commands-for-beginners/unix_for_beginners/
 
 
 
