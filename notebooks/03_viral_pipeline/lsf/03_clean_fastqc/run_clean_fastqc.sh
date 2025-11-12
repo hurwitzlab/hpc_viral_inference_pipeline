@@ -1,5 +1,5 @@
 #! /bin/bash
-# This script submits a job array on an LSF scheduler to run FastQC on raw reads
+# This script submits a job array on an LSF scheduler to run FastQC on clean reads
 # Each job array will process multiple samples in parallel
 # The number of samples is determined by the number of lines in the input list file     
 # --------------------------------------------------
@@ -15,7 +15,7 @@ if [[ ! -f "$IN_LIST" ]]; then
     exit 1
 fi
 
-export JOB1="01_raw_fastqc"  # this is not necessary but will be useful for consistency in larger pipelines
+export JOB1="03_clean_fastqc"  # this is not necessary but will be useful for consistency in larger pipelines
 
 # get number of samples to process
 # the number of samples will be used to set the range of the job array

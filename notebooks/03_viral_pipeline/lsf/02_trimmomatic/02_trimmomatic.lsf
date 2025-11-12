@@ -1,15 +1,15 @@
 #!/bin/bash
 # ==================================================
-# FastQC Job Script for Hazel HPC
+# Trimmomatic Job Script for Hazel HPC
 # ==================================================
-# This script runs FastQC quality control on sequencing data
+# This script runs trimmomatic quality control on sequencing data
 # using an Apptainer Container
 
 
 # --------------------------------------------------
 # Request resources here
 # --------------------------------------------------
-#BSUB -J raw_fastqc                   # job name
+#BSUB -J trimmomatic                  # job name
 #BSUB -n 2                            # number of CPUs required per task
 #BSUB -q shared_memory                # the queue to run on
 #BSUB -R "span[hosts=1]"              # number of hosts to spread the jobs across, 1 host used here
@@ -46,8 +46,8 @@ export SAMPLE=`head -n +${LSB_JOBINDEX} $IN_LIST | tail -n 1`
 # --------------------------------------------------
 
 # Check if container exists
-if [ ! -f "${FASTQC_SIF}" ]; then
-    echo "ERROR: Container not found at ${FASTQC_SIF}"
+if [ ! -f "${TRIMMOMATIC_SIF}" ]; then
+    echo "ERROR: Container not found at ${TRIMMOMATIC_SIF}"
     exit 1
 fi
 
@@ -58,21 +58,22 @@ if [ ! -d "${IN_DIR}" ]; then
 fi
 
 # --------------------------------------------------
-# Execute FastQC
+# Execute Trimmomatic
 # --------------------------------------------------
 
-echo "Running FastQC on sample: ${SAMPLE}"
+echo "Running trimmomatic on sample: ${SAMPLE}"
 
-apptainer exec ${FASTQC_SIF} fastqc \
-    --threads 2 \
-    --outdir ${OUT_DIR} \
-    ${IN_DIR}/${SAMPLE}_*.fastq*
+apptainer run ${TRIMMOMATIC} trimmomatic PE -phred33 -threads 4 \
+    ${IN_DIR}/${SAMPLE}_R1*.fastq* ${IN_DIR}/${SAMPLE}_R2*.fastq* \
+    ${OUT_DIR}/${SAMPLE}_R1.fastq.gz ${OUT_DIR}/${SAMPLE}_R1.fastq.gz \
+    ${UNPAIR_DIR}/${SAMPLE}_R2.fastq.gz ${UNPAIR_DIR}/${SAMPLE}_R2.fastq.gz \
+    ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10 SLIDINGWINDOW:4:20 MINLEN:100 HEADCROP:15
 
-# Check if FastQC completed successfully
+# Check if Trimmomatic completed successfully
 if [ $? -eq 0 ]; then
-    echo "FastQC completed successfully"
+    echo "Trimmomatic completed successfully"
 else
-    echo "ERROR: FastQC failed with exit code $?"
+    echo "ERROR: Trimmomatic failed with exit code $?"
     exit 1
 fi
 

@@ -9,7 +9,7 @@
 # --------------------------------------------------
 # Request resources here
 # --------------------------------------------------
-#BSUB -J raw_fastqc                   # job name
+#BSUB -J clean_fastqc                 # job name
 #BSUB -n 2                            # number of CPUs required per task
 #BSUB -q shared_memory                # the queue to run on
 #BSUB -R "span[hosts=1]"              # number of hosts to spread the jobs across, 1 host used here
