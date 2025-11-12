@@ -8,6 +8,20 @@ This repository contains training materials and scripts for running a viral meta
 
 This pipeline demonstrates how to process metagenomic datasets to identify, classify, and annotate viral sequences using bioinformatics tools. It serves as both a learning resource and a practical implementation guide for viral metagenomics on high-performance computing (HPC) systems.
 
+## 🦠 Why Study Viruses?
+
+- Viruses are the "most abundant biological entities on the planet"<sup>[1](https://www.nature.com/articles/21119),[2](https://www.sciencedirect.com/science/article/pii/S0966842X05001083?via%3Dihub)</sup>, with 1031 virus-like particles<sup>[3](https://www.nature.com/articles/nature04160)</sup>
+- 3% (0-18%) of any microbial genome is really a viral sequence<sup>[4](https://journals.asm.org/doi/10.1128/mmbr.67.2.238-276.2003),[5](https://onlinelibrary.wiley.com/doi/10.1046/j.1365-2958.2003.03580.x)</sup>
+- On the topic of composition, 8% of the human genome is viral<sup>[6](https://www.nature.com/articles/35057062),[7](https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2018.02039/full)</sup>
+- Move 1029 genes per day, globally<sup>[8](https://www.caister.com/backlist/jmmb/v/v1/v1n1/07.pdf),[9]</sup>
+- Lyse between 20-40% of ocean microbes daily<sup>[10](https://www.nature.com/articles/nrmicro1750)</sup>
+- They steal metabolic genes and can encode key metabolic components (like photosynthesis!)<sup>[11](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0040234),[12](https://elifesciences.org/articles/03125),[13](https://www.science.org/doi/10.1126/science.1252229)</sup>
+- Can infect other viruses (virophages)<sup>[14](https://www.nature.com/articles/nature07218)</sup>
+- Viruses - not microbes - encode many of the toxins we think of as bacterial (bordtella, cholera, shiga, etc)<sup>[15](https://pmc.ncbi.nlm.nih.gov/articles/PMC2658872/)</sup>
+- Fewer than 1% are culturable<sup>[16],[17](https://journals.asm.org/doi/10.1128/mmbr.68.4.686-691.2004)</sup>
+
+Viruses are often hidden in datasets (both viral and microbial) this guide will help you find them!
+
 ## ⚙️ Pipeline Workflow
 
 The pipeline processes a single metagenomic dataset from the Global Ocean Viromes collection through the following steps:

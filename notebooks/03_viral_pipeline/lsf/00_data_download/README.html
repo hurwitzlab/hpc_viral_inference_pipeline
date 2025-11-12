@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -83,143 +48,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="hpc-viral-inference-pipeline" class="level1">
-<h1>HPC Viral Inference Pipeline</h1>
-<p>This repository contains training materials and scripts for running a viral metagenomic analysis pipeline based on the workflow from <a href="https://kbase.us/n/126189/27/">KBase narrative 126189/27</a>.</p>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">🔬 Overview</h2>
-<p>This pipeline demonstrates how to process metagenomic datasets to identify, classify, and annotate viral sequences using bioinformatics tools. It serves as both a learning resource and a practical implementation guide for viral metagenomics on high-performance computing (HPC) systems.</p>
+<section id="data-download" class="level1">
+<h1># 00: Data Download</h1>
+<p>This directory contains the LSF script to download SRA data using <code>prefetch</code> from the SRA Toolkit within an Apptainer container.</p>
+<p>Some HPCs lack internet connection in their compute nodes. When compute nodes lack internet access, these tasks must be performed on the login node. However, remember that we CANNOT run computationally intensive tasks on the login node. Some of these processes, like downloading large databases, can be resource-intensive and could violate cluster policies if executed directly on the login node without proper resource management.</p>
+<p>To address this challenge, the script utilizes GNU Parallel to perform multiple downloads concurrently in the login node, optimizing the use of available CPU resources and avoiding conflict with other users.</p>
+<section id="what-is-gnu-parallel" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-gnu-parallel">What is GNU Parallel?</h2>
+<p>GNU Parallel is a <strong>command-line tool that allows you to execute multiple jobs simultaneously while controlling resource usage</strong>. Think of it as a way to run several commands at once, but with intelligent management of how many processes run at any given time. Instead of running tasks sequentially (one after another) or launching them all at once (which could overwhelm the system), GNU Parallel lets you specify how many jobs should run in parallel. For example, if you need to download 100 datasets, you could tell GNU Parallel to download 4 at a time—as soon as one download finishes, it automatically starts the next one until all are complete.</p>
+<p>This controlled parallelization is particularly valuable on login nodes, where we need to be mindful of resource consumption while still completing tasks efficiently. By limiting the number of concurrent processes, GNU Parallel allows us to perform necessary downloads and installations <strong>without monopolizing</strong> the login node’s resources or violating cluster policies.</p>
+<p>It also provides useful features like progress monitoring, automatic retry of failed jobs, and the ability to resume interrupted work—making it an essential tool for managing data-intensive tasks in restricted HPC environments.</p>
 </section>
-<section id="why-study-viruses" class="level2">
-<h2 class="anchored" data-anchor-id="why-study-viruses">🦠 Why Study Viruses?</h2>
-<ul>
-<li>Viruses are the “most abundant biological entities on the planet”<sup><a href="https://www.nature.com/articles/21119">1</a>,<a href="https://www.sciencedirect.com/science/article/pii/S0966842X05001083?via%3Dihub">2</a></sup>, with 1031 virus-like particles<sup><a href="https://www.nature.com/articles/nature04160">3</a></sup></li>
-<li>3% (0-18%) of any microbial genome is really a viral sequence<sup><a href="https://journals.asm.org/doi/10.1128/mmbr.67.2.238-276.2003">4</a>,<a href="https://onlinelibrary.wiley.com/doi/10.1046/j.1365-2958.2003.03580.x">5</a></sup></li>
-<li>On the topic of composition, 8% of the human genome is viral<sup><a href="https://www.nature.com/articles/35057062">6</a>,<a href="https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2018.02039/full">7</a></sup></li>
-<li>Move 1029 genes per day, globally<sup><a href="https://www.caister.com/backlist/jmmb/v/v1/v1n1/07.pdf">8</a>,[9]</sup></li>
-<li>Lyse between 20-40% of ocean microbes daily<sup><a href="https://www.nature.com/articles/nrmicro1750">10</a></sup></li>
-<li>They steal metabolic genes and can encode key metabolic components (like photosynthesis!)<sup><a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0040234">11</a>,<a href="https://elifesciences.org/articles/03125">12</a>,<a href="https://www.science.org/doi/10.1126/science.1252229">13</a></sup></li>
-<li>Can infect other viruses (virophages)<sup><a href="https://www.nature.com/articles/nature07218">14</a></sup></li>
-<li>Viruses - not microbes - encode many of the toxins we think of as bacterial (bordtella, cholera, shiga, etc)<sup><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2658872/">15</a></sup></li>
-<li>Fewer than 1% are culturable<sup>[16],<a href="https://journals.asm.org/doi/10.1128/mmbr.68.4.686-691.2004">17</a></sup></li>
-</ul>
-<p>Viruses are often hidden in datasets (both viral and microbial) this guide will help you find them!</p>
-</section>
-<section id="pipeline-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="pipeline-workflow">⚙️ Pipeline Workflow</h2>
-<p>The pipeline processes a single metagenomic dataset from the Global Ocean Viromes collection through the following steps:</p>
-<ol type="1">
-<li><strong>Data Download</strong>: Download metagenomic data from NCBI SRA and check quality with FastQC</li>
-<li><strong>Quality Control</strong>: Perform quality trimming and filtering with trimmomatic, followed by quality assessment using FastQC</li>
-<li><strong>Assembly</strong>: Assemble reads using metaSPAdes</li>
-<li><strong>Viral Genome Inference</strong>: Identify viral sequences with VirSorter2</li>
-<li><strong>Viral Genome Quality Control</strong>: Assess viral genome quality using CheckV</li>
-<li><strong>Annotation</strong>: Annotate sequences with:
-<ul>
-<li>Prokka (gene prediction and functional annotation)</li>
-<li>DRAM-v (viral metabolic annotation, and annotation of AMGs)</li>
-<li>vConTACT2 (viral clustering and taxonomic assignment)</li>
-</ul></li>
-</ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="viral_inference_pipeline_2025.png" class="img-fluid figure-img"></p>
-<figcaption><strong>Computational workflow for viral genome identification and annotation from NCBI-SRA data.</strong> Software tools are shown in black text, while pipeline processes are indicated in gray boxes.</figcaption>
-</figure>
-</div>
-</section>
-<section id="contents" class="level2">
-<h2 class="anchored" data-anchor-id="contents">📁 Contents</h2>
-<pre><code>├── scripts/               # Pipeline execution scripts
-├── data/                  # Sample data and test datasets
-├── configs/               # Configuration files for tools
-├── notebooks/             # Training notebooks and tutorials
-   ├── 00_setup            # NOTE TO SELF: these notebooks could be sent as a pre to kbase?
-   ├── 01_unix             # Basic UNIX training
-   ├── 02_hpc              # HPC job scheduling and Apptainer/Singularity usage
-   └── 03_viral_pipeline   # Viral inference pipeline walkthrough
-└── docs/                  # Additional documentation</code></pre>
-</section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">✅ Prerequisites</h2>
-<ul>
-<li>GitHub account to clone the repository</li>
-<li>Access to an HPC cluster with job scheduling (e.g., SLURM, PBS)</li>
-<li>Apptainer or Singularity installed for containerized execution</li>
-<li>Basic knowledge of command-line operations and bioinformatics tools (See [link to training on UNIX])</li>
-</ul>
-<hr>
-</section>
-<section id="getting-started" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started">🚀 Getting Started</h2>
-<ol type="1">
-<li><p>Clone or download this repository:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/hurwitzlab/hpc_viral_inference_pipeline.git</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> hpc_viral_inference_pipeline</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Choose your preferred viewing method from the options below</p></li>
-<li><p>Open the training materials and follow along with the exercises</p></li>
-</ol>
-</section>
-<section id="viewing-the-training-materials" class="level2">
-<h2 class="anchored" data-anchor-id="viewing-the-training-materials">👀 Viewing the Training Materials</h2>
-<p>There are several ways to view and interact with the training materials:</p>
-<section id="option-1-view-pre-rendered-html-files-easiest" class="level3">
-<h3 class="anchored" data-anchor-id="option-1-view-pre-rendered-html-files-easiest">Option 1: View Pre-rendered HTML Files (Easiest)</h3>
-<ol type="1">
-<li>Download the HTML files from the repository</li>
-<li>Open them directly in your web browser</li>
-<li>No additional software required</li>
-</ol>
-</section>
-<section id="option-2-use-vs-code-with-quarto-extension-recommended-for-editing" class="level3">
-<h3 class="anchored" data-anchor-id="option-2-use-vs-code-with-quarto-extension-recommended-for-editing">Option 2: Use VS Code with Quarto Extension (Recommended for Editing)</h3>
-<p>If you want to edit or preview the materials while working on them:</p>
-<ol type="1">
-<li>Install <a href="https://code.visualstudio.com/">VS Code</a></li>
-<li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=quarto.quarto">Quarto extension</a> for VS Code</li>
-<li>Open the <code>.qmd</code> files in VS Code</li>
-<li>Use the preview pane to see rendered output alongside your code</li>
-<li>Press <code>Ctrl+Shift+K</code> (or <code>Cmd+Shift+K</code> on Mac) to render the document</li>
-</ol>
-</section>
-<section id="option-3-render-with-quarto-cli" class="level3">
-<h3 class="anchored" data-anchor-id="option-3-render-with-quarto-cli">Option 3: Render with Quarto CLI</h3>
-<p>To render the Quarto documents yourself:</p>
-<ol type="1">
-<li><p>Install <a href="https://quarto.org/docs/get-started/">Quarto</a></p></li>
-<li><p>Clone this repository:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/hurwitzlab/brc_hazel_training.git</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> brc_hazel_training</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Render individual documents:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render document.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Or render all documents:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Open the generated HTML files in your browser</p></li>
-</ol>
-</section>
-<section id="option-4-use-rstudio" class="level3">
-<h3 class="anchored" data-anchor-id="option-4-use-rstudio">Option 4: Use RStudio</h3>
-<p>If you’re familiar with RStudio:</p>
-<ol type="1">
-<li>Install <a href="https://posit.co/download/rstudio-desktop/">RStudio</a> (version 2022.07 or later includes Quarto)</li>
-<li>Open the <code>.qmd</code> files in RStudio</li>
-<li>Click the “Render” button to preview documents</li>
-</ol>
-</section>
-<section id="option-5-view-raw-files-on-github" class="level3">
-<h3 class="anchored" data-anchor-id="option-5-view-raw-files-on-github">Option 5: View raw files on GitHub</h3>
-<p>You can view the raw Quarto markdown files directly on GitHub, though formatting and code output won’t be rendered.</p>
-<hr>
-</section>
-</section>
-<section id="contributing" class="level2">
-<h2 class="anchored" data-anchor-id="contributing">🤝 Contributing</h2>
-<p>If you find issues or have suggestions for improvements, please open an issue or submit a pull request.</p>
-</section>
-<section id="contact" class="level2">
-<h2 class="anchored" data-anchor-id="contact">📧 Contact</h2>
-<p>For questions about the training materials, please contact the Hurwitz Lab (Mery Touceda-Suárez: mtouced@ncsu.edu or Bonnie Hurwitz: blhurwit@ncsu.edu) or the Sullivan Lab (Ben Bolduc: bolduc.10@osu.edu)</p>
-<hr>
+<section id="downloading-data-from-sra" class="level2">
+<h2 class="anchored" data-anchor-id="downloading-data-from-sra">Downloading data from SRA</h2>
+<p>First, create a text file listing the SRA accession numbers you want to download with one accession number per line (see file: <code>hpc_viral_inference_pipeline/data/sra_accessions.txt</code>).</p>
+<p>Then, modify the script <code>00_data_download.sh</code> to set the paths to your work directory, GNU Parallel binary, and SRA Toolkit Apptainer container. Finally, run the script on the login node to start downloading the data using GNU Parallel.</p>
 </section>
 </section>
 
