@@ -7,3 +7,8 @@ SRA_CONTAINER=/rs1/shares/brc/admin/containers/images/quay.io_biocontainers_sra-
 
 # run gnu parallel downloads with joblog
 cat sra_accessions.txt | $PARALLEL -j $CPUS --progress --joblog $JOBLOG "apptainer exec $SRA_CONTAINER prefetch {}"
+
+
+
+
+## This is just a test for github desktop thanks bye
