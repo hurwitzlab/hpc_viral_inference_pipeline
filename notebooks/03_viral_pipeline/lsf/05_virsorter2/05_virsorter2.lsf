@@ -1,0 +1,90 @@
+#!/bin/bash
+# ==================================================
+# VirSorter2 Job Script for Hazel HPC
+# ==================================================
+# This script runs VirSorter2 for viral sequence identification from contigs
+# using an Apptainer Container
+
+
+# --------------------------------------------------
+# Request resources here
+# --------------------------------------------------
+#BSUB -J virsorter2                   # job name
+#BSUB -n 2                            # number of CPUs required per task
+#BSUB -q shared_memory                # the queue to run on
+#BSUB -R "span[hosts=1]"              # number of hosts to spread the jobs across, 1 host used here
+#BSUB -R "rusage[mem=4GB]"            # required total memory for the job 
+#BSUB -o "./output.%J.log"            # standard output file (%J is job name)
+#BSUB -e "./error.%J.log"             # standard error file (%J is job ID)
+#BSUB -W 10:00:00                     # time to run
+
+# --------------------------------------------------
+# Load modules here
+# --------------------------------------------------
+
+module load apptainer
+
+# --------------------------------------------------
+# Execute commands here
+# --------------------------------------------------
+
+# Print job start information
+echo "=================================================="
+echo "Job started: $(date)"
+echo "Job ID: $LSB_JOBID"
+echo "Running on host: $(hostname)"
+echo "Working directory: $(pwd)"
+echo "=================================================="
+
+# Source config file and get sample name from input list based on job array index
+source ./config.sh
+export SAMPLE=`head -n +${LSB_JOBINDEX} $IN_LIST | tail -n 1`
+
+
+# --------------------------------------------------
+# Validate inputs
+# --------------------------------------------------
+
+# Check if container exists
+if [ ! -f "${VIRSORTER_SIF}" ]; then
+    echo "ERROR: Container not found at ${VIRSORTER_SIF}"
+    exit 1
+fi
+
+# Check if input directory exists
+if [ ! -d "${IN_DIR}" ]; then
+    echo "ERROR: Input directory not found at ${IN_DIR}"
+    exit 1
+fi
+
+# --------------------------------------------------
+# Execute VirSorter2
+# --------------------------------------------------
+
+echo "Running VirSorter2 on sample: ${SAMPLE}"
+
+apptainer exec ${VIRSORTER_SIF} virsorter run -w ${OUT_DIR}/${SAMPLE}_virsorter2_output \
+    -i ${IN_DIR}/${SAMPLE}_metaspades_output/${SAMPLE}_contigs.fasta \
+    --include-groups dsDNAphage,ssDNA \
+    --min-length 3000 \
+    --min-score 0.5 \
+    -j 16 \
+    all \
+    --prep-for-dramv
+
+# Check if VirSorter2 completed successfully
+if [ $? -eq 0 ]; then
+    echo "VirSorter2 completed successfully"
+else
+    echo "ERROR: VirSorter2 failed with exit code $?"
+    exit 1
+fi
+
+# --------------------------------------------------
+# Job completion
+# --------------------------------------------------
+
+echo "=================================================="
+echo "Job completed: $(date)"
+echo "Results saved to: ${OUT_DIR}"
+echo "=================================================="

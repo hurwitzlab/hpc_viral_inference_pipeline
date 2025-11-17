@@ -5,7 +5,7 @@ export FASTQC_SIF="/path/to/container/image"                                    
 
 # Create output directory if it doesn't exist
 mkdir -p /path/to/working/dir/02_trimmomatic_results/clean_reads            # This will be the directory for the clean reads
-OUT_DIR="/path/to/working/dir/02_trimmomatic_results/clean_reads"
+export OUT_DIR="/path/to/working/dir/02_trimmomatic_results/clean_reads"
 
 mkdir -p /path/to/working/dir/02_trimmomatic_results/unpaired_reads         # This will be the directory for the unpaired reads
-UNPAIR_DIR="/path/to/working/dir/02_trimmomatic_results/unpaired_reads"
+export UNPAIR_DIR="/path/to/working/dir/02_trimmomatic_results/unpaired_reads"

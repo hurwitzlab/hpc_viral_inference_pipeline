@@ -5,4 +5,4 @@ export FASTQC_SIF="/path/to/container/image"                                    
 
 # Create output directory if it doesn't exist
 mkdir -p /path/to/working/dir/03_clean_fastqc_results
-OUT_DIR="/path/to/working/dir/03_clean_fastqc_results"
+export OUT_DIR="/path/to/working/dir/03_clean_fastqc_results"
