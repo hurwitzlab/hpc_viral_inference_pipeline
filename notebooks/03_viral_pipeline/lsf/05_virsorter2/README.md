@@ -1,4 +1,4 @@
-05: Read assembly with VirSorter2 
+05: Viral sequence inference with VirSorter2 
 =================
 This directory contains scripts and configuration files to run VirSorter2 on assembled contigs as part of a viral inference pipeline using an LSF job scheduler.
 
@@ -18,6 +18,7 @@ The launcher script `run_virsorter2.sh` submits a job array to the LSF scheduler
 - Access to an HPC cluster with LSF job scheduler.
 - Apptainer/Singularity installed on the cluster.
 - VirSorter2 container available on the cluster.
+- VirSorter2 database available on the cluster (See 00_data_download).
 - Paired reads cleaned with trimmomatic files available in the specified working directory.  
 
 ## Output
@@ -30,7 +31,54 @@ VirSorter2 performs equivalent to OR superior than nearly all other tools at 3-5
 
 VirSorter2 default parameters are fine to use. If you want to use DRAM-v on the output, you will need to enable the "Enable DRAM-v outputs" flag. Also, be sure to include the virus groups. Since our data derives from a marine sample and has not undergone any type of RNA-focused extraction/amplification, we only need to use dsDNA phage and ssDNA. In this example, I've also enabled "Only output high confidence viral sequences." Other options are either situational or adjust the level of sensitivity or specificity in virus identification.
 
-### Parameters used in this pipeline: 
+## VirSorter2 Workflow
+
+The figure below illustrates the VirSorter2 computational workflow for identifying viral sequences from assembled contigs:
+
+![VirSorter2 Workflow Diagram. Figure modified from [Guo et al (2021) Microbiome](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00990-y)](virsorter_workflow.png)
+
+### Workflow Steps
+
+**1. Input and Database Integration**
+VirSorter2 begins with assembled contigs and integrates multiple customizable databases including:
+
+- Prodigal RBS motifs for gene prediction
+- Hidden Markov Model databases (hmmDB)
+- Hallmark viral genes
+- Pre-trained classifiers
+
+**2. Feature Extraction**
+The pipeline performs two key analyses on the contigs:
+
+- **Viral hallmark gene identification**: Detects genes that are characteristic of viral genomes
+- **Circular sequence detection**: Identifies circular viral genomes, a common feature of many viruses
+- **Gene prediction**: Uses Prodigal to predict at least 2 genes per contig, generating both nucleotide (faa - amino acid) and nucleotide (gff - gene feature format) files
+
+**3. Feature Annotation**
+Predicted genes are annotated with:
+
+- HMM-based functional annotations
+- Taxonomic features derived from database matches
+- Genomic features including structural characteristics
+
+**4. Classification and Scoring**
+Multiple classifiers evaluate each contig and generate scores based on the extracted features. These scores are compiled into a comprehensive feature table and score table.
+
+**5. Sequence Categorization**
+Sequences are classified based on their maximum classifier scores relative to a cutoff threshold:
+
+- **Max score ≥ cutoff**: Classified as "near full viral sequences"
+- **Max score < cutoff**: Classified as "other sequences"
+
+**6. Final Output**
+The workflow produces two categories of output:
+
+- **Trimmed full viral sequences**: High-confidence complete or near-complete viral genomes after boundary trimming
+- **Partial viral sequences**: Viral sequences extracted using the "provirus extraction" module, which identifies integrated viral sequences within larger contigs
+
+This multi-tiered approach combining reference databases, gene-based features, and machine learning classifiers enables VirSorter2 to accurately identify viral sequences while distinguishing them from cellular sequences in metagenomic assemblies.
+
+## Parameters used in this pipeline: 
 ```bash
 apptainer exec ${VIRSORTER_SIF} virsorter run -w ${OUT_DIR}/${SAMPLE}_virsorter2_output \
     -i ${IN_DIR}/${SAMPLE}_metaspades_output/${SAMPLE}_contigs.fasta \

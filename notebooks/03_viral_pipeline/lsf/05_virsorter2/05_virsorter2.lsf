@@ -68,7 +68,7 @@ apptainer exec ${VIRSORTER_SIF} virsorter run -w ${OUT_DIR}/${SAMPLE}_virsorter2
     --include-groups dsDNAphage,ssDNA \
     --min-length 3000 \
     --min-score 0.5 \
-    -j 16 \
+    -j 16 \                                 # number of threads, make sure it matches the -n value above
     all \
     --prep-for-dramv
 

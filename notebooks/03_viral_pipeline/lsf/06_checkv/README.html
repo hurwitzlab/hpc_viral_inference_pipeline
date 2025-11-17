@@ -83,15 +83,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="read-assembly-with-virsorter2" class="level1">
-<h1>05: Read assembly with VirSorter2</h1>
-<p>This directory contains scripts and configuration files to run VirSorter2 on assembled contigs as part of a viral inference pipeline using an LSF job scheduler.</p>
-<p>The launcher script <code>run_virsorter2.sh</code> submits a job array to the LSF scheduler, where each job in the array processes a different sample from the input list through the <code>05_virsorter2.lsf</code> job script. The configuration file <code>config.sh</code> allows you to set parameters such as the input list of samples, working directory, and paths to necessary containers and pass them on to the launcher and the job script.</p>
+<section id="viral-inference-quality-control-with-checkv" class="level1">
+<h1>06: Viral inference quality control with CheckV</h1>
+<p>This directory contains scripts and configuration files to run CheckV on viral inferences as part of a viral inference pipeline using an LSF job scheduler.</p>
+<p>The launcher script <code>run_checkv.sh</code> submits a job array to the LSF scheduler, where each job in the array processes a different sample from the input list through the <code>06_checkv.lsf</code> job script. The configuration file <code>config.sh</code> allows you to set parameters such as the input list of samples, working directory, and paths to necessary containers and pass them on to the launcher and the job script.</p>
 <section id="files-in-this-directory" class="level2">
 <h2 class="anchored" data-anchor-id="files-in-this-directory">Files in this directory</h2>
 <ul>
-<li><code>run_virsorter2.sh</code>: This is the main launcher script that submits the job array to the LSF scheduler.</li>
-<li><code>05_virsorter2.lsf</code>: This is the LSF job script that runs virsorter2 on the raw sequencing reads for each sample.</li>
+<li><code>run_checkv.sh</code>: This is the main launcher script that submits the job array to the LSF scheduler.</li>
+<li><code>06_checkv.lsf</code>: This is the LSF job script that runs checkv on the raw sequencing reads for each sample.</li>
 <li><code>config.sh</code>: This configuration file allows you to set parameters such as the input list of samples, working directory, and paths to necessary containers.</li>
 </ul>
 </section>
@@ -99,8 +99,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="how-to-use-these-scripts">How to use these scripts</h2>
 <ol type="1">
 <li>Modify the <code>config.sh</code> file to set the appropriate paths and parameters for your analysis.</li>
-<li>Run the <code>run_virsorter2.sh</code> script to submit the job array to the LSF scheduler.</li>
-<li>Monitor the job status using LSF commands (e.g., <code>bjobs</code>, <code>bpeek</code>, etc.) to check the progress of the virsorter2 analyses.</li>
+<li>Run the <code>run_checkv.sh</code> script to submit the job array to the LSF scheduler.</li>
+<li>Monitor the job status using LSF commands (e.g., <code>bjobs</code>, <code>bpeek</code>, etc.) to check the progress of the checkv analyses.</li>
 </ol>
 </section>
 <section id="prerequisites" class="level2">
@@ -108,85 +108,137 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Access to an HPC cluster with LSF job scheduler.</li>
 <li>Apptainer/Singularity installed on the cluster.</li>
-<li>VirSorter2 container available on the cluster.</li>
+<li>CheckV container available on the cluster.</li>
 <li>Paired reads cleaned with trimmomatic files available in the specified working directory.</li>
 </ul>
 </section>
 <section id="output" class="level2">
 <h2 class="anchored" data-anchor-id="output">Output</h2>
-<p>The VirSorter2 results for each sample will be saved in the specified output directory within the working directory. Each sample will have its own subdirectory containing the identified viral sequences and related files.</p>
+<p>The CheckV results for each sample will be saved in the specified output directory within the working directory. Each sample will have its own subdirectory containing the identified viral sequences and related files.</p>
 </section>
-<section id="about-virsorter2" class="level2">
-<h2 class="anchored" data-anchor-id="about-virsorter2">About VirSorter2</h2>
-<p>VirSorter2 is a tool designed to identify viral sequences from metagenomic data. It uses a combination of reference-based and machine learning approaches to classify sequences as viral or non-viral. For more information, visit the <a href="https://github.com/jiarong/VirSorter2">VirSorter2 documentation</a>.</p>
-<p>VirSorter2 performs equivalent to OR superior than nearly all other tools at 3-5 kb and greater. That said, it is important to recognize that database and algorithm improvements often bias the most recently published tools. Always be aware of the databases used to train the model(s) and benchmarks employed by every virus identification tool. Many tools often only examine/benchmark using viral RefSeq, which is heavily biased towards human and human-affecting (e.g.&nbsp;commercial crops) viruses.</p>
-<p>VirSorter2 default parameters are fine to use. If you want to use DRAM-v on the output, you will need to enable the “Enable DRAM-v outputs” flag. Also, be sure to include the virus groups. Since our data derives from a marine sample and has not undergone any type of RNA-focused extraction/amplification, we only need to use dsDNA phage and ssDNA. In this example, I’ve also enabled “Only output high confidence viral sequences.” Other options are either situational or adjust the level of sensitivity or specificity in virus identification.</p>
+<section id="about-checkv" class="level2">
+<h2 class="anchored" data-anchor-id="about-checkv">About CheckV</h2>
+<p>CheckV is a tool designed to assess the quality and completeness of viral genomes assembled from metagenomic data. It estimates genome completeness, identifies potential contamination, and classifies viral sequences into quality tiers. For more information, visit the <a href="https://bitbucket.org/berkeleylab/checkv/src/master/">CheckV documentation</a>.</p>
+<p>To summarize, CheckV uses virus marker genes and knowledge about the basic structure of viruses to access overall quality by identifying ends, completeness, and how strongly genes of the contigs look viral.</p>
+<p>Do not expect CheckV to agree 100% with any virus prediction tools. They were benchmarked with different viruses, they use different databases, and viruses are weird (don’t expect them to always match your expectations!).</p>
 </section>
-<section id="virsorter2-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="virsorter2-workflow">VirSorter2 Workflow</h2>
-<p>The figure below illustrates the VirSorter2 computational workflow for identifying viral sequences from assembled contigs:</p>
+<section id="checkv-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="checkv-workflow">CheckV Workflow</h2>
+<p>The figure below illustrates the CheckV computational workflow for assessing the quality and completeness of viral genomes:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="virsorter_workflow.png" class="img-fluid figure-img"></p>
-<figcaption>VirSorter2 Workflow Diagram. Figure modified from <a href="https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00990-y">Guo et al (2021) Microbiome</a></figcaption>
+<p><img src="checkv_workflow.png" class="img-fluid figure-img"></p>
+<figcaption>CheckV Workflow Diagram. Figure modified from <a href="https://www.nature.com/articles/s41587-020-00774-7">Nayfach et al (2020) Nature Biotechnology</a></figcaption>
 </figure>
 </div>
-<section id="workflow-steps" class="level3">
-<h3 class="anchored" data-anchor-id="workflow-steps">Workflow Steps</h3>
-<p><strong>1. Input and Database Integration</strong> VirSorter2 begins with assembled contigs and integrates multiple customizable databases including:</p>
+<section id="workflow-overview" class="level3">
+<h3 class="anchored" data-anchor-id="workflow-overview">Workflow Overview</h3>
+<p>CheckV employs a multi-step process to evaluate viral contigs through contamination removal, completeness estimation, genome structure prediction, and quality summarization.</p>
+<hr>
+</section>
+<section id="panel-a-remove-host-contamination" class="level3">
+<h3 class="anchored" data-anchor-id="panel-a-remove-host-contamination"><strong>Panel a: Remove Host Contamination</strong></h3>
+<p><strong>Step 1: CheckV HMM Marker Genes Database</strong></p>
+<p>CheckV uses several curated databases of hidden Markov models (HMMs):</p>
 <ul>
-<li>Prodigal RBS motifs for gene prediction</li>
-<li>Hidden Markov Model databases (hmmDB)</li>
-<li>Hallmark viral genes</li>
-<li>Pre-trained classifiers</li>
+<li>KEGG (22,746 models)</li>
+<li>VOGDB (25,399 models)</li>
+<li>Pfam A and B (37,929 models)</li>
+<li>IMG/VR (25,281 models)</li>
+<li>TIGRFAM (4,488 models)</li>
+<li>RVDB (9,911 models)</li>
 </ul>
-<p><strong>2. Feature Extraction</strong> The pipeline performs two key analyses on the contigs:</p>
+<p>These databases undergo HMM selection, clustering, and identification of bit-score cutoffs to generate two categories: - <strong>Microbial-specific HMMs</strong> (7,185 models) - <strong>Viral-specific HMMs</strong> (8,773 models)</p>
+<p><strong>Step 2: Contamination Detection Algorithm</strong></p>
+<p>For a query sequence (65 kb in the example):</p>
 <ul>
-<li><strong>Viral hallmark gene identification</strong>: Detects genes that are characteristic of viral genomes</li>
-<li><strong>Circular sequence detection</strong>: Identifies circular viral genomes, a common feature of many viruses</li>
-<li><strong>Gene prediction</strong>: Uses Prodigal to predict at least 2 genes per contig, generating both nucleotide (faa - amino acid) and nucleotide (gff - gene feature format) files</li>
+<li>Genes are annotated as microbial (green arrows), viral (blue arrows), or unannotated (gray arrows)</li>
+<li>Host regions are defined as 15 kb windows with ≥23% microbial genes</li>
+<li>Viral regions are defined as 50 kb windows with ≥77% viral genes</li>
+<li>GC content percentage is calculated across the sequence</li>
+<li>Adjacent gene windows are analyzed (sliding from left to right)</li>
+<li>Host-virus boundaries are scored based on gene annotations and GC content differences between windows</li>
+<li>Identified host regions are removed from the sequence</li>
 </ul>
-<p><strong>3. Feature Annotation</strong> Predicted genes are annotated with:</p>
+<hr>
+</section>
+<section id="panel-b-estimate-genome-completeness" class="level3">
+<h3 class="anchored" data-anchor-id="panel-b-estimate-genome-completeness"><strong>Panel b: Estimate Genome Completeness</strong></h3>
+<p><strong>Step 1: CheckV Complete Viral Genomes Database</strong></p>
+<p>Two reference databases are used:</p>
 <ul>
-<li>HMM-based functional annotations</li>
-<li>Taxonomic features derived from database matches</li>
-<li>Genomic features including structural characteristics</li>
+<li>NCBI GenBank complete viral genomes (24,834 sequences)</li>
+<li>DTR (Direct Terminal Repeat) viral contigs (76,262 sequences)</li>
 </ul>
-<p><strong>4. Classification and Scoring</strong> Multiple classifiers evaluate each contig and generate scores based on the extracted features. These scores are compiled into a comprehensive feature table and score table.</p>
-<p><strong>5. Sequence Categorization</strong> Sequences are classified based on their maximum classifier scores relative to a cutoff threshold:</p>
+<p>These are clustered at 95% Average Nucleotide Identity (ANI) and 85% Alignment Fraction (AF) to generate:</p>
 <ul>
-<li><strong>Max score ≥ cutoff</strong>: Classified as “near full viral sequences”</li>
-<li><strong>Max score &lt; cutoff</strong>: Classified as “other sequences”</li>
+<li>NCBI representatives (13,239 genomes)</li>
+<li>DTR representatives (39,117 genomes)</li>
 </ul>
-<p><strong>6. Final Output</strong> The workflow produces two categories of output:</p>
+<p><strong>Step 2: Completeness Estimation Algorithm</strong></p>
+<p>The query sequence is compared against the CheckV genome database:</p>
 <ul>
-<li><strong>Trimmed full viral sequences</strong>: High-confidence complete or near-complete viral genomes after boundary trimming</li>
-<li><strong>Partial viral sequences</strong>: Viral sequences extracted using the “provirus extraction” module, which identifies integrated viral sequences within larger contigs</li>
+<li>Aligned proteins from the query are compared to reference genomes (e.g., 100 kb reference)</li>
+<li>A 50 kb viral region of the query is identified</li>
+<li>Alignment scores are calculated using AAI% (Amino Acid Identity) × AF% (Alignment Fraction)</li>
+<li>Precomputed error rates combine alignment score and estimated error to assign confidence levels:
+<ul>
+<li><strong>High confidence</strong>: &gt;90% complete (5-10% error)</li>
+<li><strong>Medium confidence</strong>: 50-90% complete (5-10% error)</li>
+<li><strong>Low confidence</strong>: &lt;50% complete (&gt;10% error)</li>
+</ul></li>
+<li>Query length relative to reference determines estimated completeness (e.g., 50% estimated completeness)</li>
 </ul>
-<p>This multi-tiered approach combining reference databases, gene-based features, and machine learning classifiers enables VirSorter2 to accurately identify viral sequences while distinguishing them from cellular sequences in metagenomic assemblies.</p>
+<hr>
+</section>
+<section id="panel-c-predict-closed-genomes" class="level3">
+<h3 class="anchored" data-anchor-id="panel-c-predict-closed-genomes"><strong>Panel c: Predict Closed Genomes</strong></h3>
+<p><strong>Step 1: DTR (Direct Terminal Repeat)</strong></p>
+<p>Identifies circular genomes by detecting direct terminal repeats:</p>
+<pre><code>TAGCAA... [viral sequence] ...TAGCAA</code></pre>
+<p>Sequences with matching terminal repeats are flagged as closed circular genomes.</p>
+<p><strong>Step 2: Complete Provirus</strong></p>
+<p>Detects integrated prophages within host sequences:</p>
+<pre><code>Host → Viral genes → Host</code></pre>
+<p>Complete proviruses are identified when viral genes are flanked by host sequences on both ends.</p>
+<p><strong>Step 3: ITR (Inverted Terminal Repeat)</strong></p>
+<p>Identifies genomes with inverted terminal repeats:</p>
+<pre><code>TAGCAA... [viral sequence] ...TTGCTA</code></pre>
+<p>ITRs indicate closed linear genomes or potentially circular genomes.</p>
+<p>These structural features flag putative complete genome fragments.</p>
+<hr>
+</section>
+<section id="panel-d-summarize-quality" class="level3">
+<h3 class="anchored" data-anchor-id="panel-d-summarize-quality"><strong>Panel d: Summarize Quality</strong></h3>
+<p>CheckV assigns quality tiers to viral contigs based on completeness estimates:</p>
+<ul>
+<li><strong>Complete</strong>: Closed genomes (DTR, ITR, or complete provirus detected)</li>
+<li><strong>High quality</strong>: ≥90% complete</li>
+<li><strong>Medium quality</strong>: 50-90% complete</li>
+<li><strong>Low quality</strong>: &lt;50% complete</li>
+<li><strong>Undetermined</strong>: Completeness cannot be reliably estimated</li>
+</ul>
+<p>This quality assessment helps researchers prioritize high-confidence viral genomes for downstream analyses such as annotation, taxonomy assignment, and comparative genomics.</p>
+<hr>
+</section>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<p>CheckV integrates marker gene analysis, reference database comparisons, and structural predictions to provide comprehensive quality assessment of viral contigs. By removing host contamination, estimating completeness, detecting genome structures, and summarizing quality, CheckV enables researchers to confidently identify high-quality viral genomes from metagenomic assemblies.</p>
 </section>
 </section>
 <section id="parameters-used-in-this-pipeline" class="level2">
 <h2 class="anchored" data-anchor-id="parameters-used-in-this-pipeline">Parameters used in this pipeline:</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="va">${VIRSORTER_SIF}</span> virsorter run <span class="at">-w</span> <span class="va">${OUT_DIR}</span>/<span class="va">${SAMPLE}</span>_virsorter2_output <span class="dt">\</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-i</span> <span class="va">${IN_DIR}</span>/<span class="va">${SAMPLE}</span>_metaspades_output/<span class="va">${SAMPLE}</span>_contigs.fasta <span class="dt">\</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--include-groups</span> dsDNAphage,ssDNA <span class="dt">\</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--min-length</span> 3000 <span class="dt">\</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--min-score</span> 0.5 <span class="dt">\</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">-j</span> 16 <span class="dt">\</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    all <span class="dt">\</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--prep-for-dramv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="va">${CHECKV_SIF}</span> checkv end_to_end <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">${IN_DIR}</span><span class="st">/</span><span class="va">${SAMPLE}</span><span class="st">_virsorter2_output/</span><span class="va">${SAMPLE}</span><span class="st">_virsorter2_cat-1-2.fasta"</span> <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">${OUT_DIR}</span><span class="st">/</span><span class="va">${SAMPLE}</span><span class="st">_checkv_output"</span> <span class="dt">\</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">-t</span> 2 <span class="dt">\</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">-d</span> /checkv-db</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li><code>-w</code>: This option specifies the working directory where the VirSorter2 results will be saved.<br>
-</li>
-<li><code>-i</code>: This option specifies the input file containing the assembled contigs to be analyzed.</li>
-<li><code>--include-groups</code>: This option allows you to specify which viral groups to include in the analysis. In this case, both dsDNA phages and ssDNA viruses are included.</li>
-<li><code>--min-length</code>: This option sets the minimum length for contigs to be considered for viral identification. Contigs shorter than this length will be ignored. In this case, contigs shorter than 3000 base pairs will not be analyzed.</li>
-<li><code>--min-score</code>: This option sets the minimum score threshold for classifying a sequence as viral. Sequences with scores below this threshold will not be classified as viral. In this case, a minimum score of 0.5 is used.</li>
-<li><code>-j</code>: This option sets the number of threads to be used for the VirSorter2 process, allowing for parallel processing and faster execution. Default is set to 16 threads.</li>
-<li><code>all</code>: This argument specifies that all available databases and models should be used for viral identification.<br>
-</li>
-<li><code>--prep-for-dramv</code>: This flag prepares the output for downstream annotation with DRAM-v, a tool for annotating viral genomes.</li>
+<li><code>end_to_end</code>: This command runs the full CheckV pipeline, which includes estimating genome completeness, identifying potential contamination, and classifying viral sequences into quality tiers.</li>
+<li>Input file: This is the path to the input FASTA file containing viral sequences to be analyzed. In this case, it points to the VirSorter2 output file containing categories 1 and 2 viral sequences.</li>
+<li>Output directory: This is the path to the output directory where CheckV will save the results of the analysis for the specified sample.</li>
+<li><code>-t</code>: This option sets the number of threads to be used for the analysis, allowing for parallel processing and faster execution. Default is set to 2 threads.</li>
+<li><code>-d</code>: This option specifies the path to the CheckV database, which contains reference data used for quality assessment and classification of viral sequences.</li>
 </ul>
 </section>
 </section>

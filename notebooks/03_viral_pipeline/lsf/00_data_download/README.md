@@ -21,3 +21,9 @@ First, create a text file listing the SRA accession numbers you want to download
 
 Then, modify the script `00_data_download.sh` to set the paths to your work directory, GNU Parallel binary, and SRA Toolkit Apptainer container. Finally, run the script on the login node to start downloading the data using GNU Parallel.    
 
+
+## ADD HERE!
+- download VirSorter2 DB
+- download CheckV DB
+- download prokka DB
+- download DRAM-v DB
