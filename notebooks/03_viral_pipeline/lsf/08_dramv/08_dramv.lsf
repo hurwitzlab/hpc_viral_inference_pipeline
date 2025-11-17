@@ -1,0 +1,94 @@
+#!/bin/bash
+# ==================================================
+# DRAMV Job Script for Hazel HPC
+# ==================================================
+# This script runs DRAM-v for viral protein annotation
+# using an Apptainer Container
+
+
+# --------------------------------------------------
+# Request resources here
+# --------------------------------------------------
+#BSUB -J dramv                          # job name
+#BSUB -n 2                            # number of CPUs required per task
+#BSUB -q shared_memory                # the queue to run on
+#BSUB -R "span[hosts=1]"              # number of hosts to spread the jobs across, 1 host used here
+#BSUB -R "rusage[mem=4GB]"            # required total memory for the job 
+#BSUB -o "./output.%J.log"            # standard output file (%J is job name)
+#BSUB -e "./error.%J.log"             # standard error file (%J is job ID)
+#BSUB -W 10:00:00                     # time to run
+
+# --------------------------------------------------
+# Load modules here
+# --------------------------------------------------
+
+module load apptainer
+
+# --------------------------------------------------
+# Execute commands here
+# --------------------------------------------------
+
+# Print job start information
+echo "=================================================="
+echo "Job started: $(date)"
+echo "Job ID: $LSB_JOBID"
+echo "Running on host: $(hostname)"
+echo "Working directory: $(pwd)"
+echo "=================================================="
+
+# Source config file and get sample name from input list based on job array index
+source ./config.sh
+export SAMPLE=`head -n +${LSB_JOBINDEX} $IN_LIST | tail -n 1`
+
+
+# --------------------------------------------------
+# Validate inputs
+# --------------------------------------------------
+
+# Check if container exists
+if [ ! -f "${DRAMV_SIF}" ]; then
+    echo "ERROR: Container not found at ${DRAMV_SIF}"
+    exit 1
+fi
+
+# Check if input directory exists
+if [ ! -d "${IN_DIR}" ]; then
+    echo "ERROR: Input directory not found at ${IN_DIR}"
+    exit 1
+fi
+
+# --------------------------------------------------
+# Execute DRAM-v
+# --------------------------------------------------
+
+echo "Running DRAM-v on sample: ${SAMPLE}"
+
+apptainer exec ${DRAMV_SIF} dramv annotate $IN_DIR/final-viral-combined-for-dramv.fa -v $IN_DIR/viral-affi-contigs-for-dramv.tab \
+    -o ${OUT_DIR}/${SAMPLE}_dramv_output \
+    --min_contig_size 3000 \
+    --threads 2 \
+    --database_dir ${DRAMV_DB_DIR}
+
+apptainer exec ${DRAMV_SIF} dramv distill -i ${OUT_DIR}/${SAMPLE}_dramv_output/annotations.tsv \
+    -o ${OUT_DIR}/${SAMPLE}_dramv_distilled \
+    --min_contig_size 3000 \
+    --min_score 0.8 \                     # minimum score to consider a viral contig high-quality    
+    --min_completeness 50                  # minimum completeness percentage to consider a viral contig high-quality
+    
+
+# Check if DRAM-v completed successfully
+if [ $? -eq 0 ]; then
+    echo "DRAM-v completed successfully"
+else
+    echo "ERROR: DRAM-v failed with exit code $?"
+    exit 1
+fi
+
+# --------------------------------------------------
+# Job completion
+# --------------------------------------------------
+
+echo "=================================================="
+echo "Job completed: $(date)"
+echo "Results saved to: ${OUT_DIR}"
+echo "=================================================="

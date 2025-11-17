@@ -25,7 +25,7 @@ The launcher script `run_prokka.sh` submits a job array to the LSF scheduler, wh
 
 
 ## About Prokka
-Prokka is a software tool used for the rapid annotation of prokaryotic genomes, including viral genomes. It identifies genes, coding sequences (CDS), and other genomic features, and assigns functional annotations based on various databases. Prokka is widely used in microbial genomics for its speed and accuracy in genome annotation. For more information, visit the [Prokka documentation]()
+Prokka is a software tool used for the rapid annotation of prokaryotic genomes, including viral genomes. It identifies genes, coding sequences (CDS), and other genomic features, and assigns functional annotations based on various databases. Prokka is widely used in microbial genomics for its speed and accuracy in genome annotation. For more information, visit the [Prokka documentation](https://github.com/tseemann/prokka)
 
 ## Parameters used in this pipeline: 
 ```bash
@@ -44,5 +44,6 @@ apptainer exec ${PROKKA_SIF} prokka \
 - `--kingdom Viruses`: Indicates that the input sequences are viral genomes.
 - `--addgenes`: Instructs Prokka to add gene features to the output
 - `--force`: Overwrites existing output files if they already exist.
+
 
 
