@@ -1,14 +1,11 @@
 #! /bin/bash
 # create some variables for a more clean script
 CPUS=3
-PARALLEL=/rs1/shares/brc/admin/tools/parallel-20250922/bin/parallel                                                         # your path to GNU parallel
-JOBLOG=/your_workdir/path/download_log.txt                                                                                  # your path to joblog file       
-SRA_CONTAINER=/rs1/shares/brc/admin/containers/images/quay.io_biocontainers_sra-tools:3.2.1--h4304569_1.sif                 # your path to sra-tools apptainer container
+PARALLEL=/path/to/gnu/parallel                                                                  # your path to GNU parallel
+JOBLOG=/your_workdir/path/download_log.txt                                                      # your path to joblog file       
+SRA_CONTAINER=/path/to/container/image                                                          # your path to sra-tools apptainer container
+SRA_ACCESSIONS=/your/path/to/repo/hpc_viral_inference_pipeline/data/sra_accessions.txt          # your path to sra accessions file
 
 # run gnu parallel downloads with joblog
-cat sra_accessions.txt | $PARALLEL -j $CPUS --progress --joblog $JOBLOG "apptainer exec $SRA_CONTAINER prefetch {}"
+cat $SRA_ACCESSIONS | $PARALLEL -j $CPUS --progress --joblog $JOBLOG "apptainer exec $SRA_CONTAINER prefetch {}"
 
-
-
-
-## This is just a test for github desktop thanks bye
