@@ -1,0 +1,305 @@
+---
+title: "Unix Files and Directories"
+author: "Mery Touceda-Suárez"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+---
+
+> Note: This training has used significant contribution from [Ken Youens-Clark's Bioinformatics Primer Book](https://github.com/kyclark/bioinformatics_primer) and the [Happy Belly Bioinformatics Unix Crash Course](https://astrobiomike.github.io/unix/unix-intro). 
+
+## Working With Files
+Move to the directory of the present tutorial:
+```bash
+$ cd path/to/github/repos/hpc_viral_inference_pipeline/notebooks/01_unix 
+```
+Where `path/to/github/repos` is the path to where you have cloned this repository.
+
+We will often want to get a look at a file to see how it’s structured or what’s in it. 
+
+#### `head` and `tail`: Quick Peeks
+The `head` command shows the first 10 lines of a file:
+```bash
+head example.txt
+```
+The `tail` command shows the last 10 lines:
+```bash
+tail example.txt
+```
+
+For this example, `example.txt` contains text from the Wikipedia page of Vigo, a city in Spain ([source](https://en.wikipedia.org/wiki/Vigo)).
+
+**Why use these commands?** They're incredibly efficient for large files. Whether your file is 10KB or 10GB, `head` will display the first 10 lines instantly without loading the entire file into memory.
+
+**Pro tip**: You can change the number of lines displayed with the `-n` flag:
+```bash
+$ head -n 20 example.txt    # Show first 20 lines
+$ tail -n 5 example.txt     # Show last 5 lines
+```
+
+#### `less`: Interactive File Viewer
+The `less` command opens an interactive, scrollable view of the entire file:
+```bash
+less example.txt
+```
+Useful `less` commands:
+- **Space bar** or **Page Down**: Scroll down one page
+- **b** or **Page Up**: Scroll up one page
+- **/** followed by text: Search for text (press **n** for next match)
+- **q**: Quit and return to command line
+
+`less` is perfect for exploring files you're unfamiliar with, especially configuration files or logs.
+
+#### `wc`: Counting File Statistics
+The `wc` (word count) command provides statistics about a file:
+```bash
+$ wc example.txt 
+      37     871    5234 example.text
+```
+
+This output tells us:
+
+- **37** lines
+- **871** words  
+- **5234** characters
+
+You can also get specific counts:
+```bash
+$ wc -l example.txt    # Just line count
+$ wc -w example.txt    # Just word count
+$ wc -c example.txt    # Just character count
+```
+
+**Practical use**: Combine `wc -l` with pipes to count things, like how many files are in a directory:
+```bash
+$ ls | wc -l
+```
+
+::: {.callout-note}
+## Plain Text Files
+A general definition of a plain-text file is a text file that doesn’t contain any special formatting characters or information, and that can be properly viewed and edited with any standard text editor.
+
+Common types of plain-text files are those ending with extensions like “.txt”, “.tsv” (tab-separated values), or “.csv” (comma separated values). Some examples of common file types that are not plain-text files would be “.docx”, “.pdf”, or “.xlsx”. This is because those file formats contain special types of compression and formatting information that are only interpretable by programs specifically designed to work with them.
+
+> A note on file extensions: File extensions themselves do not actually do anything to the file format. They are mostly there just for our convenience/organization – “mostly” because some programs require a specific extension to be present for them to even try interacting with a file. But this has nothing to do with the file contents, just that the program won’t let us interact with it unless it has a specific extension.
+:::
+
+
+## Copying, Moving, Renaming, and Removing Files
+
+### Copying
+The commands `cp` and `mv` (copy and move) have the same basic structure. They both require two positional arguments – the first is the file we want to act on, and the second is where we want it to go (which can include the name we want to give it).
+
+To see how this works, let’s make a copy of “example.txt”:
+```bash
+$ cp example.txt ./example_copy.txt
+example.txt -> ./example_copy.txt
+```
+Where `./` is the relative path to the present directory, and does not need to be included. This command would do the same thing: 
+```bash
+$ cp example.txt example_copy.txt
+```
+By just giving the second argument a name and nothing else (meaning no path in front of the name), we are implicitly saying we want it copied to where we currently are.
+
+The inclusion of a path to the file makes sense when we want to make a copy and put it somewhere else, like in our subdirectory “data”. We could change the second positional argument using a **relative path** (“relative” because it starts from where we currently are):
+```bash
+cp example.txt data/example_copy.txt
+```
+Or we could make the path an **absolute path**: 
+```bash
+cp example.txt path/to/github/repos/hpc_viral_inference_pipeline/notebooks/01_unix/data/example_copy.txt
+```
+Where `path/to/github/repos` is the path to where you have cloned this repository.
+
+
+To copy it to that subdirectory but **keep the same name**, we could type the whole name out, but we can also just provide the directory and leave off the file name, and it will automatically keep the same original name:
+```bash
+cp example.txt data/
+```
+
+If we wanted to **copy something from somewhere else to our current working directory** and keep the same name, we can use another special character, a period (.), which specifies the current working directory. For example: 
+```bash
+cp ../00_setup/github_basics.qmd .
+```
+Where `../` tells the computer to go back one, to the parent directory, in this case `notebooks`. 
+
+---
+
+### Moving and renaming
+The `mv` command is used to move files. Let’s move the “example_copy.txt” file into the `test` subdirectory:
+```bash
+mv example_copy.txt test/
+```
+> Note that here you could type the path to test as `./test` (the relative path of the directory respect to where we are), or `path/to/github/repos/hpc_viral_inference_pipeline/notebooks/01_unix/` (using the absolute path).
+
+The `mv` command is also used to **rename** files. This may seem strange at first, but remember that the path (address) of a file actually includes its name too (otherwise everything in the same directory would have the same path).
+```bash
+mv example.txt example_old.txt
+```
+This will change the name of the file we are working with. We can also move it and change the name at the same time: 
+```bash
+mv example.txt test/example_old.txt
+```
+
+### Removing
+To delete files there is the `rm` command (remove). This requires at least one argument specifying the file we want to delete. But again, caution is warranted. There will be no confirmation or retrieval from a waste bin afterwards.
+```bash
+rm example_old.txt
+```
+
+## Working with directories
+Commands for working with directories for the most part operate similarly. 
+
+We can make a new directory with the command `mkdir` (for make directory):
+```bash
+$ mkdir training_test_dir
+```
+
+And similarly, directories can be deleted with `rmdir` (for remove directory)
+```bash
+$ rmdir training_test_dir
+```
+
+You can also remove a directory using: 
+```bash
+$ rm -r  training_test_dir
+```
+
+#### `rmdir` vs. `rm -r`: Key Differences
+The core difference between `rmdir` and `rm -r` lies in their ability to handle non-empty directories.
+
+- `rmdir`: The Safe Option (Directory Must Be Empty)
+The command `rmdir` is designed to be safe and only works if the directory is completely empty. If you try to use `rmdir` on a directory that contains even a single file or subdirectory, the command will fail and report an error (e.g., "Directory not empty").
+
+  **Use Case:** Use `rmdir` when you want to ensure you are only **deleting directories that no longer contain any content**, providing a layer of protection against accidental data loss.
+
+- `rm -r`: The Powerful Option (Recursive Deletion)
+The command rm (remove file) with the `-r` (or `--recursive`) flag is a far more powerful and dangerous tool. The `-r` flag tells `rm` to recursively delete the directory and all of its contents (files and subdirectories).
+
+  Recursion means the command will descend into every subdirectory and delete the contents before deleting the directory itself, working its way back up to the top-level directory.Because it deletes everything inside without warning, `rm -r` is the standard way to delete non-empty directories, but caution is mandatory, as the contents are not recoverable.
+
+  **Use Case:** Use `rm -r` when you intentionally need to **delete a directory and all the files/folders it contains**.
+
+<br> 
+
+## Permissions
+When you execute `ls -l`, you'll see the "long" listing of the contents of a directory similar to this:
+```bash
+$ ls -l                             
+total 408
+drwxr-xr-x@ 3 mtouced  staff     96 Nov 20 10:40 00_basics_unix_files/
+-rw-r--r--@ 1 mtouced  staff  35341 Nov 20 10:40 00_basics_unix.html
+```
+
+The first column of data contains a wealth of information represent in 10 bits. The first bit is:
+
+- "-" for a regular file
+- "d" for a directory
+- "l" for a symlink (like a shortcut)
+
+The other nine bits are broken into sets of three bits that represent the permissions for the **"user"**, **"group"**, and **"other"**. 
+The `00_basics_unix.html` is a regular file we can tell from the first dash. The next three bits show `rw-` which means that the user ("mtouced") has read, and write permissions for this file. The next three bits show `r--` meaning that the group ("staff") can read the file only. The same is true for all others.
+
+When you create a file, the normal default is that it is not executable. You must specifically tell Unix to change the mode of the file using the `chmod` command. Often it's enough to say:
+```bash
+$ chmod +x myprog.sh
+```
+Where `+` adds a permission, and `x` is the type of permission (here execute) that you are adding. So that this command turns on the execute bits for everyone, but it's possible to have much finer control of the permissions. If you only want user and group to have execute, then do:
+```bash
+$ chmod ug+x myprog.sh
+```
+Removing is done with a `"-"`, so any combination of `[ugo][+-][rwx]` will usually get you what you want.
+
+Sometimes you may see instructions to `chmod 775` a file. This is using **octal notation** where the three bits "rwx" correspond to the digits "421," so the first "7" is "4+2+1" which equals "rwx" whereas the "5" = "4+1" so only "rw":
+
+| **User** | **Group** | **Other** |
+| :---: | :---: | :---: |
+| r w x | r w x | r - x |
+| 4 2 1 | 4 2 1 | 4 0 1 |
+| = 7 | = 7 | = 5 |
+
+Therefore `chmod 775` is the same as:
+```bash
+$ chmod -rwx myfile
+$ chmod ug+rwx myfile
+$ chmod o+rw myfile
+```
+
+
+## Terminal Text Editors
+While viewing utilities like `less` are great for reading files, you'll often need to edit files directly on a remote server or within the terminal environment. This requires using a **terminal-based text editor**. Unlike graphical editors (like VS Code or Notepad++), these run entirely within the command line interface, which is essential when working on remote High-Performance Computing (HPC) clusters or other headless systems.
+
+There are three dominant text editors in the Unix world, each with a distinct learning curve and philosophy: Nano, Vi/Vim, and Emacs. Choosing a text editor is an extremely personal decision, and normally depends on what you have learned first. Here we will give you an overview of these three most popular editors, but you can use whichever you feel most comfortable with.
+
+### Nano
+Nano is the simplest and most user-friendly of the three. It's often the go-to editor for beginners or for making quick, simple edits. Its key commands (like "Write Out" or "Exit") are conveniently displayed at the bottom of the terminal screen, making it easy to use without memorizing complex shortcuts.
+```bash
+$ nano my_script.sh
+```
+Nano is the simplest to use because its commands are always displayed at the bottom of the screen.
+
+| Command | Action | Key Combination |
+| :--- | :--- | :--- |
+| **Open File** | Start editing a file named `file.txt` | `$ nano file.txt` |
+| **Type/Edit** | Just start typing! | Standard keys |
+| **Exit** | Prompts to save before quitting | **`Ctrl + X`** |
+| **Save** | Writes changes to the file | **`Ctrl + O`** (O for Output) |
+| **Search** | Search for text within the file | **`Ctrl + W`** (W for Where is) |
+
+> Note: The caret (^) symbol you see in Nano's interface represents the Control key (Ctrl).
+
+#### Resources to learn Nano
+- Built-in Help: Once inside Nano, press `Ctrl + G` (or `F1`) to view the comprehensive, built-in help documentation. This lists all key commands right in the editor.
+- Nano Cheatsheets: Simple PDF or web-based cheatsheets (like the one we generated) are often sufficient to cover everything you need.
+
+### Vi (and its modern successor Vim)
+Vi is a powerful, modal editor, meaning it operates in different modes (like Command Mode for navigation/saving, and Insert Mode for typing text). While Vi has a steep initial learning curve, it's virtually guaranteed to be installed on any Unix-like system. Mastering its efficient, keyboard-driven commands can significantly increase editing speed for advanced users.
+```bash
+$ vi my_script.sh
+```
+Vim is powerful but requires understanding its two main modes: Insert Mode (for typing) and Command Mode (for saving, exiting, and navigating).
+
+| Mode | Command | Action | Key Combination |
+| :---: | :--- | :--- | :--- |
+| **(Any)** | **Open File** | Start editing a file named `file.txt` | `$ vi file.txt` |
+| **Command** | **Enter Insert Mode** | Start typing/editing text | **`i`** (for Insert) |
+| **Insert** | **Exit Insert Mode** | Return to Command Mode | **`Esc`** key |
+| **Command** | **Save and Exit** | Save changes and quit | **`:wq`** (Write & Quit) |
+| **Command** | **Exit Without Saving** | Quit immediately (ignores changes) | **`:q!`** (Quit forcefully) |
+| **Command** | **Save Only** | Write changes but stay in file | **`:w`** (Write) |
+
+::: {.callout-tip}
+## Pro Tip for Vi/Vim
+If you accidentally find yourself in Vi and don't know how to exit, repeatedly press `Esc` to ensure you are in Command Mode, then type `:q!` and hit `Enter`. This will quit without saving anything.
+:::
+
+#### Resources to learn Vi/Vim: 
+- `vimtutor`: Terminal command to learn vi/vim interactively
+- [Vim Adventures](https://vim-adventures.com/): online game designed to teach Vim commands in a fun, ZELDA-like puzzle environment
+- [Open Vim](https://openvim.com/): browser-based simulator where you can practice commands.
+
+### Emacs
+Emacs is another highly powerful and complex editor that is often described as an entire operating environment. It is highly customizable and extensible via its own Lisp dialect. Similar to Vi/Vim, it requires significant time to master but offers unparalleled power and efficiency for programmers and advanced users.
+```bash
+$ emacs my_script.sh
+```
+Emacs is a feature-rich editor known for using many key combinations involving the Control (Ctrl) and Meta (usually the Alt or Esc key) keys.
+
+| Command | Action | Key Combination |
+| :--- | :--- | :--- |
+| **Open File** | Start editing a file named `file.txt` | `$ emacs file.txt` |
+| **Save** | Save changes to the file | **`Ctrl + X`, `Ctrl + S`** |
+| **Exit** | Quits the editor | **`Ctrl + X`, `Ctrl + C`** |
+| **Search** | Incremental search for text | **`Ctrl + S`** |
+| **Undo** | Undo the last action | **`Ctrl + /`** or **`Ctrl + _`** |
+
+#### Resources to learn Emacs: 
+- Built-in Tutorial: Similar to Vim, Emacs has an interactive tutorial. This is the official and recommended starting point.
+  1. Start Emacs: `$ emacs`
+  2. Press `Ctrl + H` then `T` to launch the tutorial.
+- The Emacs Manual: The full GNU Emacs Manual is available both online and from within the editor via the Info system (`Ctrl + H`, then `I`). It's dense but extremely thorough.
+- Emacs Lisp (Elisp): If you plan to customize Emacs extensively, you'll need to learn Elisp, its built-in programming language. Resources exist specifically for learning Elisp customization.

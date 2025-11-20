@@ -1,0 +1,48 @@
+Look at chapter 2 from Ken's book
+https://github.com/kyclark/bioinformatics_primer/blob/master/book.md
+
+## Statements
+## Comments
+## Shebang
+## Let's make a script
+Let's make our script say "Hello" to some people:
+
+$ cat -n hello2.sh
+     1    #!/usr/bin/env bash
+     2
+     3    NAME="Newman"
+     4    echo "Hello," $NAME
+     5    NAME="Jerry"
+     6    echo "Hello, $NAME"
+$ ./hello2.sh
+Hello, Newman
+Hello, Jerry
+I've created a variable called NAME to hold the string "Newman" and print it. Notice there is no $ when assigning to the variable, only when you use it. The value of NAME can be changed at any time. You can print it out like on line 4 as it's own argument to echo or inside of a string like on line 6. Notice that the version on line 4 puts a space between the arguments to echo.
+
+Because all the variables from the environment (see env) are uppercase (e.g., $HOME and $USER), I tend to use all-caps myself, but this did lead to a problem once when I named a variable PATH and then overwrote the actual PATH and then my program stopped working entirely as it could no longer find any of the programs it needed. Just remember that everything in Unix is case-sensitive, so $Name is an entirely different variable from $name.
+
+When assigning a variable, you can have NO SPACES around the = sign:
+
+$ NAME1="Doge"
+$ echo "Such $NAME1"
+Such Doge
+$ NAME2 = "Doge"
+-bash: NAME2: command not found
+$ echo "Such $NAME2"
+Such
+
+## Catching errors
+
+## For loops
+
+## While loops
+
+## Saving results in files
+
+## Getting data into your script: Arguments
+### Providing default arguments
+### Environmental arguments
+### Required and optional arguments
+
+## Reading a configuration file
+

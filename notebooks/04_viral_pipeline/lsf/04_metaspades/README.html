@@ -85,7 +85,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="read-assembly-with-metaspades" class="level1">
 <h1>04: Read assembly with MetaSPAdes</h1>
-<p>This directory contains scripts and configuration files to run metaSPAdes on raw sequencing reads as part of a viral inference pipeline using an LSF job scheduler.</p>
+<p>This directory contains scripts and configuration files to run metaSPAdes on clean sequencing reads as part of a viral inference pipeline using an LSF job scheduler.</p>
 <p>The launcher script <code>run_metaspades.sh</code> submits a job array to the LSF scheduler, where each job in the array processes a different sample from the input list through the <code>04_metaspades.lsf</code> job script. The configuration file <code>config.sh</code> allows you to set parameters such as the input list of samples, working directory, and paths to necessary containers and pass them on to the launcher and the job script.</p>
 <section id="files-in-this-directory" class="level2">
 <h2 class="anchored" data-anchor-id="files-in-this-directory">Files in this directory</h2>
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="about-metaspades" class="level2">
 <h2 class="anchored" data-anchor-id="about-metaspades">About metaSPAdes</h2>
 <p>metaSPAdes is a metagenomic assembler designed to assemble genomes from metagenomic sequencing data. It is part of the SPAdes genome assembler toolkit and is optimized for handling complex metagenomic datasets. For more information, visit the <a href="https://ablab.github.io/spades/running.html">metaSPAdes documentation</a>.</p>
-<p>Other assemblers that can be used for metagenomic assembly include MEGAHIT and IDBA-UD. Read more about how these assemblers compare in this <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5967175/">review article</a>. https://peerj.com/articles/3817/</p>
+<p>Other assemblers that can be used for metagenomic assembly include MEGAHIT and IDBA-UD. Read more about how these assemblers compare for viromics pipelines in this <a href="https://peerj.com/articles/3817/">review article</a>.</p>
 <section id="parameters-used-in-this-pipeline" class="level3">
 <h3 class="anchored" data-anchor-id="parameters-used-in-this-pipeline">Parameters used in this pipeline:</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="va">${METASPADES_SIF}</span> metaspades.py <span class="dt">\</span></span>

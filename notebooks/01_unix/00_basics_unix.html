@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mery Touceda-Suárez">
-<meta name="dcterms.date" content="2025-11-11">
+<meta name="dcterms.date" content="2025-11-20">
 
 <title>Basics of Unix</title>
 <style>
@@ -22,21 +22,56 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="basics_unix_files/libs/clipboard/clipboard.min.js"></script>
-<script src="basics_unix_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="basics_unix_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="basics_unix_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="basics_unix_files/libs/quarto-html/popper.min.js"></script>
-<script src="basics_unix_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="basics_unix_files/libs/quarto-html/anchor.min.js"></script>
-<link href="basics_unix_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="basics_unix_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="basics_unix_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="basics_unix_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="basics_unix_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="00_basics_unix_files/libs/clipboard/clipboard.min.js"></script>
+<script src="00_basics_unix_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="00_basics_unix_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="00_basics_unix_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="00_basics_unix_files/libs/quarto-html/popper.min.js"></script>
+<script src="00_basics_unix_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="00_basics_unix_files/libs/quarto-html/anchor.min.js"></script>
+<link href="00_basics_unix_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="00_basics_unix_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="00_basics_unix_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="00_basics_unix_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="00_basics_unix_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -49,12 +84,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-unix" id="toc-what-is-unix" class="nav-link active" data-scroll-target="#what-is-unix">What is Unix</a>
-  <ul class="collapse">
+  <li><a href="#what-is-unix" id="toc-what-is-unix" class="nav-link active" data-scroll-target="#what-is-unix">What is Unix</a></li>
   <li><a href="#accessing-the-command-line" id="toc-accessing-the-command-line" class="nav-link" data-scroll-target="#accessing-the-command-line">Accessing the Command Line</a></li>
+  <li><a href="#running-commands" id="toc-running-commands" class="nav-link" data-scroll-target="#running-commands">Running Commands</a>
+  <ul class="collapse">
+  <li><a href="#basic-command-syntax" id="toc-basic-command-syntax" class="nav-link" data-scroll-target="#basic-command-syntax">Basic Command Syntax</a></li>
+  <li><a href="#arguments-flags-and-options" id="toc-arguments-flags-and-options" class="nav-link" data-scroll-target="#arguments-flags-and-options">Arguments, Flags, and Options</a></li>
   </ul></li>
+  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help">Getting Help</a></li>
+  <li><a href="#tab-completion-your-best-friend" id="toc-tab-completion-your-best-friend" class="nav-link" data-scroll-target="#tab-completion-your-best-friend">Tab-Completion: Your Best Friend</a></li>
   <li><a href="#best-practices" id="toc-best-practices" class="nav-link" data-scroll-target="#best-practices">Best Practices</a></li>
   <li><a href="#common-pitfalls-to-avoid" id="toc-common-pitfalls-to-avoid" class="nav-link" data-scroll-target="#common-pitfalls-to-avoid">Common Pitfalls to Avoid</a></li>
+  <li><a href="#other-sources" id="toc-other-sources" class="nav-link" data-scroll-target="#other-sources">Other sources</a></li>
   </ul>
 </nav>
 </div>
@@ -79,7 +120,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 11, 2025</p>
+      <p class="date">November 20, 2025</p>
     </div>
   </div>
   
@@ -140,8 +181,9 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<section id="accessing-the-command-line" class="level3">
-<h3 class="anchored" data-anchor-id="accessing-the-command-line">Accessing the Command Line</h3>
+</section>
+<section id="accessing-the-command-line" class="level2">
+<h2 class="anchored" data-anchor-id="accessing-the-command-line">Accessing the Command Line</h2>
 <p><strong>On Mac/Linux:</strong></p>
 <ul>
 <li>Open the Terminal application (Applications &gt; Utilities &gt; Terminal on Mac)</li>
@@ -164,13 +206,95 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For our training, to avoid any problems accessing the terminal, we are going to use <strong>GitHub Codespaces</strong>. We will learn more about GitHub Codespaces in the next tutorial.</p>
+<p>Your HPC should have a web interface called “On-Demand”. There you can access a terminal through the browser. You can use it for this training.</p>
 </div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/on_demand.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
 </div>
 </section>
+<section id="running-commands" class="level2">
+<h2 class="anchored" data-anchor-id="running-commands">Running Commands</h2>
+<p>Once you have accessed the command line we need to talk about commands. Commands are programs that tell the computer to perform specific tasks. Think of them as verbs - they make things happen!</p>
+<section id="basic-command-syntax" class="level3">
+<h3 class="anchored" data-anchor-id="basic-command-syntax">Basic Command Syntax</h3>
+<p>The general structure of a command looks like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> command argument</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For example, the <code>date</code> command prints the current date and time:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> date</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Thu</span> Nov 20 10:30:10 EST 2025</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="arguments-flags-and-options" class="level3">
+<h3 class="anchored" data-anchor-id="arguments-flags-and-options">Arguments, Flags, and Options</h3>
+<p>Most commands can be modified using <strong>arguments</strong> (also called flags, options, or parameters):</p>
+<ul>
+<li><strong>Required arguments</strong>: Some commands need information to work. For example, <code>head</code> needs to know which file to display:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">$</span> head example.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><strong>Optional arguments</strong>: These modify how a command behaves and usually start with a dash (<code>-</code>). For example, <code>head</code> normally shows the first 10 lines, but we can change that:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">$</span> head <span class="at">-n</span> 5 example.txt    <span class="co"># Shows only first 5 lines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><strong>Positional arguments</strong>: The order matters! The filename usually comes at the end.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Important Rules
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Spaces matter!</strong> The command line uses spaces to separate commands from arguments. This is why:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>   <span class="ex">$</span> date <span class="at">-u</span>        <span class="co"># ✓ Correct - space separates command and flag</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">$</span> date-u         <span class="co"># ✗ Wrong - looks for a command called "date-u"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li><strong>Dashes matter!</strong> Arguments usually need a dash:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>   <span class="ex">$</span> date <span class="at">-u</span>        <span class="co"># ✓ Correct</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">$</span> date u         <span class="co"># ✗ Wrong - the program won't understand</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p><br></p>
+</section>
+</section>
+<section id="getting-help" class="level2">
+<h2 class="anchored" data-anchor-id="getting-help">Getting Help</h2>
+<p>Don’t know what options a command has? Try these:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> head <span class="at">-h</span>           <span class="co"># Short help</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> head <span class="at">--help</span>       <span class="co"># Detailed help</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> man head          <span class="co"># Manual page (press 'q' to quit)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Pro tip</strong>: You don’t need to memorize commands! Looking up options when you need them is completely normal and expected.</p>
+<p><br></p>
+</section>
+<section id="tab-completion-your-best-friend" class="level2">
+<h2 class="anchored" data-anchor-id="tab-completion-your-best-friend">Tab-Completion: Your Best Friend</h2>
+<p>Start typing a filename and press <code>Tab</code> - the computer will complete it for you! This: - Saves time typing - Prevents typos - Confirms the file exists where you think it does</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try it:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Type <code>head ex</code> then press <code>Tab</code>. If there’s a file starting with “ex”, it will auto-complete!</p>
+</div>
+</div>
+<p><br></p>
 </section>
 <section id="best-practices" class="level2">
 <h2 class="anchored" data-anchor-id="best-practices">Best Practices</h2>
+<p>This is a list of some of the practices you should keep in mind when working in Unix.</p>
 <ol type="1">
 <li><strong>Use tab completion</strong>: Press Tab to autocomplete file and directory names</li>
 <li><strong>Check before deleting</strong>: Use <code>ls</code> to verify what files match your pattern before using <code>rm</code></li>
@@ -182,12 +306,20 @@ Important
 </section>
 <section id="common-pitfalls-to-avoid" class="level2">
 <h2 class="anchored" data-anchor-id="common-pitfalls-to-avoid">Common Pitfalls to Avoid</h2>
+<p>Watch out for these!</p>
 <ul>
 <li><strong>Case sensitivity</strong>: <code>File.txt</code> and <code>file.txt</code> are different files</li>
 <li><strong>Spaces in names</strong>: Use quotes or escape spaces: <code>"my file.txt"</code> or <code>my\ file.txt</code></li>
 <li><strong>No undo button</strong>: Be very careful with <code>rm</code> - deleted files are gone!</li>
 <li><strong>Overwriting files</strong>: <code>&gt;</code> overwrites; use <code>&gt;&gt;</code> to append</li>
-<li><strong>Hidden files</strong>: Files starting with <code>.</code> are hidden (use <code>ls -a</code> to see them)</li>
+<li><strong>Hidden files</strong>: Files starting with <code>.</code> are hidden (use <code>ls -a</code> to see them). An example of this is the <code>.bashrc</code> file, which configures your bash shell environment. We will learn more about <code>.bashrc</code> later in this training.</li>
+</ul>
+<p><br></p>
+</section>
+<section id="other-sources" class="level2">
+<h2 class="anchored" data-anchor-id="other-sources">Other sources</h2>
+<ul>
+<li>https://bioinformatics.ccr.cancer.gov/docs/unix-commands-for-beginners/unix_for_beginners/</li>
 </ul>
 </section>
 

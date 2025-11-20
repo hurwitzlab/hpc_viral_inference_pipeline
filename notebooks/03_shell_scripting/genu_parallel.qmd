@@ -1,0 +1,4 @@
+Chapter 3 ken's book: 
+
+https://github.com/kyclark/bioinformatics_primer/blob/master/book.md#chapter-3-using-gnu-parallel-to-run-concurrent-processes
+

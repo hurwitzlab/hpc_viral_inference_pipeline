@@ -1,0 +1,201 @@
+---
+title: "Unix File System Navigation"
+author: "Mery Touceda-Suárez and Ken Youens-Clark"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+---
+
+> Note: This training has used significant contribution from [Ken Youens-Clark's Bioinformatics Primer Book](https://github.com/kyclark/bioinformatics_primer)
+
+
+## The Unix filesystem hierarchy
+The Unix filesystem can thought of as a graph or a tree. The root is `/` (which is a "slash" -- the thing leaning the other way is a "backslash" (`\`)) and is called the "root directory." We can "list" the contents of a directory with `ls`. Without any arguments, this prints the contents of the current working directory which you can print with `pwd` (print working directory).
+
+For example, if I open the terminal on my Mac and...
+
+1. List the contents of the directory I am in with `ls`, I get: 
+```bash
+$ ls
+Desktop/	Documents/	Downloads/	Globus/		Library/	Movies/		Music/		Pictures/	Public/		Zotero/
+```
+
+2. If I then print the present (or working) directory with `pwd`, I get: 
+```bash
+$ pwd
+/Users/mtouced
+```
+
+> Note: Wherever you are in the filesystem you can `ls /` to see the contents of the root directory or `ls $HOME` to see your own home directory.
+
+::: {.callout-note}
+## The command prompt
+It is normal if you see a series of words before your `$`, this is called the **command prompt**. For example, in my case I have: 
+```bash
+(base) mtouced@BRC-KW66T3CJQ7:~ $ ls
+```
+The prompt provides useful information about your current shell session:
+
+- `(base)`: This indicates you're in the "base" conda environment (a Python package management system)
+- `mtouced`: This is the username of the person logged in
+- `@`: Just a separator meaning "at"
+- `BRC-KW66T3CJQ7`: This is the hostname (computer name)
+  - `:~`: The colon separates the hostname from the current directory. The ~ symbol represents the home directory
+-   `$`: This indicates a regular user prompt (as opposed to # which would indicate root/administrator privileges)
+
+So when you see something like this before the `$`, it's completely normal! The exact format can vary based on your system configuration, but it typically shows some combination of:
+
+- Current conda/virtual environment (if applicable)
+- Username
+- Computer/hostname
+- Current working directory
+- User privilege level ($ for regular user, # for root)
+:::
+
+<br>
+
+## Moving Around the Filesystem
+The Unix file system is hierarchical, like an upside-down tree. Understanding how to move around is fundamental.
+
+Here's an example of what a file system structure looks like:
+```
+~/ (home directory)
+├── Documents/
+│   ├── report.txt
+│   └── notes.md
+├── Downloads/
+│   └── data.csv
+└── Pictures/
+    └── photo.jpg
+```
+
+The `cd` command is used to **"change directory"**. For example: 
+```bash
+(base) mtouced@BRC-KW66T3CJQ7:~ $ cd Documents 
+(base) mtouced@BRC-KW66T3CJQ7:~/Documents $ 
+```
+Notice how the command prompt has changed from `~` to `~/Documents` - this shows your current location in the file system.
+
+If you wish to **return to the previous** working directory, use `cd ..`
+```bash
+(base) mtouced@BRC-KW66T3CJQ7:~/Documents $ cd ..
+(base) mtouced@BRC-KW66T3CJQ7:~ $ 
+```
+
+::: {.callout-important}
+If you provide no argument to `cd`, it will change to your `$HOME` directory which is also known in bash by the `~` (tilde or twiddle). So these three commands are equivalent:
+```bash
+cd
+cd ~
+cd $HOME
+```
+:::
+
+
+You can use both absolute and relative paths with `cd`: 
+
+- An **absolute** path starts from the root directory, e.g., `/usr/local/bin/`. 
+- A **relative** path does not start with the leading / and assumes a path relative to your current working directory. If you were in the `/usr/local` directory and wanted to change to `/usr/local/bin`, you could either `cd /usr/local/bin` (absolute) or `cd bin` (relative to `"/usr/local"`).
+
+::: {.callout-note} 
+## What is the answer?
+Once you are in `/usr/local/bin`, what would pwd show after you did `cd ../..`?
+:::
+
+<br>
+
+## Chaining commands
+One of the most powerful features of the command line is the ability to combine multiple commands together to accomplish complex tasks.
+
+### Running Commands Sequentially
+Use a semicolon (`;`) to run multiple commands one after another:
+```bash
+(base) mtouced@BRC-KW66T3CJQ7:~ $ cd Documents; ls; pwd
+bonphyre_nf.pptx		brc_documentation/		brc_website/			GitHub/				journal_club_schackhart3.pptx	Zoom/
+/Users/mtouced/Documents
+(base) mtouced@BRC-KW66T3CJQ7:~/Documents $ 
+```
+This changes to the Documents directory, lists its contents, then prints the current location - all in one line!
+
+### Pipes: Passing Output Between Commands
+The pipe symbol (`|`) takes the output of one command and feeds it as input to another command. This is incredibly powerful!
+
+```bash
+(base) mtouced@BRC-KW66T3CJQ7:~/Documents $ ls | head -n 5       
+bonphyre_nf.pptx
+brc_documentation/
+brc_website/
+GitHub/
+journal_club_schackhart3.pptx
+```
+This lists files in long format, then shows only the first 5 lines.
+
+Another example - count how many files are in a directory:
+```bash
+(base) mtouced@BRC-KW66T3CJQ7:~/Documents $ ls | wc -l
+       6
+```
+Here `ls` lists the files, and `wc -l` counts the lines.
+
+<br>
+
+## Redirecting Output
+Instead of displaying output on screen, you can save it to a file:
+
+- `>` writes output to a file (overwrites existing content):
+```bash
+(base) mtouced@BRC-KW66T3CJQ7:~/Documents $ ls > file_list.txt
+(base) mtouced@BRC-KW66T3CJQ7:~/Documents $ cat file_list.txt 
+bonphyre_nf.pptx
+brc_documentation/
+brc_website/
+file_list.txt
+GitHub/
+journal_club_schackhart3.pptx
+Zoom/
+```
+
+The `cat` command (short for "concatenate") displays the contents of a file. It's one of the most commonly used commands for quickly viewing file contents in the terminal.
+
+
+- `>>` appends output to a file (adds to existing content):
+```bash
+(base) mtouced@BRC-KW66T3CJQ7:~/Documents $ date >> file_list.txt 
+(base) mtouced@BRC-KW66T3CJQ7:~/Documents $ cat file_list.txt 
+bonphyre_nf.pptx
+brc_documentation/
+brc_website/
+file_list.txt
+GitHub/
+journal_club_schackhart3.pptx
+Zoom/
+Thu Nov 20 10:48:10 EST 2025
+```
+Notice how the date was added to the bottom of the file rather than replacing the entire file.
+
+<br>
+
+### Cleaning Up: The `rm` Command
+You can delete files you've created for testing with the `rm` command (short for "remove"):
+```bash
+(base) mtouced@BRC-KW66T3CJQ7:~/Documents $ rm file_list.txt 
+remove file_list.txt? yes
+```
+
+::: {.callout-warning}
+The `rm` command **permanently** deletes files - there is **no undo or trash bin**! Always double-check what you're deleting before pressing enter. Some systems may ask for confirmation (as shown above), but many won't.
+::: 
+
+To remove multiple files at once:
+```bash
+$ rm file1.txt file2.txt file3.txt
+```
+
+To remove an empty directory, use `rmdir`:
+```bash
+$ rmdir old_folder
+```

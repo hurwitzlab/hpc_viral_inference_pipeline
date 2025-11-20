@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mery Touceda-Suárez">
-<meta name="dcterms.date" content="2025-11-11">
+<meta name="dcterms.date" content="2025-11-19">
 
 <title>Unix Commands and Concepts Glossary</title>
 <style>
@@ -51,6 +51,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#core-commands-for-navigation-and-file-management" id="toc-core-commands-for-navigation-and-file-management" class="nav-link active" data-scroll-target="#core-commands-for-navigation-and-file-management">Core commands for navigation and file management</a></li>
   <li><a href="#essential-concepts-for-analysis-and-automation" id="toc-essential-concepts-for-analysis-and-automation" class="nav-link" data-scroll-target="#essential-concepts-for-analysis-and-automation">Essential concepts for analysis and automation</a></li>
+  <li><a href="#other-commands" id="toc-other-commands" class="nav-link" data-scroll-target="#other-commands">Other commands</a></li>
   </ul>
 </nav>
 </div>
@@ -75,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 11, 2025</p>
+      <p class="date">November 19, 2025</p>
     </div>
   </div>
   
@@ -122,6 +123,64 @@ ul.task-list li input[type="checkbox"] {
 <li><p><code>ssh</code>: Securely connect to a remote server, such as a high-performance computing (HPC) cluster.</p></li>
 <li><p><code>&amp;</code>: Run a command in the background. Use jobs to see background processes.</p></li>
 <li><p><code>$(command)</code>: Include the output of a command within a string.</p></li>
+</ul>
+</section>
+<section id="other-commands" class="level2">
+<h2 class="anchored" data-anchor-id="other-commands">Other commands</h2>
+<ul>
+<li><strong>whoami</strong>: reports your username</li>
+<li><strong>w</strong>: shows who is currently on a system</li>
+<li><strong>man</strong>: show the manual page for a command</li>
+<li><strong>echo</strong>: say something</li>
+<li><strong>cowsay</strong>: have a cow say something</li>
+<li><strong>env</strong>: print your environment</li>
+<li><strong>printenv</strong>: print some/all of your environment</li>
+<li><strong>which/type</strong>: tells you the location of a program</li>
+<li><strong>touch</strong>: create an empty regular file</li>
+<li><strong>file</strong>: briefly describe a file or directory</li>
+<li><strong>pwd</strong>: print working directory, where you are right now</li>
+<li><strong>ls</strong>: list files in current directory</li>
+<li><strong>find</strong>: find files or directories matching some conditions</li>
+<li><strong>locate</strong>: find files using a database, requires daemon to run</li>
+<li><strong>cd</strong>: change directory (with no arguments, <code>cd $HOME</code>)</li>
+<li><strong>cp</strong>: copy a file (or “cp -r” to copy a directory)</li>
+<li><strong>mv</strong>: move a file or diretory</li>
+<li><strong>mkdir</strong>: create a directory</li>
+<li><strong>rmdir</strong>: remove a directory</li>
+<li><strong>rm</strong>: remove a file (or “rm -r” to remove a directory)</li>
+<li><strong>cat</strong>: concatenate files (cf.&nbsp;<a href="http://porkmail.org/era/unix/award.html">http://porkmail.org/era/unix/award.html</a>)</li>
+<li><strong>column</strong>: arrange text into columns</li>
+<li><strong>paste</strong>: merge lines of files</li>
+<li><strong>sort</strong>: sort text or numbers</li>
+<li><strong>uniq</strong>: remove duplicates <em>from a sorted list</em></li>
+<li><strong>sed</strong>: stream editor for altering text</li>
+<li><strong>awk/gawk</strong>: pattern scanning and processing language</li>
+<li><strong>grep</strong>: global regular expression program (maybe?), cf.&nbsp;<a href="https://en.wikipedia.org/wiki/Regular_expression">https://en.wikipedia.org/wiki/Regular_expression</a></li>
+<li><strong>history</strong>: look at past commands, cf.&nbsp;CTRL-R for searching your history directly from the command line</li>
+<li><strong>head</strong>: view the first few (10) lines of a file</li>
+<li><strong>tail</strong>: view the last (10) lines of a file</li>
+<li><strong>comm</strong>: find lines in common/unique in two sorted files</li>
+<li><strong>top</strong>: view the programs taking the most system resources (memory, I/O, time, CPUs, etc.), cf.&nbsp;“htop”</li>
+<li><strong>ps</strong>: view the currently running processes</li>
+<li><strong>cut</strong>: select columns from the output of a program</li>
+<li><strong>wc</strong>: (character) word (and line) count</li>
+<li><strong>more/less</strong>: pager programs that show you a “page” of text at a time; cf.&nbsp;<a href="https://unix.stackexchange.com/questions/81129/what-are-the-differences-between-most-more-and-less/81131">https://unix.stackexchange.com/questions/81129/what-are-the-differences-between-most-more-and-less/81131</a></li>
+<li><strong>bc</strong>: calculator</li>
+<li><strong>df</strong>: report file system disk space usage; useful to find a place to land your data</li>
+<li><strong>du</strong>: report disk usage; recommend “du -shc”; useful to identify large directories that need to be removed</li>
+<li><strong>ssh</strong>: secure shell, like telnet only with encryption</li>
+<li><strong>scp</strong>: secure copy a file from/to remote systems using ssh</li>
+<li><strong>rsync</strong>: remote sync; uses scp but only copies data that is different</li>
+<li><strong>ftp</strong>: use “file transfer protocol” to retrieve large data sets (better than HTTP/browsers, esp for getting data onto remote systems)</li>
+<li><strong>ncftp</strong>: more modern FTP client that automatically handles anonymous logins</li>
+<li><strong>wget</strong>: web get a file from an HTTP location, cf.&nbsp;“wget is not a crime” and Aaron Schwartz</li>
+<li><strong>|</strong>: pipe the output of a command into another command</li>
+<li><strong>&gt;, &gt;&gt;</strong>: redirect the output of a command into a file; the file will be created if it does not exist; the single arrow indicates that you wish to overwrite any existing file, while the double-arrows say to append to an existing file</li>
+<li><strong>&lt;</strong>: redirect contents of a file into a command</li>
+<li><strong>nano</strong>: a very simple text editor; until you’re ready to commit to vim or emacs, start here</li>
+<li><strong>md5sum</strong>: calculate the MD5 checksum of a file</li>
+<li><strong>diff</strong>: find the differences between two files</li>
+<li><strong>xargs</strong>: take a list from one command, concatenate and pass as the arguments to another command</li>
 </ul>
 </section>
 

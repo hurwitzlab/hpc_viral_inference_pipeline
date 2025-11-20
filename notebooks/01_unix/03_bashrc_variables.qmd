@@ -1,0 +1,33 @@
+---
+title: "Unix .bashrc and Variables"
+author: "Mery Touceda-Suárez and Ken Youens-Clark"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+---
+
+## What is .bashrc
+Lives in home. Controls shell environment.
+
+Dotfiles (ken)
+"Dotfiles" are files with names that begin with a dot. They are normally hidden from view unless you use ls -a to list "all" files. A single dot . means the current directory, and two dots .. mean the parent directory. Your ".bashrc" (or maybe ".profile" or maybe ".bash_profile" depending on your system) file is read every time you login to your system, so you can remember your customizations. "Rc" may mean "resource configuration," but who really knows?
+
+After a while, you may wish to collect your dotfiles into a Github repo, e.g., https://github.com/kyclark/dotfiles.
+
+### $PATH
+
+### Aliases (ken)
+Sometimes you'll find you're using a particular command quite often and want to create a shortcut. You can assign any command to a single "alias" like so:
+
+alias cx='chmod +x'
+alias up2='cd ../../'
+alias up3='cd ../../../'
+If you execute this on the command line, the alias will be saved until you log out. Adding these lines to your .bashrc will make it available every time you log in. When you make a change and want the shell to bring those into the current environment, you need to source the file. The command . is an alias for source:
+
+$ source ~/.bashrc
+$ . ~/.bashrc
+
