@@ -1,6 +1,6 @@
 ---
 title: "Unix .bashrc and Variables"
-author: "Mery Touceda-Suárez and Ken Youens-Clark"
+author: "Mery Touceda-Suárez"
 date: today
 format:
   html:
@@ -11,23 +11,202 @@ format:
 ---
 
 ## What is .bashrc
-Lives in home. Controls shell environment.
+The `.bashrc` file lives in your home directory (~/) and controls your shell environment. It's a script that runs automatically every time you open a new terminal session in bash (the Bourne Again SHell). The `.bashrc` is one of the "dotfiles" in your home directory.
 
-Dotfiles (ken)
-"Dotfiles" are files with names that begin with a dot. They are normally hidden from view unless you use ls -a to list "all" files. A single dot . means the current directory, and two dots .. mean the parent directory. Your ".bashrc" (or maybe ".profile" or maybe ".bash_profile" depending on your system) file is read every time you login to your system, so you can remember your customizations. "Rc" may mean "resource configuration," but who really knows?
+
+"Dotfiles" are files with names that begin with a dot. They are normally hidden from view unless you use `ls -a` to list "all" files. A single dot `.` means the current directory, and two dots `..` mean the parent directory. Your `.bashrc` (or maybe `.profile` or maybe `.bash_profile` depending on your system) file is read every time you login to your system, so you can remember your customizations. "Rc" may mean "resource configuration," but who really knows?
 
 After a while, you may wish to collect your dotfiles into a Github repo, e.g., https://github.com/kyclark/dotfiles.
 
+
+## Contents of `.bashrc`
+
 ### $PATH
 
-### Aliases (ken)
-Sometimes you'll find you're using a particular command quite often and want to create a shortcut. You can assign any command to a single "alias" like so:
+The `$PATH `variable is one of the most important environment variables in Unix/Linux systems, and it is often included in the `.bashrc`. It tells your shell where to look for executable programs when you type a command.
 
+When you type a command like `ls` or `python`, the shell searches through each directory listed in `$PATH` (in order) until it finds an executable file with that name.
+
+#### Viewing your PATH
+You can view your current PATH with:
+```bash
+echo $PATH
+```
+
+This will show something like:
+``` bash
+/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+```
+Where the directories are separated by colons (:).
+
+#### Adding to your PATH
+To add a new directory to your `PATH`, add this line to your `.bashrc`:
+```bash
+export PATH="$HOME/bin:$PATH"
+```
+This prepends `$HOME/bin` to your existing PATH, so the shell will search there first. You can also append to the end:
+```bash
+export PATH="$PATH:$HOME/.local/bin"
+```
+
+:::{.callout-important}
+Always include `$PATH` in your new assignment, or you'll lose access to all the standard system commands!
+:::
+
+#### Common PATH additions
+```bash
+# Add local bin directories
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# Add conda/miniconda
+export PATH="$HOME/miniconda3/bin:$PATH"
+
+# Add custom software
+export PATH="/opt/custom-software/bin:$PATH"
+```
+
+---
+
+### Aliases
+Sometimes you'll find you're using a particular command quite often and want to create a **shortcut**. You can assign any command to a single "alias" like so:
+```bash
 alias cx='chmod +x'
 alias up2='cd ../../'
 alias up3='cd ../../../'
-If you execute this on the command line, the alias will be saved until you log out. Adding these lines to your .bashrc will make it available every time you log in. When you make a change and want the shell to bring those into the current environment, you need to source the file. The command . is an alias for source:
-
+```
+If you execute this on the command line, the alias will be saved until you log out. Adding these lines to your `.bashrc` will make it available every time you log in. When you make a change and want the shell to bring those into the current environment, you need to source the file. The command `.` is an alias for `source`:
+```bash
 $ source ~/.bashrc
 $ . ~/.bashrc
+```
 
+#### Useful aliases
+```bash
+# Navigation shortcuts
+alias ..='cd ..'
+alias ...='cd ../..'
+alias home='cd ~'
+
+# List variations
+alias ll='ls -lh'
+alias la='ls -lah'
+alias l='ls -CF'
+
+# Safety nets
+alias rm='rm -i'    # The -i flag stands for "interactive" mode. 
+alias cp='cp -i'    # It makes the command ask for confirmation before 
+alias mv='mv -i'    # doing anything destructive.
+
+# Git shortcuts
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+
+# Show PATH in readable format
+alias path='echo $PATH | tr ":" "\n"'
+```
+
+### Shell Functions
+Functions are like aliases but more powerful - they can take arguments and contain multiple commands.
+
+#### Basic function syntax
+```bash
+# Simple function
+greet() {                   # Function name followed by ()
+    echo "Hello, $1!"       # Function body: $1 is the first argument passed to the function  # Closing brace ends the function
+}
+
+# Usage: greet Mery
+# Output: Hello, Mery!
+```
+
+#### Useful function examples
+```bash
+# Create directory and cd into it
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Backup a file with timestamp
+backup() {
+    cp "$1" "$1.backup.$(date +%Y%m%d_%H%M%S)"
+}
+
+# Extract various archive types
+extract() {
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.gz)  tar xzf "$1"    ;;
+            *.zip)     unzip "$1"      ;;
+            *.tar)     tar xf "$1"     ;;
+            *.gz)      gunzip "$1"     ;;
+            *)         echo "Unknown archive format" ;;
+        esac
+    else
+        echo "File not found: $1"
+    fi
+}
+
+# Find files by name
+ff() {
+    find . -type f -iname "*$1*"
+}
+```
+
+---
+
+## Environmental Variables
+Environment variables are named values that affect how programs behave. They're available to all programs run from your shell.
+
+### Setting variables
+```bash
+# Set a variable (no spaces around =)
+MY_VAR="some value"
+
+# Export to make it available to child processes
+export MY_VAR="some value"
+
+# Or in two steps
+MY_VAR="some value"
+export MY_VAR
+```
+
+### Common environment variables
+```bash
+# Home directory
+echo $HOME
+
+# Current user
+echo $USER
+
+# Current shell
+echo $SHELL
+
+# Editor preference
+export EDITOR=vim
+
+# Language/locale settings
+export LANG=en_US.UTF-8
+```
+
+### Using variables in scripts
+```bash
+# Reference a variable with $
+echo "My home directory is $HOME"
+
+# Use curly braces for clarity
+echo "File: ${filename}.txt"
+
+# Default values
+echo "Name: ${NAME:-Anonymous}"
+```
+
+## Tips and Best Practices
+
+- Backup your `.bashrc` before making major changes
+- Test changes by sourcing the file: `. ~/.bashrc`
+- Comment your code so you remember what customizations do
+- Organize logically with sections for `PATH`, aliases, functions, etc.
+- Check for errors with bash `-n ~/.bashrc` (syntax check without executing)
+- Keep it simple - don't over-complicate your configuration

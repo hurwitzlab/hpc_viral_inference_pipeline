@@ -1,6 +1,6 @@
 ---
 title: "Unix File System Navigation"
-author: "Mery Touceda-Suárez and Ken Youens-Clark"
+author: "Mery Touceda-Suárez"
 date: today
 format:
   html:

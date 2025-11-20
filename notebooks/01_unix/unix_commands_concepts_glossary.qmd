@@ -10,111 +10,544 @@ format:
     code-fold: false
 ---
 
-## Manual pages
-The man program will show you the manual page for a program, if it exists. Just type man <program>, e.g., man wget. Inside a manpage, you can use the / to search for a string. Use q to "quit" man. Most programs will also show you a help/usage document if you run them with -h, --help, or -help. I often find it useful to grep the help, e.g.:
+## Getting Help
+
+### Manual pages (man)
+
+The `man` program shows you the manual page for a command. Just type `man <program>`, e.g., `man wget`. 
+
+Inside a manual page:
+
+- Use `/` to search for a string
+- Use `q` to quit
+
+Most programs also show help if you run them with `-h`, `--help`, or `-help`. You can grep the help output for specific information:
+
+```bash
+ls --help | grep size
+```
 
 ## Variables
-You will see things like $USER and $HOME that start with the $ sign. These are variables because they can change from person to person, system to system. On most systems, my username is "kyclark" but I might be "kclark" or "kyclark1" on others, but on all systems $USER refers to whatever value is defined for my username. Similarly, my $HOME directory might be "/Users/kyclark," "/home1/03137/kyclark," or "/home/u20/kyclark," but I can always refer to the idea of my home directory with the variable $HOME.
 
-When you are assigning a variable, you do not use the $.
+Variables are names that start with `$` and hold values that can change from person to person or system to system.
+
+### Common system variables
+
+- `$USER` - your username (e.g., "kyclark")
+- `$HOME` - your home directory (e.g., "/home/kyclark")
+- `$PATH` - directories where the shell looks for commands
+- `$PWD` - current working directory
+- `$OLDPWD` - previous working directory
+
+### Setting and using variables
+
+When **assigning** a variable, do not use the `$`:
+
 ```bash
-$ SECRET=ilikecake
-$ echo $SECRET
-ilikecake
-$ echo SECRET
-SECRET
+SECRET=ilikecake
+echo $SECRET
+# Output: ilikecake
+
+echo SECRET
+# Output: SECRET
 ```
-To remove a variable from your environment, use unset:
+
+### Removing variables
+
+To remove a variable from your environment, use `unset`:
+
 ```bash
-$ unset SECRET
-$ echo $SECRET
+unset SECRET
+echo $SECRET
+# (prints nothing - no error)
 ```
 
-Notice that there is no error when referencing a variable that does not exist or has not been set.
+::: {.callout-note}
+There is no error when referencing a variable that doesn't exist or hasn't been set.
+:::
 
-## Core commands for navigation and file management 
-- `pwd`: Print the current working directory.
-- `ls`: List the contents of a directory. Use ls -l for a detailed list.
-- `cd <directory>`: Change the current directory. Use cd .. to move up one directory, and cd ~ or cd to go to your home directory.
-- `mkdir <dirname>`: Create a new directory.
-- `cp <source> <destination>`: Copy a file or directory.
-- `mv <source> <destination>`: Move or rename a file or directory.
-- `rm <file>`: Delete a file. Use rm -r <directory> to remove a directory and its contents, but be extremely careful as this is irreversible.
-- `cat <file>`: Display the contents of a file.
-- `less <file>`: View a file page by page, allowing you to scroll through its content.
-- `nano <file`>: Open a simple text editor to edit files. 
+## Navigation and File Management
 
-## Essential concepts for analysis and automation
-- **Pipes** (|): Connect the output of one command to the input of another. This is fundamental for building analysis pipelines without creating intermediate files.
+### Basic navigation
 
-> Example: `cat data.txt | grep "pattern" | sort | uniq` (filters, sorts, and counts unique lines from data.txt).
+- `pwd` - Print the current working directory
+- `ls` - List directory contents
+  - `ls -l` - Detailed list with permissions, size, date
+  - `ls -a` - Show hidden files (those starting with `.`)
+  - `ls -lh` - Human-readable file sizes
+  - `ls -lt` - Sort by modification time
+- `cd <directory>` - Change directory
+  - `cd ..` - Move up one directory
+  - `cd ~` or `cd` - Go to home directory
+  - `cd -` - Go to previous directory
 
-- **Redirection**(>, >>): Redirect command output to a file. > overwrites the file, while >> appends to it.
+### Creating and managing files/directories
 
-> Example: `ls -l > file_list.txt `saves the detailed listing to file_list.txt.
+- `mkdir <dirname>` - Create a new directory
+  - `mkdir -p path/to/nested/dir` - Create nested directories
+- `touch <file>` - Create an empty file or update timestamp
+- `cp <source> <destination>` - Copy files
+  - `cp -r <dir> <dest>` - Copy directory recursively
+  - `cp -i` - Prompt before overwriting
+- `mv <source> <destination>` - Move or rename files/directories
+  - `mv -i` - Prompt before overwriting
+- `rm <file>` - Delete a file
+  - `rm -r <directory>` - Remove directory and contents (careful!)
+  - `rm -i` - Prompt before deletion (safer)
+  - `rm -f` - Force deletion without prompts
 
-- **Flags:** Options that modify a command's behavior. They typically start with a hyphen (e.g., `ls -l` shows a long listing, `grep -i` performs a case-insensitive search).
+::: {.callout-warning}
+**Be extremely careful with `rm -r` and `rm -rf`** - deletion is irreversible in Unix. There is no recycle bin!
+:::
 
-- `man <command>`: Display the manual page for a command to learn about its usage and options.
+### Viewing file contents
 
-- `ssh`: Securely connect to a remote server, such as a high-performance computing (HPC) cluster.
+- `cat <file>` - Display entire file contents
+- `less <file>` - View file page by page (scrollable)
+  - Use arrow keys or `space` to navigate
+  - Use `/` to search, `q` to quit
+- `more <file>` - Similar to `less` but with fewer features
+- `head <file>` - View first 10 lines
+  - `head -n 20 <file>` - View first 20 lines
+- `tail <file>` - View last 10 lines
+  - `tail -n 20 <file>` - View last 20 lines
+  - `tail -f <file>` - Follow file as it grows (useful for logs)
 
-- `&`: Run a command in the background. Use jobs to see background processes.
+### File information
 
-- `$(command)`: Include the output of a command within a string. 
+- `file <file>` - Describe file type
+- `wc <file>` - Count lines, words, and characters
+  - `wc -l` - Count only lines
+  - `wc -w` - Count only words
+  - `wc -c` - Count only characters
+- `du` - Report disk usage
+  - `du -sh <directory>` - Show total size in human-readable format
+  - `du -sh *` - Show size of all items in current directory
+- `df` - Report file system disk space usage
+  - `df -h` - Human-readable format
+- `stat <file>` - Display detailed file information (permissions, timestamps, etc.)
 
+## Text Processing and Search
 
-## Other commands
-* **whoami**: reports your username
-* **w**: shows who is currently on a system
-* **man**: show the manual page for a command
-* **echo**: say something
-* **cowsay**: have a cow say something
-* **env**: print your environment
-* **printenv**: print some/all of your environment
-* **which/type**: tells you the location of a program
-* **touch**: create an empty regular file
-* **file**: briefly describe a file or directory
-* **pwd**: print working directory, where you are right now
-* **ls**: list files in current directory
-* **find**: find files or directories matching some conditions
-* **locate**: find files using a database, requires daemon to run
-* **cd**: change directory (with no arguments, `cd $HOME`)
-* **cp**: copy a file (or "cp -r" to copy a directory)
-* **mv**: move a file or diretory
-* **mkdir**: create a directory
-* **rmdir**: remove a directory
-* **rm**: remove a file (or "rm -r" to remove a directory)
-* **cat**: concatenate files (cf. [http://porkmail.org/era/unix/award.html](http://porkmail.org/era/unix/award.html))
-* **column**: arrange text into columns
-* **paste**: merge lines of files
-* **sort**: sort text or numbers
-* **uniq**: remove duplicates _from a sorted list_
-* **sed**: stream editor for altering text
-* **awk/gawk**: pattern scanning and processing language
-* **grep**: global regular expression program (maybe?), cf. [https://en.wikipedia.org/wiki/Regular\_expression](https://en.wikipedia.org/wiki/Regular_expression)
-* **history**: look at past commands, cf. CTRL-R for searching your history directly from the command line
-* **head**: view the first few (10) lines of a file
-* **tail**: view the last (10) lines of a file
-* **comm**: find lines in common/unique in two sorted files
-* **top**: view the programs taking the most system resources (memory, I/O, time, CPUs, etc.), cf. "htop"
-* **ps**: view the currently running processes
-* **cut**: select columns from the output of a program
-* **wc**: (character) word (and line) count
-* **more/less**: pager programs that show you a "page" of text at a time; cf. [https://unix.stackexchange.com/questions/81129/what-are-the-differences-between-most-more-and-less/81131](https://unix.stackexchange.com/questions/81129/what-are-the-differences-between-most-more-and-less/81131)
-* **bc**: calculator
-* **df**: report file system disk space usage; useful to find a place to land your data
-* **du**: report disk usage; recommend "du -shc"; useful to identify large directories that need to be removed
-* **ssh**: secure shell, like telnet only with encryption
-* **scp**: secure copy a file from/to remote systems using ssh
-* **rsync**: remote sync; uses scp but only copies data that is different
-* **ftp**: use "file transfer protocol" to retrieve large data sets (better than HTTP/browsers, esp for getting data onto remote systems)
-* **ncftp**: more modern FTP client that automatically handles anonymous logins
-* **wget**: web get a file from an HTTP location, cf. "wget is not a crime" and Aaron Schwartz
-* **\|**: pipe the output of a command into another command
-* **&gt;, &gt;&gt;**: redirect the output of a command into a file; the file will be created if it does not exist; the single arrow indicates that you wish to overwrite any existing file, while the double-arrows say to append to an existing file
-* **&lt;**: redirect contents of a file into a command
-* **nano**: a very simple text editor; until you're ready to commit to vim or emacs, start here
-* **md5sum**: calculate the MD5 checksum of a file
-* **diff**: find the differences between two files
-* **xargs**: take a list from one command, concatenate and pass as the arguments to another command
+### Searching and filtering
+
+- `grep <pattern> <file>` - Search for patterns in files
+  - `grep -i` - Case-insensitive search
+  - `grep -r` - Recursive search in directories
+  - `grep -n` - Show line numbers
+  - `grep -v` - Invert match (show non-matching lines)
+  - `grep -c` - Count matching lines
+  - `grep -A 3` - Show 3 lines after match
+  - `grep -B 3` - Show 3 lines before match
+- `find <path> -name <pattern>` - Find files by name
+  - `find . -name "*.txt"` - Find all .txt files in current directory
+  - `find . -type f` - Find only files
+  - `find . -type d` - Find only directories
+  - `find . -mtime -7` - Files modified in last 7 days
+  - `find . -size +100M` - Files larger than 100MB
+- `locate <pattern>` - Find files using a database (faster but requires updates)
+
+### Text manipulation
+
+- `sort <file>` - Sort lines alphabetically or numerically
+  - `sort -n` - Sort numerically
+  - `sort -r` - Reverse sort
+  - `sort -u` - Sort and remove duplicates
+  - `sort -k2` - Sort by second field
+- `uniq` - Remove duplicate lines from sorted input
+  - `sort file.txt | uniq` - Remove duplicates
+  - `uniq -c` - Count occurrences
+  - `uniq -d` - Show only duplicates
+- `cut` - Select columns from output
+  - `cut -f1,3 -d',' file.csv` - Extract fields 1 and 3 from CSV
+  - `cut -c1-10 file.txt` - Extract characters 1-10
+- `paste` - Merge lines of files side by side
+- `column` - Arrange text into columns
+  - `column -t` - Create table with aligned columns
+- `tr` - Translate or delete characters
+  - `tr 'a-z' 'A-Z'` - Convert lowercase to uppercase
+  - `tr -d '\r'` - Delete carriage returns
+- `sed` - Stream editor for transforming text
+  - `sed 's/old/new/g' file.txt` - Replace text
+  - `sed -n '10,20p' file.txt` - Print lines 10-20
+- `awk` - Pattern scanning and text processing
+  - `awk '{print $1}' file.txt` - Print first column
+  - `awk -F',' '{print $2}' file.csv` - Print second column of CSV
+
+## Pipes and Redirection
+
+### Pipes (|)
+
+Connect the output of one command to the input of another. Essential for building analysis pipelines.
+
+```bash
+cat data.txt | grep "pattern" | sort | uniq
+```
+
+This filters, sorts, and finds unique lines from data.txt without creating intermediate files.
+
+### Redirection
+
+- `>` - Redirect output to file (overwrites)
+- `>>` - Redirect output to file (appends)
+- `<` - Redirect file contents as input
+- `2>` - Redirect error messages to file
+- `2>&1` - Redirect errors to same place as standard output
+- `&>` - Redirect both output and errors to file
+
+```bash
+# Save output to file
+ls -l > file_list.txt
+
+# Append to existing file
+echo "New line" >> file_list.txt
+
+# Use file as input
+sort < unsorted.txt > sorted.txt
+
+# Redirect errors
+command 2> error.log
+
+# Redirect both output and errors
+command &> all_output.log
+
+# Discard output
+command > /dev/null
+```
+
+### Command substitution
+
+- `$(command)` - Include command output within a string
+- `` `command` `` - Older syntax (backticks)
+
+```bash
+echo "Today is $(date)"
+echo "I am in $(pwd)"
+echo "There are $(ls | wc -l) files here"
+```
+
+## Operators
+
+### The && (AND) operator
+
+Run the next command only if the previous command **succeeded**:
+
+```bash
+mkdir -p "$1" && cd "$1"
+```
+
+Creates a directory, then (if successful) changes into it.
+
+### The || (OR) operator  
+
+Run the next command only if the previous command **failed**:
+
+```bash
+vim "$1" || nano "$1"
+```
+
+Try vim first, but if that fails, try nano instead.
+
+### Combining operators
+
+```bash
+# Try to compile and run, or show error
+make && ./program || echo "Build failed!"
+
+# Chain multiple commands
+cd project && make clean && make && ./run_tests
+```
+
+### Background execution
+
+- `&` - Run command in background
+
+```bash
+long_running_script.sh &
+```
+
+- `jobs` - List background jobs
+- `fg` - Bring background job to foreground
+- `bg` - Resume stopped job in background
+- `Ctrl+Z` - Suspend current foreground job
+- `nohup <command> &` - Run command that continues after logout
+
+## Wildcards and Pattern Matching
+
+- `*` - Match zero or more characters
+- `?` - Match exactly one character
+- `[abc]` - Match any one of the characters a, b, or c
+- `[a-z]` - Match any character from a to z
+- `[!abc]` - Match any character except a, b, or c
+
+```bash
+# Examples
+ls *.txt              # All .txt files
+ls file?.txt          # file1.txt, fileA.txt, etc.
+ls [AB]*.txt          # Files starting with A or B
+ls [0-9]*.txt         # Files starting with a digit
+rm temp[!1-3].txt     # Remove temp files except temp1, temp2, temp3
+```
+
+## Permissions and Ownership
+
+### Understanding permissions
+
+Use `ls -l` to see permissions:
+
+```
+-rw-r--r-- 1 user group 1234 Nov 20 10:30 file.txt
+```
+
+- First character: file type (`-` = file, `d` = directory, `l` = link)
+- Next 9 characters: permissions (3 groups of 3)
+  - Owner permissions (rwx)
+  - Group permissions (rwx)
+  - Others permissions (rwx)
+- `r` = read (4), `w` = write (2), `x` = execute (1)
+
+### Changing permissions
+
+- `chmod` - Change file permissions
+  - `chmod +x script.sh` - Make file executable
+  - `chmod -w file.txt` - Remove write permission
+  - `chmod 755 script.sh` - rwxr-xr-x (owner: rwx, group: rx, others: rx)
+  - `chmod 644 file.txt` - rw-r--r-- (owner: rw, group: r, others: r)
+- `chown` - Change file owner
+  - `chown user:group file.txt` - Change owner and group
+- `chgrp` - Change group ownership
+
+## System Information and Processes
+
+### User and system info
+
+- `whoami` - Display your username
+- `id` - Show user ID and group memberships
+- `w` - Show who is currently logged in
+- `uptime` - Show how long system has been running
+- `uname -a` - Display system information
+- `hostname` - Show system hostname
+- `date` - Display or set system date/time
+- `cal` - Display calendar
+- `env` - Print all environment variables
+- `printenv <VAR>` - Print specific environment variable
+- `which <command>` - Show location of a command
+- `type <command>` - Show what kind of command it is
+- `whereis <command>` - Locate binary, source, and manual page
+
+### Process management
+
+- `ps` - Show currently running processes
+  - `ps aux` - Show all processes with details
+  - `ps -ef` - Another format for all processes
+- `top` - Interactive view of processes (press `q` to quit)
+- `htop` - Enhanced version of top (if installed)
+- `kill <PID>` - Terminate a process by ID
+  - `kill -9 <PID>` - Force kill
+- `killall <name>` - Terminate processes by name
+- `pkill <pattern>` - Kill processes matching pattern
+- `pgrep <pattern>` - Find process IDs by pattern
+
+## Compression and Archives
+
+### Creating archives
+
+- `tar -czf archive.tar.gz directory/` - Create compressed tar archive
+- `tar -cjf archive.tar.bz2 directory/` - Create bzip2 compressed archive
+- `zip -r archive.zip directory/` - Create zip archive
+
+### Extracting archives
+
+- `tar -xzf archive.tar.gz` - Extract .tar.gz
+- `tar -xjf archive.tar.bz2` - Extract .tar.bz2
+- `unzip archive.zip` - Extract .zip
+- `gunzip file.gz` - Decompress .gz file
+
+### Viewing archive contents
+
+- `tar -tzf archive.tar.gz` - List contents of tar.gz
+- `unzip -l archive.zip` - List contents of zip
+
+::: {.callout-tip}
+**Tar flags breakdown:**
+
+- `c` = create
+- `x` = extract
+- `t` = list contents
+- `z` = gzip compression
+- `j` = bzip2 compression
+- `f` = file (must be followed by filename)
+- `v` = verbose (show progress)
+:::
+
+## Text Editors
+
+- `nano <file>` - Simple text editor (good for beginners)
+  - Use `Ctrl+O` to save, `Ctrl+X` to exit
+  - `Ctrl+K` to cut line, `Ctrl+U` to paste
+- `vim <file>` - Powerful modal text editor
+  - Press `i` to insert, `Esc` to exit insert mode
+  - `:w` to save, `:q` to quit, `:wq` to save and quit
+  - `:q!` to quit without saving
+- `emacs <file>` - Extensible text editor
+  - `Ctrl+X Ctrl+S` to save, `Ctrl+X Ctrl+C` to exit
+
+## File Comparison and Checksums
+
+- `diff <file1> <file2>` - Show differences between two files
+  - `diff -u` - Unified format (easier to read)
+  - `diff -y` - Side-by-side comparison
+- `comm <file1> <file2>` - Find common/unique lines in two sorted files
+- `cmp <file1> <file2>` - Compare files byte by byte
+- `md5sum <file>` - Calculate MD5 checksum (verify file integrity)
+- `sha256sum <file>` - Calculate SHA-256 checksum (more secure)
+
+## Remote Access and File Transfer
+
+### Remote connection
+
+- `ssh user@host` - Secure shell connection to remote server
+  - `ssh user@hpc.university.edu` - Connect to HPC cluster
+  - `ssh -p 2222 user@host` - Connect on specific port
+  - `ssh -X user@host` - Enable X11 forwarding (run GUI apps)
+
+### File transfer
+
+- `scp <source> <destination>` - Secure copy between systems
+  - `scp file.txt user@remote:/path/` - Copy to remote
+  - `scp user@remote:/path/file.txt .` - Copy from remote
+  - `scp -r directory/ user@remote:/path/` - Copy directory recursively
+- `rsync` - Sync files/directories (only copies changed data)
+  - `rsync -av source/ destination/` - Archive mode with verbose output
+  - `rsync -avz source/ user@remote:/path/` - With compression
+  - `rsync -av --delete source/ dest/` - Delete files in dest not in source
+- `wget <url>` - Download files from the web
+  - `wget https://example.com/file.zip`
+  - `wget -c url` - Resume interrupted download
+- `curl <url>` - Transfer data from/to servers
+  - `curl -O https://example.com/file.zip` - Download file
+  - `curl -L url` - Follow redirects
+
+## Utilities
+
+- `bc` - Calculator for arithmetic operations
+  - `echo "5 + 3" | bc`
+  - `echo "scale=2; 10/3" | bc` - Set decimal places
+- `history` - Show command history
+  - Use `Ctrl+R` to search history interactively
+  - `!n` - Execute command number n from history
+  - `!!` - Execute last command
+  - `!$` - Last argument of previous command
+- `xargs` - Build and execute commands from standard input
+  - `find . -name "*.tmp" | xargs rm` - Delete all .tmp files
+  - `echo "file1 file2" | xargs -n 1 echo` - Process one argument at a time
+- `alias` - Create command shortcuts
+  - `alias ll='ls -lh'`
+- `time <command>` - Measure how long a command takes
+- `watch <command>` - Execute command repeatedly
+  - `watch -n 5 df -h` - Update every 5 seconds
+- `tee <file>` - Read from input and write to file and stdout
+  - `command | tee output.txt` - Save output and see it on screen
+
+## Keyboard Shortcuts
+
+### Command line editing
+
+- `Ctrl+A` - Move to beginning of line
+- `Ctrl+E` - Move to end of line
+- `Ctrl+U` - Delete from cursor to beginning of line
+- `Ctrl+K` - Delete from cursor to end of line
+- `Ctrl+W` - Delete word before cursor
+- `Ctrl+L` - Clear screen
+- `Ctrl+C` - Cancel current command
+- `Ctrl+D` - Exit shell (or end of input)
+- `Ctrl+Z` - Suspend current process
+- `Ctrl+R` - Search command history
+- `Tab` - Auto-complete commands and filenames
+
+### Navigation in less/man
+
+- `Space` - Next page
+- `b` - Previous page
+- `/pattern` - Search forward
+- `?pattern` - Search backward
+- `n` - Next search result
+- `N` - Previous search result
+- `g` - Go to beginning
+- `G` - Go to end
+- `q` - Quit
+
+## Special Files and Directories
+
+- `.` - Current directory
+- `..` - Parent directory
+- `~` - Home directory
+- `/dev/null` - "Black hole" - discard all input
+- `/dev/zero` - Provides infinite stream of zero bytes
+- `/tmp` - Temporary files (often cleared on reboot)
+- `/etc` - System configuration files
+- `/var/log` - System log files
+- `/usr/bin` - User programs
+- `/usr/local/bin` - Locally installed programs
+
+## Common Command Patterns
+
+### Finding large files
+
+```bash
+du -h --max-depth=1 | sort -hr
+find . -type f -size +100M -exec ls -lh {} \;
+```
+
+### Counting files
+
+```bash
+ls -1 | wc -l
+find . -type f | wc -l
+```
+
+### Finding and deleting files
+
+```bash
+find . -name "*.tmp" -delete
+find . -name "*.log" -mtime +30 -delete  # Older than 30 days
+```
+
+### Batch renaming
+
+```bash
+for file in *.txt; do mv "$file" "${file%.txt}.bak"; done
+```
+
+### Monitoring log files
+
+```bash
+tail -f /var/log/syslog
+tail -f application.log | grep ERROR
+```
+
+### Finding processes using a port
+
+```bash
+lsof -i :8080
+netstat -tulpn | grep 8080
+```
+
+::: {.callout-tip}
+## Quick Reference Tips
+
+1. Use `Tab` for auto-completion - it saves time and prevents typos
+2. Use `Ctrl+R` to search your command history
+3. Always use quotes around variables: `"$variable"`
+4. Test destructive commands (like `rm`) with `echo` first
+5. Learn one text editor well (nano, vim, or emacs)
+6. Read error messages carefully - they usually tell you what's wrong
+7. When stuck, try `man command` or `command --help`
+:::
+
+## Additional Resources
+
+- [Unix command cheat sheet](https://www.gnu.org/software/bash/manual/)
+- [Regular expressions guide](https://www.regular-expressions.info/)
+- [Explain Shell](https://explainshell.com/) - breaks down complex commands
+- [The Art of Command Line](https://github.com/jlevy/the-art-of-command-line)
