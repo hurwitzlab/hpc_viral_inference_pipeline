@@ -9,7 +9,7 @@ format:
     theme: cosmo
     code-fold: false
 ---
-> Note: This tutorial draws heavily from the [Happy Belly Bioinformatics Unix Crash Course](https://astrobiomike.github.io/unix/unix-intro). Thank you ... . Other resources can be found at the end of the tutorial.
+> Note: This tutorial draws heavily from the [Happy Belly Bioinformatics Unix Crash Course](https://astrobiomike.github.io/unix/unix-intro). Other resources can be found at the end of the tutorial.
 
 Unix is very likely the most foundational skillset we can develop for bioinformatics. Many of the most common and powerful bioinformatics approaches happen in this text-based environment, and having a solid foundation here can make everything we’re trying to learn and do much easier. Additionally, unix is the language used by most High Performance Clusters (HPCs) and cloud computing, which is where we will be performing most of our computation going forward. Learning unix is essential for the process and analysis of large metagenomics datasets. 
 
