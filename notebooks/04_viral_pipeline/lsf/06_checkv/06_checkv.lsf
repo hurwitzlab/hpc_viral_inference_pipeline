@@ -63,11 +63,11 @@ fi
 
 echo "Running CheckV on sample: ${SAMPLE}"
 
-apptainer exec ${CHECKV_SIF} checkv end_to_end \
+apptainer exec $BIND ${CHECKV_SIF} checkv end_to_end \
     "${IN_DIR}/${SAMPLE}_virsorter2_output/${SAMPLE}_virsorter2_cat-1-2.fasta" \
     "${OUT_DIR}/${SAMPLE}_checkv_output" \
-    -t 2 \                                      # number of threads, make sure it matches the -n value above
-    -d /checkv-db
+    -t $CPUS \                                      # number of threads, make sure it matches the -n value above
+    -d $CHECKV_DB
 
 # Check if CheckV completed successfully
 if [ $? -eq 0 ]; then

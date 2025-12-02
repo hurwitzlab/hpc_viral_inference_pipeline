@@ -7,18 +7,6 @@
 
 
 # --------------------------------------------------
-# Request resources here
-# --------------------------------------------------
-#BSUB -J dramv                          # job name
-#BSUB -n 2                            # number of CPUs required per task
-#BSUB -q shared_memory                # the queue to run on
-#BSUB -R "span[hosts=1]"              # number of hosts to spread the jobs across, 1 host used here
-#BSUB -R "rusage[mem=4GB]"            # required total memory for the job 
-#BSUB -o "./output.%J.log"            # standard output file (%J is job name)
-#BSUB -e "./error.%J.log"             # standard error file (%J is job ID)
-#BSUB -W 10:00:00                     # time to run
-
-# --------------------------------------------------
 # Load modules here
 # --------------------------------------------------
 
@@ -63,17 +51,17 @@ fi
 
 echo "Running DRAM-v on sample: ${SAMPLE}"
 
-apptainer exec ${DRAMV_SIF} dramv annotate $IN_DIR/final-viral-combined-for-dramv.fa -v $IN_DIR/viral-affi-contigs-for-dramv.tab \
+apptainer exec $BIND ${DRAMV_SIF} dramv annotate $IN_DIR/final-viral-combined-for-dramv.fa -v $IN_DIR/viral-affi-contigs-for-dramv.tab \
     -o ${OUT_DIR}/${SAMPLE}_dramv_output \
-    --min_contig_size 3000 \
-    --threads 2 \
-    --database_dir ${DRAMV_DB_DIR}
+    --min_contig_size $MIN_CONTIG_SIZE \
+    --threads $CPUS \
+    --database_dir $DRAMV_DB_DIR
 
-apptainer exec ${DRAMV_SIF} dramv distill -i ${OUT_DIR}/${SAMPLE}_dramv_output/annotations.tsv \
+apptainer exec $BIND ${DRAMV_SIF} dramv distill -i ${OUT_DIR}/${SAMPLE}_dramv_output/annotations.tsv \
     -o ${OUT_DIR}/${SAMPLE}_dramv_distilled \
-    --min_contig_size 3000 \
-    --min_score 0.8 \                     # minimum score to consider a viral contig high-quality    
-    --min_completeness 50                  # minimum completeness percentage to consider a viral contig high-quality
+    --min_contig_size $MIN_CONTIG_SIZE \
+    --min_score $MIN_SCORE \                     # minimum score to consider a viral contig high-quality    
+    --min_completeness $MIN_COMPLETENESS                  # minimum completeness percentage to consider a viral contig high-quality
     
 
 # Check if DRAM-v completed successfully

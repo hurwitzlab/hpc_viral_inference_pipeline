@@ -63,11 +63,11 @@ fi
 
 echo "Running Prokka on sample: ${SAMPLE}"
 
-apptainer exec ${PROKKA_SIF} prokka \
+apptainer exec $BIND ${PROKKA_SIF} prokka \
     --outdir "${OUT_DIR}/${SAMPLE}_prokka_output" \
     --prefix "${SAMPLE}_prokka" \
-    --cpus 2 \                                   # number of CPUs, make sure it matches the -n value above
-    --kingdom Viruses \
+    --cpus $CPUS \                                   # number of CPUs, make sure it matches the -n value above
+    --kingdom $KINGDOM \
     --addgenes \
     --force \
     "${IN_DIR}/${SAMPLE}_checkv_output/${SAMPLE}_checkv_complete.fasta"

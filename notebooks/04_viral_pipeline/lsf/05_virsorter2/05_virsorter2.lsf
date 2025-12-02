@@ -7,21 +7,8 @@
 
 
 # --------------------------------------------------
-# Request resources here
-# --------------------------------------------------
-#BSUB -J virsorter2                   # job name
-#BSUB -n 2                            # number of CPUs required per task
-#BSUB -q shared_memory                # the queue to run on
-#BSUB -R "span[hosts=1]"              # number of hosts to spread the jobs across, 1 host used here
-#BSUB -R "rusage[mem=4GB]"            # required total memory for the job 
-#BSUB -o "./output.%J.log"            # standard output file (%J is job name)
-#BSUB -e "./error.%J.log"             # standard error file (%J is job ID)
-#BSUB -W 10:00:00                     # time to run
-
-# --------------------------------------------------
 # Load modules here
 # --------------------------------------------------
-
 module load apptainer
 
 # --------------------------------------------------
@@ -63,12 +50,12 @@ fi
 
 echo "Running VirSorter2 on sample: ${SAMPLE}"
 
-apptainer exec ${VIRSORTER_SIF} virsorter run -w ${OUT_DIR}/${SAMPLE}_virsorter2_output \
+apptainer exec $BIND ${VIRSORTER_SIF} virsorter run -w ${OUT_DIR}/${SAMPLE}_virsorter2_output \
     -i ${IN_DIR}/${SAMPLE}_metaspades_output/${SAMPLE}_contigs.fasta \
-    --include-groups dsDNAphage,ssDNA \
-    --min-length 3000 \
-    --min-score 0.5 \
-    -j 16 \                                 # number of threads, make sure it matches the -n value above
+    --include-groups $GROUPS \
+    --min-length $MIN_LEN \
+    --min-score $MIN_SCORE \
+    -j $CPUS \                                 # number of threads, make sure it matches the -n value above
     all \
     --prep-for-dramv
 

@@ -5,23 +5,9 @@
 # This script runs metaSPAdes for metagenomic assembly of reads into contigs
 # using an Apptainer Container
 
-
-# --------------------------------------------------
-# Request resources here
-# --------------------------------------------------
-#BSUB -J metaspades                   # job name
-#BSUB -n 2                            # number of CPUs required per task
-#BSUB -q shared_memory                # the queue to run on
-#BSUB -R "span[hosts=1]"              # number of hosts to spread the jobs across, 1 host used here
-#BSUB -R "rusage[mem=4GB]"            # required total memory for the job 
-#BSUB -o "./output.%J.log"            # standard output file (%J is job name)
-#BSUB -e "./error.%J.log"             # standard error file (%J is job ID)
-#BSUB -W 10:00:00                     # time to run
-
 # --------------------------------------------------
 # Load modules here
 # --------------------------------------------------
-
 module load apptainer
 
 # --------------------------------------------------
@@ -63,15 +49,15 @@ fi
 
 echo "Running metaSPAdes on sample: ${SAMPLE}"
 
-apptainer exec ${METASPADES_SIF} metaspades.py \
+apptainer exec $BIND ${METASPADES_SIF} metaspades.py \
     --meta \
     -1 ${IN_DIR}/${SAMPLE}_R1.fastq.gz \
     -2 ${IN_DIR}/${SAMPLE}_R2.fastq.gz \
     -o ${OUT_DIR}/${SAMPLE}_metaspades_output \
-    -t 2 \                         # number of threads, make sure it matches the -n value above
-    -m 4 \                         # maximum memory in GB, meake sure it matches the rusage[mem=] value above
-    --min-contig-length 2000 \
-    -k 21,33,55,77,99,127
+    -t $CPUS \                         # number of threads, make sure it matches the -n value above
+    -m $MEM \                         # maximum memory in GB, meake sure it matches the rusage[mem=] value above
+    --min-contig-length $MIN_CONTIG_LEN \
+    -k $K_VALUES
 
 # Check if metaSPAdes completed successfully
 if [ $? -eq 0 ]; then
