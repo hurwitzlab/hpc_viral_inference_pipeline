@@ -5,23 +5,9 @@
 # This script runs trimmomatic quality control on sequencing data
 # using an Apptainer Container
 
-
-# --------------------------------------------------
-# Request resources here
-# --------------------------------------------------
-#BSUB -J trimmomatic                  # job name
-#BSUB -n 2                            # number of CPUs required per task
-#BSUB -q shared_memory                # the queue to run on
-#BSUB -R "span[hosts=1]"              # number of hosts to spread the jobs across, 1 host used here
-#BSUB -R "rusage[mem=4GB]"            # required total memory for the job 
-#BSUB -o "./output.%J.log"            # standard output file (%J is job name)
-#BSUB -e "./error.%J.log"             # standard error file (%J is job ID)
-#BSUB -W 10:00                        # time to run
-
 # --------------------------------------------------
 # Load modules here
 # --------------------------------------------------
-
 module load apptainer
 
 # --------------------------------------------------
@@ -63,11 +49,15 @@ fi
 
 echo "Running trimmomatic on sample: ${SAMPLE}"
 
-apptainer run ${TRIMMOMATIC} trimmomatic PE -phred33 -threads 4 \
+apptainer run $BIND ${TRIMMOMATIC} trimmomatic PE -phred33 \
+    -threads $CPUS \
     ${IN_DIR}/${SAMPLE}_R1*.fastq* ${IN_DIR}/${SAMPLE}_R2*.fastq* \
     ${OUT_DIR}/${SAMPLE}_R1.fastq.gz ${OUT_DIR}/${SAMPLE}_R1.fastq.gz \
     ${UNPAIR_DIR}/${SAMPLE}_R2.fastq.gz ${UNPAIR_DIR}/${SAMPLE}_R2.fastq.gz \
-    ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10 SLIDINGWINDOW:4:20 MINLEN:100 HEADCROP:15
+    ILLUMINACLIP:$ILLUMINACLIP \
+    SLIDINGWINDOW:$SLIDINGWINDOW \
+    MINLEN:$MINLEN \
+    HEADCROP:$HEADCROP
 
 # Check if Trimmomatic completed successfully
 if [ $? -eq 0 ]; then
