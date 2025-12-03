@@ -24,7 +24,7 @@ Other reasons to learn Unix:
 - enables use of higher-powered computers elsewhere (servers/cloud-computing)
 
 ## What is Unix
-UNIX is a family of innovative **operating systema** developed in the 1970s, designed for developers, with a command-line interface and a core kernel, or the fundamental code which allows software to manage hardware (handling critical functions like process scheduling, memory management, and device management). Like a lot of success sotories in programming (I am looking at you R), Unix spread due to its portability and through open community development and collaboration.
+UNIX is a family of innovative **operating systems** developed in the 1970s, designed for developers, with a command-line interface and a core kernel, or the fundamental code which allows software to manage hardware (handling critical functions like process scheduling, memory management, and device management). Like a lot of success sotories in programming (I am looking at you, R), Unix spread due to its portability and through open community development and collaboration.
 
 Many successful offshoots of Unix have been developed, which is why we might see the term “Unix-like”, in order to encompass all the systems that aren’t technically “Unix”.
 

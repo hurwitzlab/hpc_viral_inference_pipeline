@@ -16,7 +16,7 @@ The `.bashrc` file lives in your home directory (~/) and controls your shell env
 
 "Dotfiles" are files with names that begin with a dot. They are normally hidden from view unless you use `ls -a` to list "all" files. A single dot `.` means the current directory, and two dots `..` mean the parent directory. Your `.bashrc` (or maybe `.profile` or maybe `.bash_profile` depending on your system) file is read every time you login to your system, so you can remember your customizations. "Rc" may mean "resource configuration," but who really knows?
 
-After a while, you may wish to collect your dotfiles into a Github repo, e.g., https://github.com/kyclark/dotfiles.
+After a while, you may wish to collect your dotfiles into a [Github repo](https://github.com/kyclark/dotfiles). 
 
 
 ## Contents of `.bashrc`

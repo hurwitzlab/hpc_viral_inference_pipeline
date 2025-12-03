@@ -1,0 +1,328 @@
+---
+title: "cut, paste, grep, sed, awk, tr"
+author: "Mery Touceda-Suárez"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+---
+
+> Note: This training has used significant contribution from the [Happy Belly Bioinformatics Unix Crash Course](https://astrobiomike.github.io/unix/unix-intro). 
+
+## Six commands for your toolkit
+
+Mastering a handful of versatile Unix commands can dramatically improve your ability to work with large datasets and automate repetitive tasks. In this section, we'll explore four essential tools that every bioinformatician should have in their toolkit: `cut` for extracting and manipulating columns, `paste` for merging files side-by-side, `grep` for searching through text and finding patterns, `sed` for performing search-and-replace operations, `awk` for filtering data based on conditions and performing calculations, and `tr` for translating or deleting single characters. While each of these commands has extensive capabilities that take time to master, even basic familiarity with their core functions will enable you to quickly wrangle tab-delimited tables, filter BLAST results, extract specific annotations, and transform data without ever leaving the command line. Think of these commands as building blocks that can be combined using pipes to create powerful one-line data processing workflows.
+
+
+## About the example dataset
+
+For this training, we'll be working with a gene annotation file called `gene_annotations.tsv`. This file contains functional predictions for 100 genes identified across four bacterial genomes. The dataset is structured as a tab-separated values (TSV) table with four columns:
+
+- **gene_ID**: A unique identifier for each gene (e.g., Te_0001, Te_4133)
+- **genome**: The source genome from which the gene was identified. Our dataset includes genes from four genomes: UW179A, UW277, 3R_1045, and 3R_1087
+- **KO_ID**: The KEGG Orthology identifier, which links genes to known functional categories in the KEGG database (e.g., K00001, K18979)
+- **KO_annotation**: A text description of the predicted gene function, primarily enzyme names (e.g., "alcohol dehydrogenase", "glycerol dehydrogenase")
+
+Some genes lack functional annotations and are marked as "NA" in both the KO_ID and KO_annotation columns—this is common in genomic datasets when computational methods cannot confidently assign a function to a gene. Throughout the exercises, we'll use this file to practice extracting specific columns, searching for genes of interest, replacing text values, and filtering data based on various criteria. The file contains 101 total lines: one header row and 100 data rows.
+
+
+### Example dataset inspection
+We can get a little more information about this dataset using unix commands: 
+
+1. Pull out the header to see what columns we are working with:
+```bash
+head -n 1 gene_annotations.tsv
+```
+
+2. Count the number of rows
+```bash
+wc -l gene_annotations.tsv
+```
+
+3. Look at the first and last lines of the table to get an idea of how the values look
+```bash
+head gene_annotations.tsv
+tail gene_annotations.tsv
+```
+
+Now that we know something about the file we’re working with, let’s get to some new commands!
+
+
+## `cut`
+`cut` is a command that’s great for **manipulating columns**. The **required arguments** for cut are :
+
+- **which columns** we want
+- from **which file** 
+
+Here’s how we can use cut to pull out just the gene_ID column (column 1):
+```bash
+cut -f 1 gene_annotations.tsv
+```
+That is printing out all of the lines to the screen though, let’s pipe | it into head for now to keep things manageable while we’re working on it:
+
+> remember we can bring up a previous command by pressing up
+```bash
+cut -f 1 gene_annotations.tsv | head
+```
+Here we are specifying which column we want with the `-f` parameter (for field). We can specify multiple individual columns if we separate them with a comma:
+```bash
+cut -f 1,3 gene_annotations.tsv | head
+```
+And a range of columns if we join them with a dash:
+```bash
+cut -f 1-3 gene_annotations.tsv | head
+```
+Just like in spreadsheet programs, cut thinks about where columns start and stop based on a delimiter, like a comma or a tab. The default setting is a tab, so we didn’t need to change it for that file. But if we try using it on a comma separated values file (a csv), things don’t work well unless we tell cut the delimiter is a comma, which we can do with the -d parameter:
+```bash
+cut -d "," -f 1-3 example_gene_annotations.csv | head
+```
+:::{.callout-note}
+## Practice
+From our tab-delimited file, `gene_annotations.tsv`, try to make a new file that has just 2 columns: the gene_ID and KO_annotation columns (remember the `>` redirector). Name the new file `IDs_and_annotations.tsv`.
+:::
+
+-----
+
+##  `grep`
+`grep` (global regular expression) is a search tool. It looks through text files for strings (sequences of characters). In its default usage, `grep` will look for whatever string of characters you give it (1st positional argument), in whichever file you specify (2nd positional argument), and then print out the lines that contain what you searched for. Let’s try it:
+```bash
+head example.txt
+```
+```bash
+grep Vigo example.txt
+```
+If there are multiple lines that match, `grep` will print them all:
+
+If what we are looking for is not in the file, we will just get our prompt back with nothing printed out:
+```bash
+grep London example.txt
+```
+<br>
+
+Back to our gene annotations file, remember it holds KO-annotation information in the 3rd and 4th columns:
+```bash
+head -n 1 gene_annotations.tsv
+```
+For the moment, let’s pretend we’re interested in genes predicted to encode for the enzyme epoxyqueuosine reductase for some reason. If we search at the KO website for this, it tells us that there are 2 KO_IDs associated with it: K09765 and K18979. `grep` is a super-quick way to see if they are in our annotations file:
+```bash
+grep K09765 gene_annotations.tsv
+```
+```bash
+grep K18979 gene_annotations.tsv
+```
+It seems the first one wasn’t found in our genomes, but the second one is in there twice!
+
+:::{.callout-note}
+## Practice
+Using a combination of `grep` and `cut`, how could we print out just the genomes (column 2) that have the "K18979" annotation.
+:::
+
+-------
+
+## `paste`
+Let’s look at another file in our directory that holds the amino acid lengths and sequences of our genes:
+```bash
+head genes_and_seqs.tsv
+```
+If the lines are longer than the terminal window, then they will wrap like this and look kind of messy. We can take a look without linewraps with the less program by adding the -S option:
+```bash
+less -S genes_and_seqs.tsv
+```
+In this view things run off the screen, but each line is one row. Note that the terminal doesn’t automatically line up columns for us. `q` will exit less.
+
+Let’s say we want to add these protein lengths and sequences to our `gene_annotations.tsv` file. We can paste the two files together, but then we’ll have two columns for `gene_ID` (columns 1 and 5):
+```bash
+paste gene_annotations.tsv genes_and_seqs.tsv | head -n 1
+```
+:::{.callout-note}
+If a `paste: write error: Broken pipe` message pops up here, it can be ignored. It is just happening because the head command is finishing before the paste command, and then paste is telling us it had nowhere to send the output anymore. But since all we care about is the first line here, it does not affect what we’re doing. (Not all systems do things this way, so you may or may not see that).
+:::
+
+If we wanted to take everything except the fifth column (the second “gene_ID” column), we could do it like this:
+```bash
+paste gene_annotations.tsv genes_and_seqs.tsv | cut -f 1-4,6- | head -n 2
+```
+Notice that by putting the dash after the 6, and nothing else, we are specifying that column and all that follow.
+
+:::{.callout-warning}
+Paste is a super-useful command. But it does not check to make sure what we are doing makes sense. If these files were out of order from each other, paste would still be just as happy to stick them together and then our merged file would hold mismatched information. So it’s important to make sure things we are pasting together are in the appropriate order. It’s a little too far off the path for now, but just to note them, useful commands to look into for doing this would be `sort` and `comm`. 
+:::
+
+--------
+
+## `sed`
+`sed` (for stream editor) is our **“search and replace”** command, just like in something like Excel or Word, but much more powerful. Like many of the commands here, sed is useful in just general usage, but you can also learn to do a lot more with it if you need/want to at some point. For now, let’s look at the general usage.
+
+Let’s imagine we want to change the name of one of the new genomes in our `gene_annotations.tsv` file. So now we need to change all instances of “UW179A” to “UW277”.
+
+This genome happens to appear at the end of our file, so we can check it with tail if we’d like:
+```bash
+tail gene_annotations.tsv
+```
+
+The syntax of sed is a little strange at first, so let’s run it and then break it down (don’t forget, feel free to copy and paste things):
+```bash
+sed 's/UW179A/UW277/' gene_annotations.tsv | tail
+```
+Here, the sed command is followed by an expression within single quotes: `'s/UW179A/UW277/'`. This whole expression one positional argument we are passing to the sed program. This expression holds 4 items separated by the 3 forward slashes in there:
+- `“s”`: which is for “substitute”
+- `“UW179A”`: what we’d like to find and replace
+- `“UW277”`: what we’d like to replace it with 
+- `/'`: empty 4th element in this case (the next example will use that slot)
+
+Now that we’ve previewed this, we can remove the `tail` (allows us to preview the change without modifying it) and write the new version to a file with a redirector:
+```bash
+sed 's/UW179A/UW277/' gene_annotations.tsv > modified_gene_annotations.tsv
+tail modified_gene_annotations.tsv
+```
+
+And note that this did not alter the original file:
+```bash
+tail gene_annotations.tsv
+```
+
+One important thing to know about sed is that by default it will only change the first occurrence of something in a line. For example, let’s say we need to change all occurrences of “NA” to “<NA>” to fit a certain program we want to use:
+```bash
+head gene_annotations.tsv
+```
+```bash
+sed 's/NA/<NA>/' gene_annotations.tsv | head
+```
+Note that only the first occurrence in each line was changed. To change that behavior, we need to add a `g` (for global) to that fourth slot like so:
+```bash
+sed 's/NA/<NA>/g' gene_annotations.tsv | head
+```
+
+And now all instances are replaced.
+
+There is however another problem we would need to address. You may have noticed that all places where “NA” occurred were changed, including places that said things like “DNA” in the “KO_annotation” column. This isn’t ideal in this case, and this example was a little contrived just to show the `g` parameter of sed. There are ways to make sed work with exact words only (so it wouldn’t affect things within longer strings like “DNA”), but those get a little tricky and vary by what type of Unix system we are working on, so they’re a little bit beyond our current scope. 
+
+-------
+
+## `awk`
+`awk` is even more expansive than any of the others we’ve seen, since it is not only a powerful text processing tool but also a programming language. `awk` is fundamentally a field-oriented data manipulator that treats a file as a stream of records (lines) and fields (columns). The power of awk comes from its ability to process data only when specific conditions are met, and to perform actions like filtering, counting, and simple arithmetic.
+
+### Basic Syntax and Concept
+The fundamental structure of an `awk` command is `awk 'pattern {action}' filename`.
+
+- **pattern**: A condition (e.g., column 2 equals "UW277") that must be met for the action to run.
+- **action**: A set of commands (e.g., print column 1) to be executed when the pattern is true.
+
+If the pattern is missing, the action runs on every line. If the action is missing, the default action is `{print $0}` (print the entire line).
+
+### Awk Variables: Records and Fields
+`awk` automatically creates special variables:
+
+- `$0`: The entire current line (record).
+- `$1, $2, $3, ...`: The individual fields (columns) of the current line.
+- `NF`: The Number of Fields (total columns) in the current line.
+- `NR`: The Number of Records (current line number).
+
+### Core Usage: Extracting Columns (`{action} only`)
+While cut is faster for simple column extraction, awk can do the same.
+
+Goal: Extract the `gene_ID` (column 1) and `KO_annotation` (column 4).
+```bash
+# {print $1, $4} is the action. No pattern means run on every line.
+awk '{print $1, $4}' gene_annotations.tsv | head
+```
+> Note: `awk` prints values separated by a space by default, not a tab. You can control the output field separator (OFS) if needed for new file creation.
+
+### Conditional Filtering (`pattern {action}`)
+We can use `awk` to filter lines based on the content of a field, which is a key advantage over a simple grep.
+
+#### 1. Exact Match Filtering
+Goal: Print all lines where the genome (column 2) is exactly UW277.
+```bash
+# $2 == "UW277" is the pattern. The action is print the whole line ($0).
+awk '$2 == "UW277" {print $0}' gene_annotations.tsv | head
+```
+
+#### 2. Numerical Filtering
+`awk` can use standard comparison operators (>, <, ==, !=). To make this example work, we'll need a column with numbers, like the protein length from our genes_and_seqs.tsv file. Let's assume the length is column 2 in that file.
+
+Goal: Find all genes longer than 400 amino acids.
+```bash
+# Join the files first, then filter by the length column (column 5)
+paste gene_annotations.tsv genes_and_seqs.tsv | awk '$5 > 400'
+```
+:::{.callout-note}
+## Practice
+Use `wc -l` to count how many genes are longer than 400 amino acids.
+:::
+
+#### 3. Performing On-the-Fly Calculations
+One of `awk`'s most powerful features is its ability to treat fields as numbers and perform arithmetic.
+
+Goal: Filter for genes from genome 3R_1045 (`$2 == "3R_1045"`) AND whose protein length (column 6) is greater than 1000 amino acids.
+```bash
+# 1. Paste the two files
+# 2. Awk processes the combined stream
+paste gene_annotations.tsv genes_and_seqs.tsv | awk '$2 == "3R_1045" && $6 > 1000'
+```
+
+### Essential Trick: Skipping the Header Row
+When `awk` performs numerical comparisons (like `$6 > 1000`), it includes the text header row because the text is not numerically less than the threshold. The simplest way to exclude the header is to use the built-in variable NR (Number of Records).
+
+Goal: Repeat the previous filter, but only for lines after the first line (NR > 1).
+```bash
+paste gene_annotations.tsv genes_and_seqs.tsv | awk 'NR > 1 && $2 == "3R_1045" && $6 > 1000'
+```
+
+### Special Blocks: `BEGIN` and `END`
+`awk` has two special, optional blocks that are extremely useful for formatting and summarization.
+
+| Block | Function | Example Use Case |
+| :--- | :--- | :--- |
+| **`BEGIN { ... }`** | Actions run **once** before the very first line of input is read. | Printing a **header row** or setting field separators. |
+| **`END { ... }`** | Actions run **once** after the very last line of input has been processed. | Printing a final summary, such as a **count** or an **average**. |
+
+<br>
+
+Goal: Print a header and count how many genes have an "NA" annotation.
+```bash
+awk '
+BEGIN {
+    # Print a header for our filtered output
+    print "GENE_ID\tKO_ANNOTATION"
+}
+$4 == "NA" {
+    # This action runs on every line where column 4 is "NA"
+    print $1 "\t" $4
+    count++ # Increment a custom variable 'count'
+}
+END {
+    # This action runs after all lines are processed
+    print "---"
+    print "Total genes with 'NA' annotation: " count
+}' gene_annotations.tsv
+```
+
+:::{.callout-note}
+`awk` is often written across multiple lines like this for readability, but can be a single line. The tab (\t) ensures the output is tab-separated.
+:::
+
+
+## `tr`
+`tr` (for translate) is a simpler text utility than `sed` used only for translating or deleting single characters. Unlike `grep` and `sed`, `tr` does not take a file as an argument; it reads from standard input, making it always used with a pipe.
+
+### 1. Translation
+The basic syntax is `tr` 'set1' 'set2', where every character in set1 is converted to the corresponding character in set2.
+
+Goal: Convert all occurrences of the underscore character (_) in the gene_ID column to a hyphen (-).
+```bash
+# Extract the gene_ID column, pipe it to tr, and print the result
+cut -f 1 gene_annotations.tsv | head | tr '_' '-'
+```
+
+### 2. Deletion
+To delete a character, use the `-d`option.
+
+Goal: Remove all quotation marks (") from a file. (We'll use our annotations file and pretend it has quotes).
+```bash
+# Print the annotation column, pipe it to tr -d to delete all "
+cut -f 4 gene_annotations.tsv | head | tr -d '"'
+```

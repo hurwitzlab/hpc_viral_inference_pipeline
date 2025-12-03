@@ -99,7 +99,7 @@ cd $HOME
 You can use both absolute and relative paths with `cd`: 
 
 - An **absolute** path starts from the root directory, e.g., `/usr/local/bin/`. 
-- A **relative** path does not start with the leading / and assumes a path relative to your current working directory. If you were in the `/usr/local` directory and wanted to change to `/usr/local/bin`, you could either `cd /usr/local/bin` (absolute) or `cd bin` (relative to `"/usr/local"`).
+- A **relative** path does not start with the leading `/` and assumes a path relative to your current working directory. If you were in the `/usr/local` directory and wanted to change to `/usr/local/bin`, you could either `cd /usr/local/bin` (absolute) or `cd bin` (relative to `"/usr/local"`).
 
 ::: {.callout-note} 
 ## What is the answer?

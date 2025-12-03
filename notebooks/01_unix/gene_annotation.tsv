@@ -1,0 +1,51 @@
+gene_ID	genome	KO_ID	KO_annotation
+Te_0001	UW179A	K00001	alcohol dehydrogenase
+Te_0002	UW179A	K00002	alcohol dehydrogenase (NADP+)
+Te_0003	UW179A	NA	NA
+Te_0004	UW179A	K00003	homoserine dehydrogenase
+Te_0005	UW179A	K00004	glycerol dehydrogenase
+Te_0006	UW277	K00005	glycerol dehydrogenase (NADP+)
+Te_0007	UW277	NA	NA
+Te_0008	UW277	K00006	glycerol-3-phosphate dehydrogenase
+Te_0009	UW277	K00007	galactose dehydrogenase
+Te_0010	UW277	K00008	L-lactate dehydrogenase
+Te_0011	3R_1045	K00009	myo-inositol 2-dehydrogenase
+Te_0012	3R_1045	K00010	glycerol dehydrogenase
+Te_0013	3R_1045	NA	NA
+Te_0014	3R_1045	K00011	aldehyde dehydrogenase
+Te_0015	3R_1045	K00012	UDPglucose 6-dehydrogenase
+Te_0016	3R_1087	K00013	histidinol dehydrogenase
+Te_0017	3R_1087	K00014	shikimate dehydrogenase
+Te_0018	3R_1087	NA	NA
+Te_0019	3R_1087	K00015	glycine dehydrogenase
+Te_0020	3R_1087	K00016	L-lactate dehydrogenase (cytochrome)
+Te_0021	UW179A	K00017	glycerate dehydrogenase
+Te_0022	UW179A	K00018	glycerol-3-phosphate dehydrogenase
+Te_0023	UW179A	NA	NA
+Te_0024	UW179A	K00019	dihydrodipicolinate reductase
+Te_0025	UW179A	K00020	3-hydroxyisobutyrate dehydrogenase
+Te_0026	UW277	K00021	malate dehydrogenase
+Te_0027	UW277	K00022	3-hydroxyacyl-CoA dehydrogenase
+Te_0028	UW277	NA	NA
+Te_0029	UW277	K00023	acetoacetyl-CoA reductase
+Te_0030	UW277	K00024	glycerate dehydrogenase
+Te_0031	3R_1045	K00025	serine dehydrogenase
+Te_0032	3R_1045	K00026	malate dehydrogenase (oxaloacetate-decarboxylating)
+Te_0033	3R_1045	NA	NA
+Te_0034	3R_1045	K00027	isocitrate dehydrogenase
+Te_0035	3R_1045	K00028	malate oxidoreductase (NADP+)
+Te_0036	3R_1087	K00029	glyceraldehyde-3-phosphate dehydrogenase
+Te_0037	3R_1087	K00030	isocitrate dehydrogenase (NAD+)
+Te_0038	3R_1087	NA	NA
+Te_0039	3R_1087	K18979	epoxyqueuosine reductase
+Te_0040	3R_1087	K00031	isocitrate dehydrogenase
+Te_0041	UW179A	K00032	1-pyrroline-5-carboxylate dehydrogenase
+Te_0042	UW179A	K00033	phosphoglycerate dehydrogenase
+Te_0043	UW179A	NA	NA
+Te_0044	UW179A	K00034	aspartate-semialdehyde dehydrogenase
+Te_0045	UW179A	K00035	4-hydroxy-tetrahydrodipicolinate reductase
+Te_0046	UW277	K00036	glucose-6-phosphate dehydrogenase
+Te_0047	UW277	K00037	phosphogluconate dehydrogenase
+Te_0048	UW277	NA	NA
+Te_0049	UW277	K00038	'malic' enzyme (oxaloacetate-decarboxylating)
+Te_0050	UW277	K00039	NADP-dependent malic enzyme
