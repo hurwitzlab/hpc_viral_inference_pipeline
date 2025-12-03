@@ -60,18 +60,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="cut_grep_sed_awk_files/libs/clipboard/clipboard.min.js"></script>
-<script src="cut_grep_sed_awk_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="cut_grep_sed_awk_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="cut_grep_sed_awk_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="cut_grep_sed_awk_files/libs/quarto-html/popper.min.js"></script>
-<script src="cut_grep_sed_awk_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="cut_grep_sed_awk_files/libs/quarto-html/anchor.min.js"></script>
-<link href="cut_grep_sed_awk_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="cut_grep_sed_awk_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="cut_grep_sed_awk_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="cut_grep_sed_awk_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="cut_grep_sed_awk_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="04_cut_grep_sed_awk_files/libs/clipboard/clipboard.min.js"></script>
+<script src="04_cut_grep_sed_awk_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="04_cut_grep_sed_awk_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="04_cut_grep_sed_awk_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="04_cut_grep_sed_awk_files/libs/quarto-html/popper.min.js"></script>
+<script src="04_cut_grep_sed_awk_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="04_cut_grep_sed_awk_files/libs/quarto-html/anchor.min.js"></script>
+<link href="04_cut_grep_sed_awk_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="04_cut_grep_sed_awk_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="04_cut_grep_sed_awk_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="04_cut_grep_sed_awk_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="04_cut_grep_sed_awk_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -107,6 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#translation" id="toc-translation" class="nav-link" data-scroll-target="#translation">1. Translation</a></li>
   <li><a href="#deletion" id="toc-deletion" class="nav-link" data-scroll-target="#deletion">2. Deletion</a></li>
   </ul></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s next</a></li>
   </ul>
 </nav>
 </div>
@@ -460,7 +461,12 @@ Note
 <p>Goal: Remove all quotation marks (“) from a file. (We’ll use our annotations file and pretend it has quotes).</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the annotation column, pipe it to tr -d to delete all "</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-f</span> 4 gene_annotations.tsv <span class="kw">|</span> <span class="fu">head</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="at">-d</span> <span class="st">'"'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br></p>
 </section>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s next</h2>
+<p>Now that you’ve mastered the fundamentals of the “six commands” (<code>cut</code>, <code>paste</code>, <code>grep</code>, <code>sed</code>, <code>awk</code>, and <code>tr</code>), you have all the necessary building blocks to transition from running single commands to writing powerful, automated workflows. The true power of these utilities is unlocked when they are combined using pipes and integrated into larger control structures. In the <strong>next module (02_shell_scripting</strong>), we will dive into shell scripting, where we will learn how to use for loops, variables, and conditional statements to create multi-step programs that can automatically process thousands of files and execute complex data analyses with a single command.</p>
 </section>
 
 </main>

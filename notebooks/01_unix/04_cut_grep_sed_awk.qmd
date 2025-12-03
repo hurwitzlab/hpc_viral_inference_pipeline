@@ -326,3 +326,8 @@ Goal: Remove all quotation marks (") from a file. (We'll use our annotations fil
 # Print the annotation column, pipe it to tr -d to delete all "
 cut -f 4 gene_annotations.tsv | head | tr -d '"'
 ```
+
+<br>
+
+## What's next
+Now that you've mastered the fundamentals of the "six commands" (`cut`, `paste`, `grep`, `sed`, `awk`, and `tr`), you have all the necessary building blocks to transition from running single commands to writing powerful, automated workflows. The true power of these utilities is unlocked when they are combined using pipes and integrated into larger control structures. In the **next module (02_shell_scripting**), we will dive into shell scripting, where we will learn how to use for loops, variables, and conditional statements to create multi-step programs that can automatically process thousands of files and execute complex data analyses with a single command.
