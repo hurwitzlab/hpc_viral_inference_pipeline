@@ -303,3 +303,221 @@ Emacs is a feature-rich editor known for using many key combinations involving t
   2. Press `Ctrl + H` then `T` to launch the tutorial.
 - The Emacs Manual: The full GNU Emacs Manual is available both online and from within the editor via the Info system (`Ctrl + H`, then `I`). It's dense but extremely thorough.
 - Emacs Lisp (Elisp): If you plan to customize Emacs extensively, you'll need to learn Elisp, its built-in programming language. Resources exist specifically for learning Elisp customization.
+
+
+## Key Takeaways
+By completing this module, you should now be comfortable with:
+
+- **File inspection:** Using `head`, `tail`, and `less` to quickly examine file contents without opening large files in memory
+- **File statistics:** Applying `wc` to count lines, words, and characters in files
+- **File operations:** Copying (`cp`), moving (`mv`), renaming, and removing (`rm`) files with both relative and absolute paths
+- **Directory management:** Creating (`mkdir`) and removing (`rmdir`, `rm -r`) directories, understanding the critical difference between safe and recursive deletion
+- **File permissions:** Reading and interpreting the 10-bit permission string, using chmod to modify execute, read, and write permissions with both symbolic and octal notation
+- **Terminal text editors:** Knowing when and how to use Nano (beginner-friendly), Vi/Vim (modal and powerful), or Emacs (highly customizable) for editing files directly in the terminal
+- **Plain text concepts:** Understanding what constitutes a plain-text file and why file extensions are primarily organizational tools
+
+These fundamental file manipulation skills form the backbone of bioinformatics workflows, enabling you to efficiently navigate, inspect, and modify data files on local machines and remote HPC clusters.
+
+
+## Homework
+::: {.callout-note icon=false}
+## Homework Exercises
+Complete the following exercises to practice working with files and directories in Unix. Work in a safe test directory to avoid accidentally deleting important files.
+
+### Setup: Create Your Workspace
+Before starting, create a dedicated homework directory:
+```bash
+mkdir ~/unix_files_homework
+cd ~/unix_files_homework
+```
+
+### Part 1: File Inspection and Statistics
+#### 1. Download or create a test file:
+
+- Create a file called `proteins.txt` with at least 50 lines of text (you can copy text from any source, or use a command like `seq 1 100 > proteins.txt` to generate numbered lines)
+- Use `wc` to determine how many lines, words, and characters are in this file
+
+
+#### 2. Quick file inspection:
+
+- View the first 15 lines of `proteins.txt`
+- View the last 8 lines of `proteins.txt`
+- Use less to navigate through the entire file, practice searching for a specific word, then exit
+
+
+#### 3. Combining commands:
+
+- Create three more text files: genes.txt, samples.txt, and results.txt (content doesn't matter)
+- Use a single command to count the total number of lines across all four .txt files in your directory
+- Hint: Use wildcards (`*.txt`) and pipes (`|`)
+
+
+
+
+### Part 2: Copying and Moving Files
+
+#### 1. Create a directory structure:
+
+Create the following directory structure:
+```
+   unix_files_homework/
+   ├── raw_data/
+   ├── processed_data/
+   └── archive/
+```
+
+#### 2. Practice copying:
+
+- Copy `proteins.txt` to the `raw_data/` directory (keep the same name)
+- Copy `genes.txt `to the `processed_data/` directory and rename it to `genes_v1.txt`
+- Create a copy of `samples.txt` in the current directory called `samples_backup.txt`
+
+
+#### 3. Practice moving and renaming:
+
+- Move `results.txt` into the `processed_data/` directory
+- Rename `samples_backup.txt` to `samples_original.txt` (without moving it)
+- Move `samples_original.txt` to `archive/` and rename it to `samples_20241204.txt` in a single command
+
+
+
+
+### Part 3: Working with Paths
+
+#### 1. Absolute vs. relative paths:
+
+- Write down the absolute path to your raw_data/ directory
+- From within the processed_data/ directory, write a command using a relative path to copy proteins.txt from raw_data/ to your current location
+- Use the . notation to copy a file from the parent directory to your current directory
+
+
+#### 2. Navigation practice:
+
+- Navigate to the archive/ directory
+- Use .. notation to list the contents of the parent directory without leaving archive/
+- Return to your home directory using cd ~, then navigate back to unix_files_homework using a relative path
+
+
+
+
+### Part 4: File Permissions
+
+#### 1. Create and examine a script:
+
+Create a new file called analysis.sh with this content:
+
+```bash   
+#!/bin/bash
+   echo "Running analysis..."
+```
+- Use `ls -l` to check the current permissions on `analysis.sh`
+- Try to execute it: `./analysis.sh` - what happens and why?
+
+
+#### 2. Modify permissions:
+
+- Make analysis.sh executable for everyone using symbolic notation (`chmod +x`)
+- Verify the permissions changed with `ls -l`
+- Now execute the script successfully: `./analysis.sh`
+
+
+#### 3. Practice permission scenarios:
+Create a file called `sensitive_data.txt`
+Set permissions so that:
+
+- You (user) can read and write
+- Your group can only read
+- Others have no permissions at all
+- Write this using both symbolic notation (e.g., `chmod u=rw,g=r,o=`) and octal notation (e.g., `chmod 640`)
+- Verify with `ls -l`
+
+
+
+
+### Part 5: Safe Deletion Practice
+
+#### 1. Safe directory removal:
+
+Create an empty directory called `temp_empty/`
+Remove it using `rmdir` - this should succeed
+Create another directory called `temp_full/` and put a file in it
+Try to remove it with `rmdir` - what happens?
+Now remove it properly using `rm -r`
+
+
+#### 2. Deletion safety net:
+
+Create a test file called `delete_me.txt`
+Add the following alias to your current session: alias `rm='rm -i'`
+Try to delete `delete_me.txt` - what's different?
+Why is the `-i `flag useful in a production environment?
+
+
+
+
+### Part 6: Terminal Text Editors
+
+#### 1. Nano practice:
+
+- Use Nano to create a new file called `experiment_notes.txt`
+- Type in at least 5 lines of text (pretend these are experiment notes)
+- Save the file and exit Nano
+- Reopen the file, add 2 more lines, save, and exit
+
+
+#### 2. Vi/Vim challenge (if you're feeling brave):
+
+- Open a new file in Vi/Vim: vi `quick_test.txt`
+- Enter insert mode, type "Hello from Vi!", exit insert mode
+- Save and quit the file
+- If you get stuck, remember: `Esc` then `:q!` to quit without saving
+
+
+#### 3. Editor comparison:
+
+- Write a brief paragraph (3-4 sentences) comparing your experience with the different text editors you tried
+- Save this in a file called `editor_reflection.txt`
+
+
+
+
+### Part 7: Putting It All Together
+
+#### 1. Complex workflow:
+
+Create a file called `data_summary.txt` that contains:
+
+- The first 5 lines of `proteins.txt`
+- A blank line
+- The last 5 lines of genes_v1.txt (from `processed_data/`)
+- Hint: You'll need to use output redirection (`>` and `>>`)
+
+
+#### 2. File organization challenge:
+
+- Count how many total files exist in your `unix_files_homework` directory and all its subdirectories
+- Create a file called directory_structure.txt that shows the output of `ls -lR` (recursive listing)
+- Make this file read-only for everyone using octal notation
+
+:::
+
+
+::: {.callout-tip icon=false}
+## Bonus Challenges
+
+### Advanced permissions:
+
+- Research what the "sticky bit" is in Unix permissions
+- Create a directory with sticky bit permissions set
+- Explain in a text file what the sticky bit does and when it's useful
+
+
+### Scripting practice:
+Create a script called `backup.sh` that:
+
+- Creates a directory called `backup_YYYYMMDD` (with today's date)
+- Copies all `.txt` files into this backup directory
+- Prints "Backup complete!" when finished
+- Make it executable and run it
+
+:::

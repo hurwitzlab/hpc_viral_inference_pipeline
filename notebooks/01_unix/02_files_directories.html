@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mery Touceda-Suárez">
-<meta name="dcterms.date" content="2025-12-03">
+<meta name="dcterms.date" content="2025-12-04">
 
 <title>Unix Files and Directories</title>
 <style>
@@ -99,6 +99,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#vi-and-its-modern-successor-vim" id="toc-vi-and-its-modern-successor-vim" class="nav-link" data-scroll-target="#vi-and-its-modern-successor-vim">Vi (and its modern successor Vim)</a></li>
   <li><a href="#emacs" id="toc-emacs" class="nav-link" data-scroll-target="#emacs">Emacs</a></li>
   </ul></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a></li>
   </ul>
 </nav>
 </div>
@@ -123,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 3, 2025</p>
+      <p class="date">December 4, 2025</p>
     </div>
   </div>
   
@@ -515,6 +517,236 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<p>By completing this module, you should now be comfortable with:</p>
+<ul>
+<li><strong>File inspection:</strong> Using <code>head</code>, <code>tail</code>, and <code>less</code> to quickly examine file contents without opening large files in memory</li>
+<li><strong>File statistics:</strong> Applying <code>wc</code> to count lines, words, and characters in files</li>
+<li><strong>File operations:</strong> Copying (<code>cp</code>), moving (<code>mv</code>), renaming, and removing (<code>rm</code>) files with both relative and absolute paths</li>
+<li><strong>Directory management:</strong> Creating (<code>mkdir</code>) and removing (<code>rmdir</code>, <code>rm -r</code>) directories, understanding the critical difference between safe and recursive deletion</li>
+<li><strong>File permissions:</strong> Reading and interpreting the 10-bit permission string, using chmod to modify execute, read, and write permissions with both symbolic and octal notation</li>
+<li><strong>Terminal text editors:</strong> Knowing when and how to use Nano (beginner-friendly), Vi/Vim (modal and powerful), or Emacs (highly customizable) for editing files directly in the terminal</li>
+<li><strong>Plain text concepts:</strong> Understanding what constitutes a plain-text file and why file extensions are primarily organizational tools</li>
+</ul>
+<p>These fundamental file manipulation skills form the backbone of bioinformatics workflows, enabling you to efficiently navigate, inspect, and modify data files on local machines and remote HPC clusters.</p>
+</section>
+<section id="homework" class="level2">
+<h2 class="anchored" data-anchor-id="homework">Homework</h2>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Homework Exercises
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Complete the following exercises to practice working with files and directories in Unix. Work in a safe test directory to avoid accidentally deleting important files.</p>
+<section id="setup-create-your-workspace" class="level3">
+<h3 class="anchored" data-anchor-id="setup-create-your-workspace">Setup: Create Your Workspace</h3>
+<p>Before starting, create a dedicated homework directory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/unix_files_homework</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/unix_files_homework</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="part-1-file-inspection-and-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-file-inspection-and-statistics">Part 1: File Inspection and Statistics</h3>
+<section id="download-or-create-a-test-file" class="level4">
+<h4 class="anchored" data-anchor-id="download-or-create-a-test-file">1. Download or create a test file:</h4>
+<ul>
+<li>Create a file called <code>proteins.txt</code> with at least 50 lines of text (you can copy text from any source, or use a command like <code>seq 1 100 &gt; proteins.txt</code> to generate numbered lines)</li>
+<li>Use <code>wc</code> to determine how many lines, words, and characters are in this file</li>
+</ul>
+</section>
+<section id="quick-file-inspection" class="level4">
+<h4 class="anchored" data-anchor-id="quick-file-inspection">2. Quick file inspection:</h4>
+<ul>
+<li>View the first 15 lines of <code>proteins.txt</code></li>
+<li>View the last 8 lines of <code>proteins.txt</code></li>
+<li>Use less to navigate through the entire file, practice searching for a specific word, then exit</li>
+</ul>
+</section>
+<section id="combining-commands" class="level4">
+<h4 class="anchored" data-anchor-id="combining-commands">3. Combining commands:</h4>
+<ul>
+<li>Create three more text files: genes.txt, samples.txt, and results.txt (content doesn’t matter)</li>
+<li>Use a single command to count the total number of lines across all four .txt files in your directory</li>
+<li>Hint: Use wildcards (<code>*.txt</code>) and pipes (<code>|</code>)</li>
+</ul>
+</section>
+</section>
+<section id="part-2-copying-and-moving-files" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-copying-and-moving-files">Part 2: Copying and Moving Files</h3>
+<section id="create-a-directory-structure" class="level4">
+<h4 class="anchored" data-anchor-id="create-a-directory-structure">1. Create a directory structure:</h4>
+<p>Create the following directory structure:</p>
+<pre><code>   unix_files_homework/
+   ├── raw_data/
+   ├── processed_data/
+   └── archive/</code></pre>
+</section>
+<section id="practice-copying" class="level4">
+<h4 class="anchored" data-anchor-id="practice-copying">2. Practice copying:</h4>
+<ul>
+<li>Copy <code>proteins.txt</code> to the <code>raw_data/</code> directory (keep the same name)</li>
+<li>Copy <code>genes.txt</code>to the <code>processed_data/</code> directory and rename it to <code>genes_v1.txt</code></li>
+<li>Create a copy of <code>samples.txt</code> in the current directory called <code>samples_backup.txt</code></li>
+</ul>
+</section>
+<section id="practice-moving-and-renaming" class="level4">
+<h4 class="anchored" data-anchor-id="practice-moving-and-renaming">3. Practice moving and renaming:</h4>
+<ul>
+<li>Move <code>results.txt</code> into the <code>processed_data/</code> directory</li>
+<li>Rename <code>samples_backup.txt</code> to <code>samples_original.txt</code> (without moving it)</li>
+<li>Move <code>samples_original.txt</code> to <code>archive/</code> and rename it to <code>samples_20241204.txt</code> in a single command</li>
+</ul>
+</section>
+</section>
+<section id="part-3-working-with-paths" class="level3">
+<h3 class="anchored" data-anchor-id="part-3-working-with-paths">Part 3: Working with Paths</h3>
+<section id="absolute-vs.-relative-paths" class="level4">
+<h4 class="anchored" data-anchor-id="absolute-vs.-relative-paths">1. Absolute vs.&nbsp;relative paths:</h4>
+<ul>
+<li>Write down the absolute path to your raw_data/ directory</li>
+<li>From within the processed_data/ directory, write a command using a relative path to copy proteins.txt from raw_data/ to your current location</li>
+<li>Use the . notation to copy a file from the parent directory to your current directory</li>
+</ul>
+</section>
+<section id="navigation-practice" class="level4">
+<h4 class="anchored" data-anchor-id="navigation-practice">2. Navigation practice:</h4>
+<ul>
+<li>Navigate to the archive/ directory</li>
+<li>Use .. notation to list the contents of the parent directory without leaving archive/</li>
+<li>Return to your home directory using cd ~, then navigate back to unix_files_homework using a relative path</li>
+</ul>
+</section>
+</section>
+<section id="part-4-file-permissions" class="level3">
+<h3 class="anchored" data-anchor-id="part-4-file-permissions">Part 4: File Permissions</h3>
+<section id="create-and-examine-a-script" class="level4">
+<h4 class="anchored" data-anchor-id="create-and-examine-a-script">1. Create and examine a script:</h4>
+<p>Create a new file called analysis.sh with this content:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>   <span class="bu">echo</span> <span class="st">"Running analysis..."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Use <code>ls -l</code> to check the current permissions on <code>analysis.sh</code></li>
+<li>Try to execute it: <code>./analysis.sh</code> - what happens and why?</li>
+</ul>
+</section>
+<section id="modify-permissions" class="level4">
+<h4 class="anchored" data-anchor-id="modify-permissions">2. Modify permissions:</h4>
+<ul>
+<li>Make analysis.sh executable for everyone using symbolic notation (<code>chmod +x</code>)</li>
+<li>Verify the permissions changed with <code>ls -l</code></li>
+<li>Now execute the script successfully: <code>./analysis.sh</code></li>
+</ul>
+</section>
+<section id="practice-permission-scenarios" class="level4">
+<h4 class="anchored" data-anchor-id="practice-permission-scenarios">3. Practice permission scenarios:</h4>
+<p>Create a file called <code>sensitive_data.txt</code> Set permissions so that:</p>
+<ul>
+<li>You (user) can read and write</li>
+<li>Your group can only read</li>
+<li>Others have no permissions at all</li>
+<li>Write this using both symbolic notation (e.g., <code>chmod u=rw,g=r,o=</code>) and octal notation (e.g., <code>chmod 640</code>)</li>
+<li>Verify with <code>ls -l</code></li>
+</ul>
+</section>
+</section>
+<section id="part-5-safe-deletion-practice" class="level3">
+<h3 class="anchored" data-anchor-id="part-5-safe-deletion-practice">Part 5: Safe Deletion Practice</h3>
+<section id="safe-directory-removal" class="level4">
+<h4 class="anchored" data-anchor-id="safe-directory-removal">1. Safe directory removal:</h4>
+<p>Create an empty directory called <code>temp_empty/</code> Remove it using <code>rmdir</code> - this should succeed Create another directory called <code>temp_full/</code> and put a file in it Try to remove it with <code>rmdir</code> - what happens? Now remove it properly using <code>rm -r</code></p>
+</section>
+<section id="deletion-safety-net" class="level4">
+<h4 class="anchored" data-anchor-id="deletion-safety-net">2. Deletion safety net:</h4>
+<p>Create a test file called <code>delete_me.txt</code> Add the following alias to your current session: alias <code>rm='rm -i'</code> Try to delete <code>delete_me.txt</code> - what’s different? Why is the <code>-i</code>flag useful in a production environment?</p>
+</section>
+</section>
+<section id="part-6-terminal-text-editors" class="level3">
+<h3 class="anchored" data-anchor-id="part-6-terminal-text-editors">Part 6: Terminal Text Editors</h3>
+<section id="nano-practice" class="level4">
+<h4 class="anchored" data-anchor-id="nano-practice">1. Nano practice:</h4>
+<ul>
+<li>Use Nano to create a new file called <code>experiment_notes.txt</code></li>
+<li>Type in at least 5 lines of text (pretend these are experiment notes)</li>
+<li>Save the file and exit Nano</li>
+<li>Reopen the file, add 2 more lines, save, and exit</li>
+</ul>
+</section>
+<section id="vivim-challenge-if-youre-feeling-brave" class="level4">
+<h4 class="anchored" data-anchor-id="vivim-challenge-if-youre-feeling-brave">2. Vi/Vim challenge (if you’re feeling brave):</h4>
+<ul>
+<li>Open a new file in Vi/Vim: vi <code>quick_test.txt</code></li>
+<li>Enter insert mode, type “Hello from Vi!”, exit insert mode</li>
+<li>Save and quit the file</li>
+<li>If you get stuck, remember: <code>Esc</code> then <code>:q!</code> to quit without saving</li>
+</ul>
+</section>
+<section id="editor-comparison" class="level4">
+<h4 class="anchored" data-anchor-id="editor-comparison">3. Editor comparison:</h4>
+<ul>
+<li>Write a brief paragraph (3-4 sentences) comparing your experience with the different text editors you tried</li>
+<li>Save this in a file called <code>editor_reflection.txt</code></li>
+</ul>
+</section>
+</section>
+<section id="part-7-putting-it-all-together" class="level3">
+<h3 class="anchored" data-anchor-id="part-7-putting-it-all-together">Part 7: Putting It All Together</h3>
+<section id="complex-workflow" class="level4">
+<h4 class="anchored" data-anchor-id="complex-workflow">1. Complex workflow:</h4>
+<p>Create a file called <code>data_summary.txt</code> that contains:</p>
+<ul>
+<li>The first 5 lines of <code>proteins.txt</code></li>
+<li>A blank line</li>
+<li>The last 5 lines of genes_v1.txt (from <code>processed_data/</code>)</li>
+<li>Hint: You’ll need to use output redirection (<code>&gt;</code> and <code>&gt;&gt;</code>)</li>
+</ul>
+</section>
+<section id="file-organization-challenge" class="level4">
+<h4 class="anchored" data-anchor-id="file-organization-challenge">2. File organization challenge:</h4>
+<ul>
+<li>Count how many total files exist in your <code>unix_files_homework</code> directory and all its subdirectories</li>
+<li>Create a file called directory_structure.txt that shows the output of <code>ls -lR</code> (recursive listing)</li>
+<li>Make this file read-only for everyone using octal notation</li>
+</ul>
+</section>
+</section>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Bonus Challenges
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="advanced-permissions" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-permissions">Advanced permissions:</h3>
+<ul>
+<li>Research what the “sticky bit” is in Unix permissions</li>
+<li>Create a directory with sticky bit permissions set</li>
+<li>Explain in a text file what the sticky bit does and when it’s useful</li>
+</ul>
+</section>
+<section id="scripting-practice" class="level3">
+<h3 class="anchored" data-anchor-id="scripting-practice">Scripting practice:</h3>
+<p>Create a script called <code>backup.sh</code> that:</p>
+<ul>
+<li>Creates a directory called <code>backup_YYYYMMDD</code> (with today’s date)</li>
+<li>Copies all <code>.txt</code> files into this backup directory</li>
+<li>Prints “Backup complete!” when finished</li>
+<li>Make it executable and run it</li>
+</ul>
+</section>
+</div>
+</div>
 </section>
 
 </main>

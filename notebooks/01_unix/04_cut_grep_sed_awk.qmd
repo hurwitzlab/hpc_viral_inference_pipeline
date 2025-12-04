@@ -331,3 +331,63 @@ cut -f 4 gene_annotations.tsv | head | tr -d '"'
 
 ## What's next
 Now that you've mastered the fundamentals of the "six commands" (`cut`, `paste`, `grep`, `sed`, `awk`, and `tr`), you have all the necessary building blocks to transition from running single commands to writing powerful, automated workflows. The true power of these utilities is unlocked when they are combined using pipes and integrated into larger control structures. In the **next module (02_shell_scripting**), we will dive into shell scripting, where we will learn how to use for loops, variables, and conditional statements to create multi-step programs that can automatically process thousands of files and execute complex data analyses with a single command.
+
+<br>
+
+---
+
+## Key Takeaways
+By completing this module, you should now be comfortable with:
+
+- **Column manipulation:** Using `cut` to extract specific columns from delimited files and understanding how to specify field delimiters
+- **Text searching:** Applying `grep` to quickly find patterns and specific strings within large files
+- **File merging:** Combining multiple files side-by-side with `paste` while being mindful of row order
+- **Text replacement:** Performing search-and-replace operations with `sed`, including global replacements
+- **Conditional filtering:** Leveraging `awk` for pattern matching, numerical comparisons, and data calculations
+- **Character translation:** Using `tr` to modify or remove individual characters from text streams
+- **Pipeline thinking:** Chaining commands together with pipes (`|`) to create multi-step data processing workflows
+- **Output redirection:** Saving command results to new files using the `>` operator
+
+These six commands form the foundation of text processing in Unix environments and will serve you well in genomics, data science, and system administration tasks. The real power comes from combining them creatively to solve complex data manipulation challenges efficiently.
+## Put homework at the end
+
+<br>
+
+---
+:::{.callout-note icon=false}
+## Homework
+Complete the following exercises using the `gene_annotations.tsv` and genes_and_seqs.tsv files. For each question, write the command(s) needed and save your answers in a text file.
+
+### Basic Exercises
+- **Column extraction:** Create a new file called genome_and_KO.tsv that contains only the genome (column 2) and KO_ID (column 3) columns from `gene_annotations.tsv`.
+- **Pattern searching:** How many genes in the dataset are annotated as "dehydrogenase" enzymes? (Hint: use grep and `wc -l`)
+- **Text replacement:** Create a modified version of `gene_annotations.tsv `where all instances of the genome name "3R_1045" are changed to "Genome_C". Save this as `renamed_annotations.tsv`.
+Character translation: Extract the `KO_annotation` column and convert all lowercase letters to uppercase. Display only the first 10 results.
+
+### Intermediate Exercises
+- **Multi-step filtering:** Find all genes from genome "UW277" that have a KO_annotation (i.e., not "NA"). How many genes meet both criteria?
+- **File merging:** Combine `gene_annotations.tsv` and `genes_and_seqs.tsv`, then create a new file that contains only: `gene_ID`, `genome`, `KO_annotation`, and `protein_length` (in that order). Save as `summary_table.tsv`.
+- **Conditional extraction with awk:** Using the combined data from both files, extract all genes from genome "3R_1087" that have protein lengths between 200 and 500 amino acids. Print only the `gene_ID` and `protein_length`.
+
+### Advanced Challenges
+
+- **Summary statistics:** Write an awk command that counts how many genes belong to each genome and prints a summary table showing genome names and their gene counts. (Hint: you'll need to use an associative array and the `END` block)
+- **Complex pipeline:** Create a one-liner that: 
+    (a) combines both files, 
+    (b) filters for genes longer than 300 amino acids, 
+    (c) keeps only genes with actual KO annotations (not "NA"), 
+    (d) extracts just the `gene_ID` and `KO_annotation` columns, and 
+    (e) saves the result to `filtered_long_genes.tsv`.
+- **Comparative analysis:** How many genes have annotations (non-"NA" KO_annotation) in genome "UW179A" compared to genome "3R_1087"? Provide the commands you used and the counts for both genomes.
+
+### Bonus Challenge
+Write a multi-line awk script that produces a report showing:
+
+- Total number of genes in the dataset
+- Number of genes with NA annotations
+- Number of genes with actual functional annotations
+- Percentage of annotated vs unannotated genes
+
+Format the output nicely with a header and clear labels for each statistic.
+
+:::

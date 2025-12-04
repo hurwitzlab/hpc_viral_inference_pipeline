@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mery Touceda-Suárez">
-<meta name="dcterms.date" content="2025-12-03">
+<meta name="dcterms.date" content="2025-12-04">
 
 <title>Unix .bashrc and Variables</title>
 <style>
@@ -98,6 +98,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#using-variables-in-scripts" id="toc-using-variables-in-scripts" class="nav-link" data-scroll-target="#using-variables-in-scripts">Using variables in scripts</a></li>
   </ul></li>
   <li><a href="#tips-and-best-practices" id="toc-tips-and-best-practices" class="nav-link" data-scroll-target="#tips-and-best-practices">Tips and Best Practices</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a></li>
   </ul>
 </nav>
 </div>
@@ -122,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 3, 2025</p>
+      <p class="date">December 4, 2025</p>
     </div>
   </div>
   
@@ -138,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="what-is-.bashrc">What is .bashrc</h2>
 <p>The <code>.bashrc</code> file lives in your home directory (~/) and controls your shell environment. It’s a script that runs automatically every time you open a new terminal session in bash (the Bourne Again SHell). The <code>.bashrc</code> is one of the “dotfiles” in your home directory.</p>
 <p>“Dotfiles” are files with names that begin with a dot. They are normally hidden from view unless you use <code>ls -a</code> to list “all” files. A single dot <code>.</code> means the current directory, and two dots <code>..</code> mean the parent directory. Your <code>.bashrc</code> (or maybe <code>.profile</code> or maybe <code>.bash_profile</code> depending on your system) file is read every time you login to your system, so you can remember your customizations. “Rc” may mean “resource configuration,” but who really knows?</p>
-<p>After a while, you may wish to collect your dotfiles into a Github repo, e.g., https://github.com/kyclark/dotfiles.</p>
+<p>After a while, you may wish to collect your dotfiles into a <a href="https://github.com/kyclark/dotfiles">Github repo</a>.</p>
 </section>
 <section id="contents-of-.bashrc" class="level2">
 <h2 class="anchored" data-anchor-id="contents-of-.bashrc">Contents of <code>.bashrc</code></h2>
@@ -325,6 +327,192 @@ Important
 <li>Check for errors with bash <code>-n ~/.bashrc</code> (syntax check without executing)</li>
 <li>Keep it simple - don’t over-complicate your configuration</li>
 </ul>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<p>By completing this module, you should now understand:</p>
+<ul>
+<li><strong>Configuration persistence:</strong> The .bashrc file runs automatically at login and stores your shell customizations</li>
+<li><strong><code>PATH</code> variable:</strong> How the shell finds executable programs and how to add directories to your <code>$PATH</code></li>
+<li><strong>Aliases:</strong> Creating command shortcuts for frequently used operations</li>
+<li><strong>Shell functions:</strong> Writing more complex custom commands that accept arguments and contain multiple steps</li>
+<li><strong>Environment variables:</strong> Setting and using variables that affect program behavior across your shell session</li>
+<li><strong>Sourcing files:</strong> Applying .bashrc changes to your current session without logging out</li>
+<li><strong>Best practices:</strong> Backing up configurations, commenting code, and testing changes safely</li>
+</ul>
+<p>These skills allow you to create a personalized, efficient command-line environment tailored to your workflow. Whether you’re adding bioinformatics tools to your PATH, creating shortcuts for complex pipelines, or setting environment variables for specific software, mastering .bashrc customization is essential for productive terminal use.</p>
+</section>
+<section id="homework" class="level2">
+<h2 class="anchored" data-anchor-id="homework">Homework</h2>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Homework
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Complete the following exercises to practice customizing your shell environment. Before starting, <strong>create a backup of your .bashrc file!</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> ~/.bashrc ~/.bashrc.backup</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="part-1-understanding-your-current-setup" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-understanding-your-current-setup">Part 1: Understanding Your Current Setup</h3>
+<section id="examine-your-current-configuration" class="level4">
+<h4 class="anchored" data-anchor-id="examine-your-current-configuration">1. Examine your current configuration:</h4>
+<ul>
+<li>Use cat or less to view your current <code>.bashrc</code> file</li>
+<li>Identify any existing aliases or <code>PATH</code> modifications</li>
+<li>Take note of what’s already configured</li>
+</ul>
+</section>
+<section id="explore-your-path" class="level4">
+<h4 class="anchored" data-anchor-id="explore-your-path">2. Explore your PATH:</h4>
+<ul>
+<li>Display your current <code>$PATH</code> variable</li>
+<li>Identify which directory contains the <code>ls</code> command (Hint: use <code>which ls</code>)</li>
+</ul>
+</section>
+<section id="test-environment-variables" class="level4">
+<h4 class="anchored" data-anchor-id="test-environment-variables">3. Test environment variables:</h4>
+<ul>
+<li>Print the values of <code>$HOME</code>, <code>$USER</code>, and <code>$SHELL</code></li>
+<li>Create a temporary variable called <code>TEST_VAR</code> with the value “Hello” and echo it</li>
+<li>Try to access <code>TEST_VAR</code> in a new terminal window - what happens? Why?</li>
+</ul>
+</section>
+</section>
+<section id="part-2-creating-custom-aliases" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-creating-custom-aliases">Part 2: Creating Custom Aliases</h3>
+<section id="create-navigation-aliases" class="level4">
+<h4 class="anchored" data-anchor-id="create-navigation-aliases">1. Create navigation aliases:</h4>
+<ul>
+<li>Add an alias called <code>proj</code> that navigates to your main project directory</li>
+<li>Create an alias <code>h</code> that shows your command history</li>
+<li>Make an alias ports that shows all listening network ports (use <code>netstat</code> or <code>lsof</code>)</li>
+</ul>
+</section>
+<section id="create-safety-aliases" class="level4">
+<h4 class="anchored" data-anchor-id="create-safety-aliases">2. Create safety aliases:</h4>
+<ul>
+<li>If not already present, add the interactive flags (<code>-i</code>) to <code>rm</code>, <code>cp</code>, and <code>mv</code></li>
+<li>Create an alias <code>saferm</code> that moves files to a trash directory instead of deleting them</li>
+</ul>
+</section>
+<section id="create-information-aliases" class="level4">
+<h4 class="anchored" data-anchor-id="create-information-aliases">3. Create information aliases:</h4>
+<ul>
+<li>Make an alias <code>diskspace</code> that shows disk usage in human-readable format</li>
+<li>Create an alias <code>myip</code> that displays your IP address</li>
+<li>Add an alias <code>weather</code> that fetches weather for your location (use curl wttr.in/YourCity)</li>
+</ul>
+</section>
+</section>
+<section id="part-3-writing-shell-functions" class="level3">
+<h3 class="anchored" data-anchor-id="part-3-writing-shell-functions">Part 3: Writing Shell Functions</h3>
+<section id="create-a-directory-navigation-function" class="level4">
+<h4 class="anchored" data-anchor-id="create-a-directory-navigation-function">1. Create a directory navigation function:</h4>
+<ul>
+<li>Write a function called <code>mkcd</code> that creates a directory and immediately changes into it</li>
+<li>Test it by creating a new directory called test_function</li>
+</ul>
+</section>
+<section id="create-a-file-finding-function" class="level4">
+<h4 class="anchored" data-anchor-id="create-a-file-finding-function">2. Create a file finding function:</h4>
+<ul>
+<li>Write a function called <code>findname</code> that searches for files by name in the current directory and subdirectories</li>
+<li>It should accept one argument (the filename pattern to search for)</li>
+<li>Example usage: <code>findname "*.txt"</code> should find all text files</li>
+</ul>
+</section>
+<section id="create-a-compression-function" class="level4">
+<h4 class="anchored" data-anchor-id="create-a-compression-function">3. Create a compression function:</h4>
+<ul>
+<li>Write a function called <code>tardir</code> that takes a directory name and creates a compressed tar.gz archive of it</li>
+<li>The archive should be named directoryname_YYYYMMDD.tar.gz with today’s date Example: <code>tardir mydata creates mydata_20241204.tar.gz</code></li>
+</ul>
+</section>
+</section>
+<section id="part-4-path-management" class="level3">
+<h3 class="anchored" data-anchor-id="part-4-path-management">Part 4: <code>PATH</code> Management</h3>
+<section id="add-a-custom-bin-directory" class="level4">
+<h4 class="anchored" data-anchor-id="add-a-custom-bin-directory">1. Add a custom bin directory:</h4>
+<ul>
+<li>Create a directory called <code>bin</code> in your <code>home</code> directory</li>
+<li>Add this directory to your <code>PATH</code> in <code>.bashrc</code></li>
+<li>Source your <code>.bashrc</code> and verify the directory is in your <code>PATH</code></li>
+</ul>
+</section>
+<section id="create-a-custom-script" class="level4">
+<h4 class="anchored" data-anchor-id="create-a-custom-script">2. Create a custom script:</h4>
+<ul>
+<li>In your new <code>~/bin directory</code>, create a script called hello that prints “Hello from my custom PATH!”</li>
+<li>Make it executable (<code>chmod +x ~/bin/hello</code>)</li>
+<li>Verify you can run hello from any directory without specifying the full path</li>
+</ul>
+</section>
+</section>
+<section id="part-5-environment-variables" class="level3">
+<h3 class="anchored" data-anchor-id="part-5-environment-variables">Part 5: Environment Variables</h3>
+<section id="set-up-bioinformatics-environment-variables" class="level4">
+<h4 class="anchored" data-anchor-id="set-up-bioinformatics-environment-variables">1. Set up bioinformatics environment variables:</h4>
+<ul>
+<li>Create an environment variable called <code>DATA_DIR</code> that points to a directory where you store datasets</li>
+<li>Create an environment variable called<code>SCRIPTS_DIR</code> for your analysis scripts</li>
+<li>Add these to your <code>.bashrc</code> and test them</li>
+</ul>
+</section>
+<section id="configure-a-default-text-editor" class="level4">
+<h4 class="anchored" data-anchor-id="configure-a-default-text-editor">2. Configure a default text editor:</h4>
+<ul>
+<li>Set the EDITOR environment variable to your preferred text editor (nano, vim, or emacs)</li>
+<li>Test it by running echo <code>$EDITOR</code></li>
+</ul>
+</section>
+</section>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Bonus Challenges
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="create-a-project-setup-function" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-project-setup-function">Create a project setup function:</h3>
+<p>Write a function called newproject that:</p>
+<ul>
+<li>Takes a project name as an argument</li>
+<li>Creates a project directory with subdirectories: <code>data/</code>, <code>scripts/</code>, <code>results/</code></li>
+<li>Creates a <code>README.md</code> file in the project directory</li>
+<li>Changes into the new project directory</li>
+</ul>
+<p>Example usage: <code>newproject analysis_2024</code></p>
+</section>
+<section id="create-a-custom-prompt" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-custom-prompt">Create a custom prompt:</h3>
+<ul>
+<li>Modify your PS1 variable to customize your command prompt</li>
+<li>Include your username, current directory, and a custom symbol</li>
+<li>Make it colorful (look up ANSI color codes)</li>
+</ul>
+</section>
+<section id="write-a-cleanup-function" class="level3">
+<h3 class="anchored" data-anchor-id="write-a-cleanup-function">Write a cleanup function:</h3>
+<p>Create a function called cleanup that finds and lists all files in the current directory:</p>
+<ul>
+<li>Larger than 100MB</li>
+<li>Not accessed in the last 30 days</li>
+<li>With specific extensions (.tmp, .log, .cache)</li>
+<li>Make it ask for confirmation before deleting</li>
+</ul>
+</section>
+</div>
+</div>
 </section>
 
 </main>

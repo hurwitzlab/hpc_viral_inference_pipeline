@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mery Touceda-Suárez">
-<meta name="dcterms.date" content="2025-12-03">
+<meta name="dcterms.date" content="2025-12-04">
 
 <title>cut, paste, grep, sed, awk, tr</title>
 <style>
@@ -108,6 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#deletion" id="toc-deletion" class="nav-link" data-scroll-target="#deletion">2. Deletion</a></li>
   </ul></li>
   <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s next</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
   </ul>
 </nav>
 </div>
@@ -132,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 3, 2025</p>
+      <p class="date">December 4, 2025</p>
     </div>
   </div>
   
@@ -467,6 +468,80 @@ Note
 <section id="whats-next" class="level2">
 <h2 class="anchored" data-anchor-id="whats-next">What’s next</h2>
 <p>Now that you’ve mastered the fundamentals of the “six commands” (<code>cut</code>, <code>paste</code>, <code>grep</code>, <code>sed</code>, <code>awk</code>, and <code>tr</code>), you have all the necessary building blocks to transition from running single commands to writing powerful, automated workflows. The true power of these utilities is unlocked when they are combined using pipes and integrated into larger control structures. In the <strong>next module (02_shell_scripting</strong>), we will dive into shell scripting, where we will learn how to use for loops, variables, and conditional statements to create multi-step programs that can automatically process thousands of files and execute complex data analyses with a single command.</p>
+<p><br></p>
+<hr>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<p>By completing this module, you should now be comfortable with:</p>
+<ul>
+<li><strong>Column manipulation:</strong> Using <code>cut</code> to extract specific columns from delimited files and understanding how to specify field delimiters</li>
+<li><strong>Text searching:</strong> Applying <code>grep</code> to quickly find patterns and specific strings within large files</li>
+<li><strong>File merging:</strong> Combining multiple files side-by-side with <code>paste</code> while being mindful of row order</li>
+<li><strong>Text replacement:</strong> Performing search-and-replace operations with <code>sed</code>, including global replacements</li>
+<li><strong>Conditional filtering:</strong> Leveraging <code>awk</code> for pattern matching, numerical comparisons, and data calculations</li>
+<li><strong>Character translation:</strong> Using <code>tr</code> to modify or remove individual characters from text streams</li>
+<li><strong>Pipeline thinking:</strong> Chaining commands together with pipes (<code>|</code>) to create multi-step data processing workflows</li>
+<li><strong>Output redirection:</strong> Saving command results to new files using the <code>&gt;</code> operator</li>
+</ul>
+<p>These six commands form the foundation of text processing in Unix environments and will serve you well in genomics, data science, and system administration tasks. The real power comes from combining them creatively to solve complex data manipulation challenges efficiently. ## Put homework at the end</p>
+<p><br></p>
+<hr>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Homework
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Complete the following exercises using the <code>gene_annotations.tsv</code> and genes_and_seqs.tsv files. For each question, write the command(s) needed and save your answers in a text file.</p>
+<section id="basic-exercises" class="level3">
+<h3 class="anchored" data-anchor-id="basic-exercises">Basic Exercises</h3>
+<ul>
+<li><strong>Column extraction:</strong> Create a new file called genome_and_KO.tsv that contains only the genome (column 2) and KO_ID (column 3) columns from <code>gene_annotations.tsv</code>.</li>
+<li><strong>Pattern searching:</strong> How many genes in the dataset are annotated as “dehydrogenase” enzymes? (Hint: use grep and <code>wc -l</code>)</li>
+<li><strong>Text replacement:</strong> Create a modified version of <code>gene_annotations.tsv</code>where all instances of the genome name “3R_1045” are changed to “Genome_C”. Save this as <code>renamed_annotations.tsv</code>. Character translation: Extract the <code>KO_annotation</code> column and convert all lowercase letters to uppercase. Display only the first 10 results.</li>
+</ul>
+</section>
+<section id="intermediate-exercises" class="level3">
+<h3 class="anchored" data-anchor-id="intermediate-exercises">Intermediate Exercises</h3>
+<ul>
+<li><strong>Multi-step filtering:</strong> Find all genes from genome “UW277” that have a KO_annotation (i.e., not “NA”). How many genes meet both criteria?</li>
+<li><strong>File merging:</strong> Combine <code>gene_annotations.tsv</code> and <code>genes_and_seqs.tsv</code>, then create a new file that contains only: <code>gene_ID</code>, <code>genome</code>, <code>KO_annotation</code>, and <code>protein_length</code> (in that order). Save as <code>summary_table.tsv</code>.</li>
+<li><strong>Conditional extraction with awk:</strong> Using the combined data from both files, extract all genes from genome “3R_1087” that have protein lengths between 200 and 500 amino acids. Print only the <code>gene_ID</code> and <code>protein_length</code>.</li>
+</ul>
+</section>
+<section id="advanced-challenges" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-challenges">Advanced Challenges</h3>
+<ul>
+<li><strong>Summary statistics:</strong> Write an awk command that counts how many genes belong to each genome and prints a summary table showing genome names and their gene counts. (Hint: you’ll need to use an associative array and the <code>END</code> block)</li>
+<li><strong>Complex pipeline:</strong> Create a one-liner that:
+<ol type="a">
+<li>combines both files,</li>
+<li>filters for genes longer than 300 amino acids,</li>
+<li>keeps only genes with actual KO annotations (not “NA”),</li>
+<li>extracts just the <code>gene_ID</code> and <code>KO_annotation</code> columns, and</li>
+<li>saves the result to <code>filtered_long_genes.tsv</code>.</li>
+</ol></li>
+<li><strong>Comparative analysis:</strong> How many genes have annotations (non-“NA” KO_annotation) in genome “UW179A” compared to genome “3R_1087”? Provide the commands you used and the counts for both genomes.</li>
+</ul>
+</section>
+<section id="bonus-challenge" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-challenge">Bonus Challenge</h3>
+<p>Write a multi-line awk script that produces a report showing:</p>
+<ul>
+<li>Total number of genes in the dataset</li>
+<li>Number of genes with NA annotations</li>
+<li>Number of genes with actual functional annotations</li>
+<li>Percentage of annotated vs unannotated genes</li>
+</ul>
+<p>Format the output nicely with a header and clear labels for each statistic.</p>
+</section>
+</div>
+</div>
 </section>
 
 </main>

@@ -210,3 +210,158 @@ echo "Name: ${NAME:-Anonymous}"
 - Organize logically with sections for `PATH`, aliases, functions, etc.
 - Check for errors with bash `-n ~/.bashrc` (syntax check without executing)
 - Keep it simple - don't over-complicate your configuration
+
+
+## Key Takeaways
+By completing this module, you should now understand:
+
+- **Configuration persistence:** The `.bashrc` file runs automatically at login and stores your shell customizations
+- **`PATH` variable:** How the shell finds executable programs and how to add directories to your `$PATH`
+- **Aliases:** Creating command shortcuts for frequently used operations
+- **Shell functions:** Writing more complex custom commands that accept arguments and contain multiple steps
+- **Environment variables:** Setting and using variables that affect program behavior across your shell session
+- **Sourcing files:** Applying `.bashrc` changes to your current session without logging out
+- **Best practices:** Backing up configurations, commenting code, and testing changes safely
+
+These skills allow you to create a personalized, efficient command-line environment tailored to your workflow. Whether you're adding bioinformatics tools to your `PATH`, creating shortcuts for complex pipelines, or setting environment variables for specific software, mastering `.bashrc `customization is essential for productive terminal use.
+
+
+## Homework 
+
+:::{.callout-note icon=false}
+## Homework
+
+Complete the following exercises to practice customizing your shell environment. Before starting, **create a backup of your .bashrc file!**
+```bash
+cp ~/.bashrc ~/.bashrc.backup
+```
+### Part 1: Understanding Your Current Setup
+
+#### 1. Examine your current configuration:
+
+- Use cat or less to view your current `.bashrc` file
+- Identify any existing aliases or `PATH` modifications
+- Take note of what's already configured
+
+
+#### 2. Explore your PATH:
+
+- Display your current `$PATH` variable
+- Identify which directory contains the `ls` command (Hint: use `which ls`)
+
+
+#### 3. Test environment variables:
+
+- Print the values of `$HOME`, `$USER`, and `$SHELL`
+- Create a temporary variable called `TEST_VAR` with the value "Hello" and echo it
+- Try to access `TEST_VAR` in a new terminal window - what happens? Why?
+
+
+
+### Part 2: Creating Custom Aliases
+
+#### 1. Create navigation aliases:
+
+- Add an alias called `proj` that navigates to your main project directory
+- Create an alias `h` that shows your command history
+- Make an alias ports that shows all listening network ports (use `netstat` or `lsof`)
+
+
+#### 2. Create safety aliases:
+
+- If not already present, add the interactive flags (`-i`) to `rm`, `cp`, and `mv`
+- Create an alias `saferm` that moves files to a trash directory instead of deleting them
+
+
+#### 3. Create information aliases:
+
+- Make an alias `diskspace` that shows disk usage in human-readable format
+- Create an alias `myip` that displays your IP address
+- Add an alias `weather` that fetches weather for your location (use curl wttr.in/YourCity)
+
+
+
+### Part 3: Writing Shell Functions
+
+#### 1. Create a directory navigation function:
+
+- Write a function called `mkcd` that creates a directory and immediately changes into it
+- Test it by creating a new directory called test_function
+
+
+#### 2. Create a file finding function:
+
+- Write a function called `findname` that searches for files by name in the current directory and subdirectories
+- It should accept one argument (the filename pattern to search for)
+- Example usage: `findname "*.txt"` should find all text files
+
+
+#### 3. Create a compression function:
+
+- Write a function called `tardir` that takes a directory name and creates a compressed tar.gz archive of it
+- The archive should be named directoryname_YYYYMMDD.tar.gz with today's date
+Example: `tardir mydata creates mydata_20241204.tar.gz`
+
+
+
+### Part 4: `PATH` Management
+
+#### 1. Add a custom bin directory:
+
+- Create a directory called `bin` in your `home` directory
+- Add this directory to your `PATH` in `.bashrc`
+- Source your `.bashrc` and verify the directory is in your `PATH`
+
+
+#### 2. Create a custom script:
+
+- In your new `~/bin directory`, create a script called hello that prints "Hello from my custom PATH!"
+- Make it executable (`chmod +x ~/bin/hello`)
+- Verify you can run hello from any directory without specifying the full path
+
+
+
+### Part 5: Environment Variables
+
+#### 1. Set up bioinformatics environment variables:
+
+- Create an environment variable called `DATA_DIR` that points to a directory where you store datasets
+- Create an environment variable called` SCRIPTS_DIR` for your analysis scripts
+- Add these to your `.bashrc` and test them
+
+
+#### 2. Configure a default text editor:
+
+- Set the EDITOR environment variable to your preferred text editor (nano, vim, or emacs)
+- Test it by running echo `$EDITOR`
+:::
+
+:::{.callout-tip icon=false}
+## Bonus Challenges
+### Create a project setup function:
+Write a function called newproject that:
+
+- Takes a project name as an argument
+- Creates a project directory with subdirectories: `data/`, `scripts/`, `results/`
+- Creates a `README.md` file in the project directory
+- Changes into the new project directory
+
+
+Example usage: `newproject analysis_2024`
+
+
+### Create a custom prompt:
+
+- Modify your PS1 variable to customize your command prompt
+- Include your username, current directory, and a custom symbol
+- Make it colorful (look up ANSI color codes)
+
+
+### Write a cleanup function:
+Create a function called cleanup that finds and lists all files in the current directory:
+
+- Larger than 100MB
+- Not accessed in the last 30 days
+- With specific extensions (.tmp, .log, .cache)
+- Make it ask for confirmation before deleting
+:::
