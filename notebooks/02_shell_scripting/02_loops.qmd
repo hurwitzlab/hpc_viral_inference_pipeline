@@ -1,0 +1,50 @@
+---
+title: "Loops"
+author: "Mery Touceda-Suárez"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+---
+> Note: This training has used significant contribution from [Ken Youens-Clark's Bioinformatics Primer Book](https://github.com/kyclark/bioinformatics_primer). 
+
+## For loops
+Often we want to do some set of actions for all the files in a directory or all the identifiers in a file. You can use a for loop to iterate over the values in some command that returns a list of results:
+
+```bash 
+for item in car truck ukulele
+do
+  echo $item
+done
+```
+
+:::{.callout-note}
+We don’t need to put these on separate lines, and we don’t need to indent over the “body” of the loop like we did above (the echo $item part), but both can help with readability so we will continue doing that moving forward. 
+
+As an example though, we could also enter it like this on one line, separating the major blocks with semicolons:
+```bash
+for item in car truck ukulele; do echo $item; done
+```
+:::
+
+There are 4 special words in the syntax of a For Loop in Unix languages: for, in, do, and done.
+| Magic word | Purpose |
+|:-----------|:--------|
+| `for` | Set the loop variable name |
+| `in` | Specify whatever it is we are looping over |
+| `do` | Specify what we want to do with each item |
+| `done` | Tell the computer we are done telling it what to do with each item |
+
+## While loops
+
+## Saving results in files
+
+## Getting data into your script: Arguments
+### Providing default arguments
+### Environmental arguments
+### Required and optional arguments
+
+## Reading a configuration file

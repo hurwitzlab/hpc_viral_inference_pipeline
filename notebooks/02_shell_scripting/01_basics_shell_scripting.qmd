@@ -13,79 +13,520 @@ format:
 
 
 ## Statements
-All programming language have a grammar where "statements" (like "sentences") are built up from other terms. Some languages like Python and Haskell use whitespace to figure out the end of a "statement," which is usually a newline (the Return or Enter key). C-like languages such as bash and Perl define the end of a statement with a colon ;. Bash is interesting because it uses both. If you hit Enter or type a newline in your code, Bash will execute that statement. If you want to put several commands on one line, you can separate each with a semicolon. If you want to stretch a command over more than one line, you can use a backslash \ to continue the line:
+In programming, a **statement** is like a sentence—it's a complete instruction that tells the computer to do something. In bash, each command you write is a statement.
+
+### How Bash Knows Where One Statement Ends
+
+Bash uses **two ways** to mark the end of a statement:
+
+1. **Newline (pressing Enter)**: The most common way
+2. **Semicolon (`;`)**: Separates multiple statements on one line
+
+### Examples
+
+**One statement per line** (most common and readable):
 ```bash
-$ echo Hi
+$ echo "Hi"
 Hi
-$ echo Hello
+$ echo "Hello"
 Hello
-$ echo Hi; echo Hello
-Hi
-Hello
-$ echo \
-> Hi
-Hi
 ```
+
+**Multiple statements on one line** (using semicolons):
+```bash
+$ echo "Hi"; echo "Hello"
+Hi
+Hello
+```
+
+Both approaches work the same way, but separate lines are usually easier to read.
+
+### Breaking Long Commands Across Multiple Lines
+
+Sometimes a command gets too long to fit comfortably on one line. You can split it using a backslash `\` at the end of the line:
+```bash
+$ echo "This is a very long message" \
+> "that continues on the next line"
+This is a very long message that continues on the next line
+```
+
+The `\` tells bash: "This statement isn't finished yet—continue on the next line."
+
+::: {.callout-tip}
+## When to Use Each Style
+
+- **Newlines** (pressing Enter): Best for normal scripts—clearest and easiest to read
+- **Semicolons**: Useful for quick one-liners in the terminal or compact scripts
+- **Backslash continuation**: Helpful for long commands with many options or arguments
+```bash
+# Good: Easy to read
+echo "Hello"
+echo "World"
+
+# Also valid: Compact one-liner
+echo "Hello"; echo "World"
+
+# Good for long commands
+docker run --name mycontainer \
+  --volume /data:/data \
+  --env KEY=value \
+  myimage:latest
+```
+:::
+
+::: {.callout-note}
+## The `>` Prompt
+
+When you use `\` to continue a line, you'll see a `>` prompt. This means bash is waiting for you to finish the statement. Just keep typing and press Enter when done.
+:::
+
+
 
 ## Comments
-Every language has a way to indicate text in the source code that should not be executed by the program. Many Unix/c-style languages use the # (hash) sign to indicate that any text to the right should be ignored by the language, but some languages use other characters or character combinations like // in Javascript, Java, and Rust. Programmers may use comments to explain what some particularly bit of code is doing, or they may use the characters to temporarily disable some section of code. Here is an example of what you might see:
+Every programming language needs a way to include notes in your code that won't be executed. In bash and many Unix-style languages, we use the `#` (hash or pound) symbol for comments. Everything after `#` on that line is ignored by the program.
+
+**Why use comments?**
+
+1. **Explain your code**: Help others (and future you!) understand what's happening
+2. **Disable code temporarily**: Test different approaches without deleting code
+
+
+Here's an example in bash:
 ```bash
-# cf. https://en.wikipedia.org/wiki/Factorial
-sub fac(n) { 
-  # first check terminal condition
-  if (n <= 1) {
-    return 1
-  }
-  # no? let's recurse!
-  else {
-    n * fac(n - 1) # the number times one less the number
-  }
-}
+#!/usr/bin/env bash
+
+# This script greets the user
+NAME="Alice"
+
+echo "Hello, $NAME"  # Print greeting to screen
+
+# Temporarily disabled - testing without this line
+# echo "Goodbye, $NAME"
 ```
 
+::: {.callout-note}
+In bash, comments start with `#`. Other languages use different symbols:
 
-## Shebang
+- JavaScript, Java, Rust: `//` 
+- Python, Ruby, Perl: `#`
+:::
+
+
+
+## Shebang: Telling the System How to Run Your Script
+When you create a script file, your system needs to know which program should interpret it. That's where the **shebang** line comes in.
+
+### What's a Shebang?
+
+The shebang is the first line of a script that starts with `#!` followed by the path to the interpreter. It looks like a comment, but it's actually a special instruction to your operating system.
+
+### Why Do We Need It?
+
+Let's see what happens without a shebang:
+```bash
+# Create a Python script without a shebang
+$ echo 'print("Hello, World")' > hello.py
+$ chmod +x hello.py
+$ ./hello.py
+./hello.py: line 1: syntax error near unexpected token `"Hello, World"'
+```
+
+**What went wrong?** When you run `./hello.py`, bash tries to interpret it as a bash script, but `print()` isn't valid bash syntax.
+
+**The solution:** Add a shebang to tell the system "use Python to run this":
+```bash
+$ cat hello.py
+#!/usr/bin/env python3
+print("Hello, World")
+
+$ ./hello.py
+Hello, World
+```
+
+Now it works! The system sees the shebang and knows to use Python.
+
+### Two Ways to Write Shebangs
+
+**Option 1: Direct path**
+```bash
+#!/bin/bash
+#!/usr/bin/python3
+```
+Points directly to the interpreter's location.
+
+**Option 2: Using `env` (recommended)**
+```bash
+#!/usr/bin/env bash
+#!/usr/bin/env python3
+```
+
+::: {.callout-tip}
+## Why use `#!/usr/bin/env`?
+
+Using `env` makes your script more **portable**. Instead of hardcoding a specific path like `/usr/local/bin/python3`, `env` finds the first matching program in your `$PATH`. 
+
+This means your script will work on different systems where Python might be installed in different locations.
+:::
+
+### Running Scripts: Two Methods
+
+**Method 1: Call the interpreter explicitly** (no shebang needed, no execute permission needed)
+```bash
+$ bash hello.sh
+Hello, World
+
+$ python3 hello.py
+Hello, World
+```
+
+**Method 2: Make it executable** (requires shebang and execute permission)
+```bash
+$ chmod +x hello.sh
+$ ./hello.sh
+Hello, World
+```
+
+The second method is cleaner and more common, but both work!
+
+::: {.callout-warning}
+## Remember
+- The shebang must be the **first line** of your file
+- No spaces after `#!` 
+- The file must be executable (`chmod +x`) to run with `./`
+:::
+
+
 
 
 ## Let's make a script
-Let's make our script say "Hello" to some people:
+## Variables: Storing and Using Information
 
+Variables let you store information and reuse it throughout your script. Think of a variable as a labeled box where you can put data.
+
+### Creating Your First Variable Script
+
+Let's create a script that greets different people:
+```bash
 $ cat -n hello2.sh
      1    #!/usr/bin/env bash
      2
-     3    NAME="Newman"
-     4    echo "Hello," $NAME
-     5    NAME="Jerry"
-     6    echo "Hello, $NAME"
+     3    NAME="Alex"
+     4    echo "Hello, $NAME"
+     5    
+     6    NAME="River"
+     7    echo "Hello, $NAME"
+
 $ ./hello2.sh
-Hello, Newman
-Hello, Jerry
-I've created a variable called NAME to hold the string "Newman" and print it. Notice there is no $ when assigning to the variable, only when you use it. The value of NAME can be changed at any time. You can print it out like on line 4 as it's own argument to echo or inside of a string like on line 6. Notice that the version on line 4 puts a space between the arguments to echo.
+Hello, Alex
+Hello, River
+```
 
-Because all the variables from the environment (see env) are uppercase (e.g., $HOME and $USER), I tend to use all-caps myself, but this did lead to a problem once when I named a variable PATH and then overwrote the actual PATH and then my program stopped working entirely as it could no longer find any of the programs it needed. Just remember that everything in Unix is case-sensitive, so $Name is an entirely different variable from $name.
+### How Variables Work
 
-When assigning a variable, you can have NO SPACES around the = sign:
+**Creating a variable:**
+```bash
+NAME="Alex"          # No $ when assigning
+```
 
-$ NAME1="Doge"
-$ echo "Such $NAME1"
-Such Doge
-$ NAME2 = "Doge"
--bash: NAME2: command not found
-$ echo "Such $NAME2"
-Such
+**Using a variable:**
+```bash
+echo "Hello, $NAME"  # Use $ to get the value
+```
 
-## Catching errors
 
-## For loops
+### The Spacing Rule: Critical!
 
-## While loops
+Bash is **very strict** about spaces around the `=` sign:
+```bash
+# ✓ CORRECT: No spaces around =
+NAME="Casey"
+echo "Hello, $NAME"
+Hello, Casey
 
-## Saving results in files
+# ✗ WRONG: Spaces around =
+NAME = "Casey"
+-bash: NAME: command not found
 
-## Getting data into your script: Arguments
-### Providing default arguments
-### Environmental arguments
-### Required and optional arguments
+echo "Hello, $NAME"
+Hello,
+```
 
-## Reading a configuration file
+**What happened?** Bash thought `NAME` was a command, not a variable assignment!
 
+::: {.callout-important}
+## Key Rules for Variables
+
+1. **No `$` when assigning**: `NAME="Alex"`
+2. **Use `$` when accessing**: `echo $NAME`
+3. **No spaces around `=`**: Spaces will cause errors!
+:::
+
+### Variables Can Change
+
+You can update a variable's value at any time:
+```bash
+#!/usr/bin/env bash
+
+GREETING="Hello"
+echo "$GREETING, Alex"      # Hello, Alex
+
+GREETING="Goodbye"
+echo "$GREETING, Alex"      # Goodbye, Alex
+```
+
+### Naming Variables: Best Practices
+
+**Case sensitivity matters:**
+```bash
+name="Jordan"
+Name="Taylor"
+NAME="Quinn"
+
+echo $name    # Jordan
+echo $Name    # Taylor
+echo $NAME    # Quinn
+```
+
+These are three **completely different** variables!
+
+::: {.callout-tip}
+## Convention: 
+**Use uppercase for your variables**
+```bash
+NAME="Alex"
+GREETING="Hello"
+COUNT=5
+```
+:::
+::: {.callout-warning}
+## Don't Overwrite System Variables!
+
+Some variable names are reserved for the system. **Never** use these names:
+
+- `PATH` - Where the system finds programs
+- `HOME` - Your home directory location
+- `USER` - Your username
+- `SHELL` - Your current shell
+```bash
+# ✗ DANGEROUS - Don't do this!
+PATH="mydata"
+echo $PATH
+# Now bash can't find any commands!
+
+# ✓ SAFE - Use a different name
+DATA_PATH="mydata"
+echo $DATA_PATH
+```
+
+If you accidentally overwrite `PATH`, close your terminal and start fresh.
+:::
+
+### Quoting Variables: When Does It Matter?
+
+You'll often see variables used with quotes:
+```bash
+NAME="Sam"
+
+# Both work for simple cases:
+echo Hello, $NAME        # Hello, Sam
+echo "Hello, $NAME"      # Hello, Sam
+```
+
+**But quotes become important with spaces:**
+```bash
+NAME="Sam Lee"
+
+echo Hello, $NAME        # Could cause issues
+echo "Hello, $NAME"      # Safer - keeps everything together
+```
+
+::: {.callout-tip}
+## Best Practice
+Get in the habit of using quotes around variables: `"$NAME"` instead of just `$NAME`. It prevents unexpected behavior when values contain spaces.
+:::
+
+
+## Catching Common Errors with `set -u`
+
+Bash won't warn you when you misspell a variable name—it just treats it as an empty variable. This can lead to silent bugs that are hard to find.
+
+### The Problem: Silent Typos
+
+Watch what happens when you mistype a variable:
+```bash
+$ echo $HOME
+/home/username
+
+$ echo $HOEM     # Oops, typo!
+                 # No output, no error!
+```
+
+Bash just assumes `$HOEM` is an empty variable and continues without complaint.
+
+### The Solution: `set -u`
+
+Add `set -u` at the top of your scripts to catch undefined variables:
+```bash
+$ set -u
+$ echo $HOEM
+-bash: HOEM: unbound variable
+```
+
+Now bash alerts you to the typo!
+
+
+
+::: {.callout-tip}
+## Add `set -u`
+Always add `set -u` near the top of your scripts, right after the shebang. It's not technically required, but it's a **best practice** that can save you from frustrating bugs. Just like wearing a helmet while biking, it protects you when things go wrong.
+:::
+
+::: {.callout-warning}
+## What `set -u` Won't Catch
+`set -u` only catches errors when the code **actually runs**. Test your scripts with different inputs to exercise all code paths!
+:::
+
+
+::: {.callout-tip}
+## Pro Tip: Use ShellCheck
+For even better error detection, use **ShellCheck**—a tool that analyzes your bash scripts for common mistakes before you even run them.
+
+**Online**: Visit [shellcheck.net](https://www.shellcheck.net/)
+:::
+
+
+---
+title: "Basics of Shell Scripting"
+author: "Mery Touceda-Suárez"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+---
+> Note: This training has used significant contribution from [Ken Youens-Clark's Bioinformatics Primer Book](https://github.com/kyclark/bioinformatics_primer). 
+
+## Key Takeaways
+
+By completing this training, you now understand:
+
+#### Core Concepts
+- **Statements**: Commands are separated by newlines or semicolons (`;`)
+- **Comments**: Use `#` to document your code or disable lines temporarily
+- **Shebang**: The `#!/usr/bin/env bash` line tells the system how to run your script
+- **Variables**: Store and reuse data; use `NAME="value"` to assign, `$NAME` to access
+- **Error checking**: Use `set -u` to catch undefined variables
+
+#### Critical Rules to Remember
+1. **No spaces around `=`** when assigning variables: `NAME="Alex"` ✓ not `NAME = "Alex"` ✗
+2. **Use `$` only when accessing** variables, not when assigning them
+3. **Everything is case-sensitive**: `$NAME`, `$Name`, and `$name` are different variables
+4. **Never overwrite system variables** like `PATH`, `HOME`, or `USER`
+5. **Always use `set -u`** at the top of your scripts to catch typos
+
+#### Best Practices
+- Start every script with a shebang: `#!/usr/bin/env bash`
+- Add `set -u` right after the shebang
+- Use quotes around variables: `"$NAME"` is safer than `$NAME`
+- Write comments to explain complex logic
+- Use ShellCheck to validate your scripts before running them
+- Test scripts with different inputs to exercise all code paths
+
+
+## Homework Assignments
+::: {.callout-note icon=false}
+## Homework 
+### Assignment 1: Hello Script (Beginner)
+**Goal**: Create a greeting script using variables
+
+**Instructions**:
+
+1. Create a file called `greet.sh`
+2. Add the proper shebang line
+3. Add `set -u` for safety
+4. Create variables for:
+   - Your name
+   - Your favorite programming language
+   - Your current location
+5. Use `echo` to print a message using all three variables
+6. Make the script executable and run it
+
+**Expected output**:
+```
+Hello! My name is [your name].
+I enjoy programming in [language].
+I'm working from [location].
+```
+
+
+### Assignment 2: Debug the Buggy Script (Intermediate)
+**Goal**: Practice debugging and error detection
+
+**Instructions**:
+1. Copy this buggy script into a file called `debug_me.sh`:
+```bash
+#!/usr/bin/env bash
+
+# This script has 5 bugs - find and fix them!
+
+FAVORITE_FOOD = "pizza"
+echo "I love $FAVRITE_FOOD"
+
+FAVORITE_COLOR="blue"
+echo "My favorite color is" $FAVORTE_COLOR
+
+AGE=25
+echo "I am $age years old"
+
+echo $UNDEFINED_VARIABLE
+```
+
+2. Run the script and identify all errors
+3. Fix each error
+4. Add `set -u` to catch undefined variables
+5. Run ShellCheck on it (if available)
+6. Document each bug you found in comments
+
+
+
+### Assignment 3: Personal Info Script (Advanced)
+**Goal**: Create a complete, well-documented script
+
+**Instructions**:
+1. Create a script called `about_me.sh` that:
+
+   - Uses at least 5 different variables
+   - Includes comments explaining each section
+   - Uses proper shebang and `set -u`
+   - Prints formatted output about yourself (hobbies, skills, goals, etc.)
+   - Uses both `echo` statements with variables inside strings and as separate arguments
+2. Test it thoroughly
+3. Run ShellCheck on it
+4. Make it executable with `chmod +x`
+
+**Bonus challenges**:
+- Use line continuation for a very long statement
+- Include a comment that temporarily disables a line of code
+- Experiment with different quoting styles
+
+### Assignment 4: Script Template (Advanced)
+**Goal**: Create a reusable template for future scripts
+
+**Instructions**:
+Create a file called `script_template.sh` that includes:
+- Shebang line
+- `set -u`
+- A comment block at the top with:
+
+  - Script name
+  - Author (your name)
+  - Date created
+  - Description of what the script does
+  - Usage instructions
+- Example variables with clear naming conventions
+- Commented sections for different parts of the script
+
+This template should be something you can copy and modify for future projects.
+:::
