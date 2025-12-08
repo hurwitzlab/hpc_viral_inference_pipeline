@@ -22,6 +22,12 @@ The launcher script `run_dramv.sh` submits a job array to the LSF scheduler, whe
 - Paired reads cleaned with trimmomatic files available in the specified working directory.  
 
 ## Output
+The output from DRAM-v will be saved in the specified output directory for each sample. The results will include annotated viral genomes, auxiliary metabolic gene (AMG) identifications, and various summary files.   
+Key output files include:
+
+- annotations.tsv: A detailed file with annotations, including viral-specific columns like vogdb matches, virsorter_category, auxiliary_score, and amg_flags.         
+- AMG Summary: Statistics on the identified AMG genes and their characteristics.
+
 
 
 ## About DRAM-v

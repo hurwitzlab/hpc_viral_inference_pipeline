@@ -21,7 +21,21 @@ The launcher script `run_raw_fastqc.sh` submits a job array to the LSF scheduler
 - Input FASTQ files available in the specified working directory.  
 
 ## Output
-The FastQC results will be saved in the specified output directory within the working directory, organized by sample. Each sample will have its own FastQC report files.
+The FastQC results will be saved in the specified output directory organized by sample. Each sample will have its own FastQC report files for for both read pairs, typically named as follows:
+
+- \<samplename\>_clean_1_fastqc.html        
+- \<samplename\>_clean_1_fastqc.zip
+- \<samplename\>_clean_2_fastqc.html
+- \<samplename\>_clean_2_fastqc.html        
+- \<samplename\>_clean_2_fastqc.zip
+
+The html files can be opened in a web browser to visualize the quality metrics, while the zip files contain the raw data used to generate the reports for further analysis if needed.
+
+You can use [MultiQC](https://github.com/MultiQC/MultiQC) to aggregate FastQC reports across multiple samples into a single report for easier comparison and visualization.
+
+
+
+#### IMPROVE THIS!!!
 
 ## About FastQC
 Following import, we always want to check the quality of the data going into an analysis. Unless you have supreme confidence in your viral isolation, extraction, sequencing preparation, and sequencing facility skills, it's always a good idea to know what quality is going into an assembly. To quote a populat CS phrase, "Garbage In, Garbage Out." Essentially, this means that if you put poor quality data into your analysis, you're going to get poor quality results out.

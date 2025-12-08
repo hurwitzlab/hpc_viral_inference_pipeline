@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mery Touceda-Suárez">
-<meta name="dcterms.date" content="2025-12-04">
+<meta name="dcterms.date" content="2025-12-08">
 
 <title>Loops</title>
 <style>
@@ -84,16 +84,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#for-loops" id="toc-for-loops" class="nav-link active" data-scroll-target="#for-loops">For loops</a></li>
-  <li><a href="#while-loops" id="toc-while-loops" class="nav-link" data-scroll-target="#while-loops">While loops</a></li>
-  <li><a href="#saving-results-in-files" id="toc-saving-results-in-files" class="nav-link" data-scroll-target="#saving-results-in-files">Saving results in files</a></li>
-  <li><a href="#getting-data-into-your-script-arguments" id="toc-getting-data-into-your-script-arguments" class="nav-link" data-scroll-target="#getting-data-into-your-script-arguments">Getting data into your script: Arguments</a>
+  <li><a href="#for-loops" id="toc-for-loops" class="nav-link active" data-scroll-target="#for-loops">For loops</a>
   <ul class="collapse">
-  <li><a href="#providing-default-arguments" id="toc-providing-default-arguments" class="nav-link" data-scroll-target="#providing-default-arguments">Providing default arguments</a></li>
-  <li><a href="#environmental-arguments" id="toc-environmental-arguments" class="nav-link" data-scroll-target="#environmental-arguments">Environmental arguments</a></li>
-  <li><a href="#required-and-optional-arguments" id="toc-required-and-optional-arguments" class="nav-link" data-scroll-target="#required-and-optional-arguments">Required and optional arguments</a></li>
+  <li><a href="#looping-over-files" id="toc-looping-over-files" class="nav-link" data-scroll-target="#looping-over-files">Looping over files</a></li>
+  <li><a href="#reading-lines-from-a-file" id="toc-reading-lines-from-a-file" class="nav-link" data-scroll-target="#reading-lines-from-a-file">Reading lines from a file</a></li>
   </ul></li>
-  <li><a href="#reading-a-configuration-file" id="toc-reading-a-configuration-file" class="nav-link" data-scroll-target="#reading-a-configuration-file">Reading a configuration file</a></li>
+  <li><a href="#while-loops" id="toc-while-loops" class="nav-link" data-scroll-target="#while-loops">While loops</a>
+  <ul class="collapse">
+  <li><a href="#basic-while-loop-for-reading-files" id="toc-basic-while-loop-for-reading-files" class="nav-link" data-scroll-target="#basic-while-loop-for-reading-files">Basic while loop for reading files</a></li>
+  <li><a href="#splitting-lines-into-fields" id="toc-splitting-lines-into-fields" class="nav-link" data-scroll-target="#splitting-lines-into-fields">Splitting lines into fields</a></li>
+  <li><a href="#while-loop-with-conditions" id="toc-while-loop-with-conditions" class="nav-link" data-scroll-target="#while-loop-with-conditions">While loop with conditions</a></li>
+  </ul></li>
+  <li><a href="#saving-results-in-files" id="toc-saving-results-in-files" class="nav-link" data-scroll-target="#saving-results-in-files">Saving results in files</a>
+  <ul class="collapse">
+  <li><a href="#basic-file-output-with-redirection" id="toc-basic-file-output-with-redirection" class="nav-link" data-scroll-target="#basic-file-output-with-redirection">Basic file output with redirection</a></li>
+  <li><a href="#using-temporary-files-for-intermediate-results" id="toc-using-temporary-files-for-intermediate-results" class="nav-link" data-scroll-target="#using-temporary-files-for-intermediate-results">Using temporary files for intermediate results</a></li>
+  <li><a href="#understanding-the-if-statements" id="toc-understanding-the-if-statements" class="nav-link" data-scroll-target="#understanding-the-if-statements">Understanding the <code>if</code> statements</a></li>
+  <li><a href="#best-practices-for-temporary-files" id="toc-best-practices-for-temporary-files" class="nav-link" data-scroll-target="#best-practices-for-temporary-files">Best practices for temporary files</a></li>
+  <li><a href="#saving-structured-output" id="toc-saving-structured-output" class="nav-link" data-scroll-target="#saving-structured-output">Saving structured output</a></li>
+  </ul></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key takeaways</a></li>
+  <li><a href="#homework-assignment" id="toc-homework-assignment" class="nav-link" data-scroll-target="#homework-assignment">Homework assignment</a></li>
   </ul>
 </nav>
 </div>
@@ -118,7 +129,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 4, 2025</p>
+      <p class="date">December 8, 2025</p>
     </div>
   </div>
   
@@ -155,28 +166,505 @@ Note
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> car truck ukulele<span class="kw">;</span> <span class="cf">do</span> <span class="bu">echo</span> <span class="va">$item</span><span class="kw">;</span> <span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<p>There are 4 special words in the syntax of a For Loop in Unix languages: for, in, do, and done. | Magic word | Purpose | |:———–|:——–| | <code>for</code> | Set the loop variable name | | <code>in</code> | Specify whatever it is we are looping over | | <code>do</code> | Specify what we want to do with each item | | <code>done</code> | Tell the computer we are done telling it what to do with each item |</p>
+<p>We can also do multiple things within the body of the loop (the lines between the special words do and done). Here we’ll add another line that also writes the words into a file we’ll call “words.txt”:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> car truck ukulele</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="va">$item</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="va">$item</span> <span class="op">&gt;&gt;</span> words.txt</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now we created a new file that holds these words.</p>
+<p>There are 4 special words in the syntax of a For Loop in Unix languages: <code>for</code>, <code>in</code>, <code>do</code>, and <code>done</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 57%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Magic word</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>for</code></td>
+<td style="text-align: left;">Set the loop variable name</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>in</code></td>
+<td style="text-align: left;">Specify whatever it is we are looping over</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>do</code></td>
+<td style="text-align: left;">Specify what we want to do with each item</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>done</code></td>
+<td style="text-align: left;">Tell the computer we are done telling it what to do with each item</td>
+</tr>
+</tbody>
+</table>
+<section id="looping-over-files" class="level3">
+<h3 class="anchored" data-anchor-id="looping-over-files">Looping over files</h3>
+<p>Often we want to perform actions on all files matching a certain pattern. We can use wildcards with for loops:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> FILE <span class="kw">in</span> <span class="pp">*</span>.sh<span class="kw">;</span> <span class="cf">do</span> <span class="bu">echo</span> <span class="st">"FILE = </span><span class="va">$FILE</span><span class="st">"</span><span class="kw">;</span> <span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This might output:</p>
+<pre><code>FILE = args.sh
+FILE = args2.sh
+FILE = args3.sh
+FILE = basic.sh
+FILE = hello.sh</code></pre>
+<p>Here’s a more complete script example that lists all files in a directory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-u</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="va">DIR</span><span class="op">=</span><span class="va">${1</span><span class="op">:-</span><span class="va">$PWD}</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="ot">!</span> <span class="ot">-d</span> <span class="st">"</span><span class="va">$DIR</span><span class="st">"</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"</span><span class="va">$DIR</span><span class="st"> is not a directory"</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="va">i</span><span class="op">=</span>0</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> FILE <span class="kw">in</span> <span class="va">$DIR</span>/<span class="pp">*</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">let</span> <span class="va">i</span><span class="op">++</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">printf</span> <span class="st">"%3d: %s\n"</span> <span class="va">$i</span> <span class="st">"</span><span class="va">$FILE</span><span class="st">"</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On line 5, we default <code>DIR</code> to the current working directory which we can find with the environmental variable <code>$PWD</code> (print working directory). We check on line 7 that the argument is actually a directory with the <code>-d</code> test (<code>man test</code>). The rest should look familiar.</p>
+<p>Here it is in action:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./for.sh <span class="kw">|</span> <span class="fu">head</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">1:</span> /Users/mtouced/Desktop</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">2:</span> /Users/mtouced/Documents</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">3:</span> /Users/mtouced/Downloads</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">4:</span> /Users/mtouced/for.sh</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">5:</span> /Users/mtouced/Globus</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">6:</span> /Users/mtouced/Library</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7:</span> /Users/mtouced/Movies</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">8:</span> /Users/mtouced/Music</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">9:</span> /Users/mtouced/Pictures</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a> <span class="ex">10:</span> /Users/mtouced/Public</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="reading-lines-from-a-file" class="level3">
+<h3 class="anchored" data-anchor-id="reading-lines-from-a-file">Reading lines from a file</h3>
+<p>You will see many examples of using <code>for</code> to read from a file like so:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="va">FILE</span><span class="op">=</span><span class="va">${1</span><span class="op">:-</span><span class="st">'srr.txt'</span><span class="va">}</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> LINE <span class="kw">in</span> <span class="va">$(</span><span class="fu">cat</span> <span class="st">"</span><span class="va">$FILE</span><span class="st">"</span><span class="va">)</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"LINE </span><span class="dt">\"</span><span class="va">$LINE</span><span class="dt">\"</span><span class="st">"</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If <code>srr.txt</code> contains:</p>
+<pre><code>SRR3115965
+SRR516222
+SRR919365</code></pre>
+<p>Running the script produces:</p>
+<pre><code>LINE "SRR3115965"
+LINE "SRR516222"
+LINE "SRR919365"</code></pre>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This approach can break badly when the file contains more than one “word” per line (as defined by the <code>$IFS</code> [input field separator]).</p>
+<p>For example the <code>01_unix/example.txt</code> file contains the Wikipedia entry for the city of Vigo. If we try to print each line using the previous script we will get only the first word in every line.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./for_file.sh example.txt <span class="kw">|</span> <span class="fu">head</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"Vigo"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"Vigo"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"(Galician:"</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"[ˈbiɣʊ],"</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"locally"</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"[ˈbiħʊ])"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"is"</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"a"</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"city"</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"and"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For more robust line-by-line file reading, consider using a <code>while read</code> loop instead (covered in the next section).</p>
+</div>
+</div>
+</section>
 </section>
 <section id="while-loops" class="level2">
 <h2 class="anchored" data-anchor-id="while-loops">While loops</h2>
+<p>The proper way to read a file line-by-line is with <code>while</code>. Unlike the <code>for</code> loop approach shown earlier, <code>while</code> properly handles lines with multiple words and preserves whitespace.</p>
+<section id="basic-while-loop-for-reading-files" class="level3">
+<h3 class="anchored" data-anchor-id="basic-while-loop-for-reading-files">Basic while loop for reading files</h3>
+<p>If we try the <code>while</code> function with <code>01_unix/example.txt</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="va">FILE</span><span class="op">=</span><span class="va">${1</span><span class="op">:-</span><span class="st">'srr.txt'</span><span class="va">}</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="at">-r</span> <span class="va">LINE</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"LINE </span><span class="dt">\"</span><span class="va">$LINE</span><span class="dt">\"</span><span class="st">"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> <span class="st">"</span><span class="va">$FILE</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This would be the output:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./while.sh example.txt<span class="kw">|</span> <span class="fu">head</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"Vigo"</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"Vigo (Galician: [ˈbiɣʊ], locally [ˈbiħʊ]) is a city and municipality in Spain, in the autonomous community of Galicia in the province of Pontevedra, and the capital of the comarca of Vigo. Located in the northwest of the Iberian Peninsula, it sits on the southern shore of an inlet of the Atlantic Ocean, the Ria de Vigo, the southernmost of the Rías Baixas."</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">""</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"The municipality, with an area of 109.06 km2 (42.11 sq mi) and a population of 295,523 in 2024 including rural parishes, is the most populous municipality in Galicia, and the 14th-most-populous in Spain. The area of the municipality includes the Cíes Islands, part of the Atlantic Islands of Galicia National Park."</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">""</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"Vigo is one of the region's primary economic agents, owing to the French Stellantis Vigo plant and to its port.[3] Close to the Portugal–Spain border, Vigo is part of the Galicia–North Portugal Euroregion. The European Fisheries Control Agency is headquartered in Vigo."</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">""</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"History"</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">"In the Early Middle Ages, the small village of Vigo was part of the territory of Galician-speaking neighbouring towns, particularly Tui, and suffered several Viking raids. However, its number of inhabitants was so small that, historically, it was not considered a real town until around the 15th century, when the earliest records began."</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="ex">LINE</span> <span class="st">""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>-r</code> flag with <code>read</code> prevents backslash escaping, which means backslashes in the input are treated as literal characters rather than escape sequences. This is almost always what you want when reading files.</p>
+</div>
+</div>
+</section>
+<section id="splitting-lines-into-fields" class="level3">
+<h3 class="anchored" data-anchor-id="splitting-lines-into-fields">Splitting lines into fields</h3>
+<p>Another advantage of <code>while</code> is that it can break each line into multiple fields automatically. Here’s an example with a tab-delimited file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="va">FILE</span><span class="op">=</span><span class="va">${1</span><span class="op">:-</span><span class="st">'data.txt'</span><span class="va">}</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">IFS</span><span class="op">=</span><span class="st">$'</span><span class="dt">\t</span><span class="st">'</span> <span class="bu">read</span> <span class="at">-r</span> <span class="va">FIELD1</span> <span class="va">FIELD2</span> <span class="va">FIELD3</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Field 1: </span><span class="va">$FIELD1</span><span class="st">"</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Field 2: </span><span class="va">$FIELD2</span><span class="st">"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Field 3: </span><span class="va">$FIELD3</span><span class="st">"</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"---"</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> <span class="st">"</span><span class="va">$FILE</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If <code>data.txt</code> contains:</p>
+<pre><code>apple   red fruit
+carrot  orange  vegetable
+blueberry   blue    fruit</code></pre>
+<p>The output would be:</p>
+<pre><code>Field 1: apple
+Field 2: red
+Field 3: fruit
+---
+Field 1: carrot
+Field 2: orange
+Field 3: vegetable
+---
+Field 1: blueberry
+Field 2: blue
+Field 3: fruit
+---</code></pre>
+<p>The <code>IFS=$'\t'</code> sets the Internal Field Separator to tab, so <code>read</code> splits each line on tabs.</p>
+</section>
+<section id="while-loop-with-conditions" class="level3">
+<h3 class="anchored" data-anchor-id="while-loop-with-conditions">While loop with conditions</h3>
+<p>While loops aren’t just for reading files - they can run as long as a condition is true:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="va">COUNTER</span><span class="op">=</span>1</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">[</span> <span class="va">$COUNTER</span> <span class="ot">-le</span> 5 <span class="bu">]</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Count: </span><span class="va">$COUNTER</span><span class="st">"</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">((</span><span class="va">COUNTER</span><span class="op">++</span><span class="kw">))</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This outputs:</p>
+<pre><code>Count: 1
+Count: 2
+Count: 3
+Count: 4
+Count: 5</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>For vs While: When to use which?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Use <strong>for loops</strong> when you know the list of items you want to iterate over (files, numbers, array elements)</li>
+<li>Use <strong>while loops</strong> when:
+<ul>
+<li>Reading files line-by-line (especially with multiple words per line)</li>
+<li>You need to continue until a condition is met</li>
+<li>Processing input streams or command output</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
 </section>
 <section id="saving-results-in-files" class="level2">
 <h2 class="anchored" data-anchor-id="saving-results-in-files">Saving results in files</h2>
+<p>When working with loops, you’ll often need to store intermediate results or the output of commands for further processing. There are several ways to handle this, from simple redirection to using temporary files.</p>
+<section id="basic-file-output-with-redirection" class="level3">
+<h3 class="anchored" data-anchor-id="basic-file-output-with-redirection">Basic file output with redirection</h3>
+<p>The simplest way to save loop output is using redirection operators:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Overwrite file (creates new or replaces existing)</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> NUM <span class="kw">in</span> <span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">5</span><span class="dt">}</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Number: </span><span class="va">$NUM</span><span class="st">"</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&gt;</span> output.txt</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Append to file (adds to existing content)</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> NUM <span class="kw">in</span> <span class="dt">{</span><span class="dv">6</span><span class="dt">..</span><span class="dv">10</span><span class="dt">}</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">"Number: </span><span class="va">$NUM</span><span class="st">"</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&gt;&gt;</span> output.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>&gt;</code> creates a new file or overwrites an existing one</li>
+<li><code>&gt;&gt;</code> appends to an existing file or creates a new one if it doesn’t exist</li>
+</ul>
+</div>
+</div>
 </section>
-<section id="getting-data-into-your-script-arguments" class="level2">
-<h2 class="anchored" data-anchor-id="getting-data-into-your-script-arguments">Getting data into your script: Arguments</h2>
-<section id="providing-default-arguments" class="level3">
-<h3 class="anchored" data-anchor-id="providing-default-arguments">Providing default arguments</h3>
+<section id="using-temporary-files-for-intermediate-results" class="level3">
+<h3 class="anchored" data-anchor-id="using-temporary-files-for-intermediate-results">Using temporary files for intermediate results</h3>
+<p>Often you’ll want to save the results of a command (like <code>find</code>, <code>grep</code>, or <code>awk</code>) into a temporary file, then iterate over those results. This is particularly useful when the command is expensive to run or when you need to process the results multiple times.</p>
+<p>Here’s an example that counts sequences in FASTA files:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-u</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="va">$#</span> <span class="ot">-ne</span> 1 <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">printf</span> <span class="st">"Usage: %s DIR\n"</span> <span class="st">"</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$0</span><span class="st">"</span><span class="va">)</span><span class="st">"</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="va">DIR</span><span class="op">=</span><span class="va">$1</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="va">TMP</span><span class="op">=</span><span class="va">$(</span><span class="fu">mktemp</span><span class="va">)</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> <span class="st">"</span><span class="va">$DIR</span><span class="st">"</span> <span class="at">-type</span> f <span class="at">-name</span> <span class="dt">\*</span>.fa <span class="op">&gt;</span> <span class="st">"</span><span class="va">$TMP</span><span class="st">"</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="va">NUM_FILES</span><span class="op">=</span><span class="va">$(</span><span class="fu">wc</span> <span class="at">-l</span> <span class="st">"</span><span class="va">$TMP</span><span class="st">"</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'{print $1}'</span><span class="va">)</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="va">$NUM_FILES</span> <span class="ot">-lt</span> 1 <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Found no .fa files in </span><span class="va">$DIR</span><span class="st">"</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span> <span class="st">"</span><span class="va">$TMP</span><span class="st">"</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="va">NUM_SEQS</span><span class="op">=</span>0</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="at">-r</span> <span class="va">FILE</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="va">NUM_SEQ</span><span class="op">=</span><span class="va">$(</span><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'^&gt;'</span> <span class="st">"</span><span class="va">$FILE</span><span class="st">"</span><span class="va">)</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    <span class="va">NUM_SEQS</span><span class="op">=</span><span class="va">$((NUM_SEQS</span> <span class="op">+</span> <span class="va">NUM_SEQ))</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">printf</span> <span class="st">"%10d %s\n"</span> <span class="st">"</span><span class="va">$NUM_SEQ</span><span class="st">"</span> <span class="st">"</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$FILE</span><span class="st">"</span><span class="va">)</span><span class="st">"</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> <span class="st">"</span><span class="va">$TMP</span><span class="st">"</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="st">"</span><span class="va">$TMP</span><span class="st">"</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Done, found </span><span class="va">$NUM_SEQS</span><span class="st"> sequences in </span><span class="va">$NUM_FILES</span><span class="st"> files."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Running this script:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./count-fa.sh ../problems</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>        <span class="ex">23</span> anthrax.fa</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>         <span class="ex">9</span> burk.fa</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Done,</span> found 32 sequences in 2 files.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Let’s break down what’s happening:</p>
+<ol type="1">
+<li><strong>Line 11</strong>: <code>mktemp</code> creates a temporary file with a unique name and returns its path</li>
+<li><strong>Line 12</strong>: <code>find</code> searches for all <code>.fa</code> files and saves the list to the temporary file</li>
+<li><strong>Line 13</strong>: We count how many files were found</li>
+<li><strong>Lines 21-25</strong>: We read each filename from the temporary file and process it</li>
+<li><strong>Line 27</strong>: Clean up by removing the temporary file</li>
+</ol>
 </section>
-<section id="environmental-arguments" class="level3">
-<h3 class="anchored" data-anchor-id="environmental-arguments">Environmental arguments</h3>
+<section id="understanding-the-if-statements" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-the-if-statements">Understanding the <code>if</code> statements</h3>
+<p>This script uses two <strong><code>if</code> statements</strong> to check conditions before proceeding. An if statement lets your script make decisions - it tests whether something is true or false, and then executes different code based on the result.</p>
+<p><strong>Basic if statement syntax:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> condition <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># commands to run if condition is true</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>If statement with an else:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> condition <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># commands if condition is true</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># commands if condition is false</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In our FASTA counting script, we have two if statements:</p>
+<p><strong>First if statement (lines 5-8):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="va">$#</span> <span class="ot">-ne</span> 1 <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">printf</span> <span class="st">"Usage: %s DIR\n"</span> <span class="st">"</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$0</span><span class="st">"</span><span class="va">)</span><span class="st">"</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This checks: “Is the number of arguments not equal to 1?” (<code>$#</code> counts the arguments, <code>-ne</code> means “not equal”).</p>
+<ul>
+<li>If <strong>true</strong> (wrong number of arguments): Print usage message and exit with error code 1</li>
+<li>If <strong>false</strong> (correct number of arguments): Continue with the script</li>
+</ul>
+<blockquote class="blockquote">
+<p>Note: We will see <strong>arguments</strong> in the next training!</p>
+</blockquote>
+<p><strong>Second if statement (lines 15-19):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="va">$NUM_FILES</span> <span class="ot">-lt</span> 1 <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Found no .fa files in </span><span class="va">$DIR</span><span class="st">"</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span> <span class="st">"</span><span class="va">$TMP</span><span class="st">"</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This checks: “Is the number of files less than 1?” (<code>-lt</code> means “less than”)</p>
+<ul>
+<li>If <strong>true</strong> (no files found): Print message, clean up temp file, and exit with error code 1</li>
+<li>If <strong>false</strong> (files were found): Continue processing the files</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Common comparison operators
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For numbers:</p>
+<ul>
+<li><code>-eq</code>: equal to</li>
+<li><code>-ne</code>: not equal to</li>
+<li><code>-lt</code>: less than</li>
+<li><code>-le</code>: less than or equal to</li>
+<li><code>-gt</code>: greater than</li>
+<li><code>-ge</code>: greater than or equal to</li>
+</ul>
+<p>For strings:</p>
+<ul>
+<li><code>=</code>: equal to</li>
+<li><code>!=</code>: not equal to</li>
+<li><code>-z</code>: string is empty</li>
+<li><code>-n</code>: string is not empty</li>
+</ul>
+<p>For files:</p>
+<ul>
+<li><code>-f</code>: file exists and is a regular file</li>
+<li><code>-d</code>: directory exists</li>
+<li><code>-r</code>: file is readable</li>
+<li><code>-w</code>: file is writable</li>
+<li><code>-x</code>: file is executable</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Why use temporary files?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Performance</strong>: Run expensive commands once, then iterate over results multiple times</li>
+<li><strong>Safety</strong>: Store intermediate results so you can check them before proceeding</li>
+<li><strong>Debugging</strong>: Inspect the temporary file to see what data you’re working with</li>
+<li><strong>Complex workflows</strong>: Break down complicated pipelines into manageable steps</li>
+</ul>
+</div>
+</div>
 </section>
-<section id="required-and-optional-arguments" class="level3">
-<h3 class="anchored" data-anchor-id="required-and-optional-arguments">Required and optional arguments</h3>
+<section id="best-practices-for-temporary-files" class="level3">
+<h3 class="anchored" data-anchor-id="best-practices-for-temporary-files">Best practices for temporary files</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a temporary file</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="va">TMP</span><span class="op">=</span><span class="va">$(</span><span class="fu">mktemp</span><span class="va">)</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Always clean up temporary files, even if script exits early</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="bu">trap</span> <span class="st">"rm -f </span><span class="va">$TMP</span><span class="st">"</span> EXIT</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the temporary file</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="ex">some_command</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$TMP</span><span class="st">"</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Process the results</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">read</span> <span class="at">-r</span> <span class="va">LINE</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Processing: </span><span class="va">$LINE</span><span class="st">"</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> <span class="op">&lt;</span> <span class="st">"</span><span class="va">$TMP</span><span class="st">"</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co"># The trap will automatically remove $TMP when the script exits</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>trap</code> command ensures your temporary file is deleted even if the script exits unexpectedly (due to an error or interrupt).</p>
+</section>
+<section id="saving-structured-output" class="level3">
+<h3 class="anchored" data-anchor-id="saving-structured-output">Saving structured output</h3>
+<p>You can also save structured data for later analysis:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="va">OUTPUT</span><span class="op">=</span><span class="st">"results.tsv"</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Write header</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"Filename\tSequences\tSize"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$OUTPUT</span><span class="st">"</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Process files and append results</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> FILE <span class="kw">in</span> <span class="pp">*</span>.fa<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">NUM_SEQS</span><span class="op">=</span><span class="va">$(</span><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'^&gt;'</span> <span class="st">"</span><span class="va">$FILE</span><span class="st">"</span><span class="va">)</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">SIZE</span><span class="op">=</span><span class="va">$(</span><span class="fu">wc</span> <span class="at">-c</span> <span class="op">&lt;</span> <span class="st">"</span><span class="va">$FILE</span><span class="st">"</span><span class="va">)</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="at">-e</span> <span class="st">"</span><span class="va">$FILE</span><span class="st">\t</span><span class="va">$NUM_SEQS</span><span class="st">\t</span><span class="va">$SIZE</span><span class="st">"</span> <span class="op">&gt;&gt;</span> <span class="st">"</span><span class="va">$OUTPUT</span><span class="st">"</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Results saved to </span><span class="va">$OUTPUT</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This creates a tab-delimited file that you could later import into Excel, R, or Python for further analysis.</p>
 </section>
 </section>
-<section id="reading-a-configuration-file" class="level2">
-<h2 class="anchored" data-anchor-id="reading-a-configuration-file">Reading a configuration file</h2>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key takeaways</h2>
+<ul>
+<li><strong>For loops</strong> are best for iterating over known lists (files with wildcards, sequences of numbers, array elements)</li>
+<li><strong>While loops</strong> are essential for reading files line-by-line, especially when lines contain spaces or special characters</li>
+<li>Use <strong>temporary files</strong> with <code>mktemp</code> to store intermediate results from expensive operations</li>
+<li>Always <strong>clean up</strong> temporary files using <code>rm</code> or the <code>trap</code> command</li>
+<li><strong>Redirection operators</strong> (<code>&gt;</code> and <code>&gt;&gt;</code>) let you save loop output directly to files</li>
+<li>The <code>-r</code> flag with <code>read</code> prevents backslash interpretation and should almost always be used</li>
+</ul>
+</section>
+<section id="homework-assignment" class="level2">
+<h2 class="anchored" data-anchor-id="homework-assignment">Homework assignment</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Homework
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p><strong>File counter</strong>: Write a script that counts all <code>.txt</code> files in a directory and its subdirectories, printing both the total count and listing each file with its line count.</p></li>
+<li><p><strong>Log parser</strong>: Create a script that reads a log file line-by-line and extracts all lines containing “ERROR”, saving them to a new file called <code>errors.log</code>. Count how many errors were found.</p></li>
+<li><p><strong>Batch renamer</strong>: Write a script that uses a for loop to rename all <code>.jpeg</code> files in a directory to <code>.jpg</code>. Make sure to check if files exist before attempting to rename them.</p></li>
+<li><p><strong>Data processor</strong>: Create a script that reads a CSV file with three columns (name, score, grade) and:</p>
+<ul>
+<li>Calculates the average score</li>
+<li>Counts how many students got each grade</li>
+<li>Saves a summary to a new file</li>
+</ul></li>
+<li><p><strong>Temperature file</strong>: Given a temporary file created with <code>mktemp</code>, use a while loop with conditions to generate the first 10 Fibonacci numbers and save them to the file, then read and display them.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Challenge exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Combine for and while loops: Write a script that finds all <code>.txt</code> files in multiple directories (use a for loop over directory names), then for each file found, use a while loop to count specific words. Save results in a structured format showing directory, filename, and word counts.</p>
+</div>
+</div>
 </section>
 
 </main>

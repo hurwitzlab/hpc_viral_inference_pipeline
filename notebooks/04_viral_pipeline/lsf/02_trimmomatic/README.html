@@ -114,7 +114,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="output" class="level2">
 <h2 class="anchored" data-anchor-id="output">Output</h2>
-<p>The trimmomatic results will be saved in two output directories within the working directory, organized by sample. One directory will contain the paired trimmed reads, and the other will contain the unpaired trimmed reads.</p>
+<p>Trimmomatic will generate trimmed and filtered FASTQ files for each sample. The output files will be saved in the specified output directory within the working directory, organized by sample. Each sample will have the following output files:</p>
+<ul>
+<li>samplename_clean_1.fastq</li>
+<li>samplename_clean_2.fastq<br>
+</li>
+<li>samplename_unpaired_1.fastq</li>
+<li>samplename_unpaired_2.fastq</li>
+</ul>
+<p>The “clean” files contain the paired reads that passed the quality filters, while the “unpaired” files contain reads that were discarded from their pairs due to quality issues.</p>
 </section>
 <section id="about-trimmomatic" class="level2">
 <h2 class="anchored" data-anchor-id="about-trimmomatic">About Trimmomatic</h2>

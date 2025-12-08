@@ -21,7 +21,15 @@ The launcher script `run_trimmomatic.sh` submits a job array to the LSF schedule
 - Input FASTQ files available in the specified working directory.  
 
 ## Output
-The trimmomatic results will be saved in two output directories within the working directory, organized by sample. One directory will contain the paired trimmed reads, and the other will contain the unpaired trimmed reads.
+Trimmomatic will generate trimmed and filtered FASTQ files for each sample. The output files will be saved in the specified output directory within the working directory, organized by sample. Each sample will have the following output files:
+
+- \<samplename\>_clean_1.fastq
+- \<samplename\>_clean_2.fastq     
+- \<samplename\>_unpaired_1.fastq
+- \<samplename\>_unpaired_2.fastq
+
+The "clean" files contain the paired reads that passed the quality filters, while the "unpaired" files contain reads that were discarded from their pairs due to quality issues.
+
 
 ## About Trimmomatic
 Trimmomatic is a flexible read trimming tool for Illumina NGS data. It is designed to perform a variety of useful trimming tasks for Illumina paired-end and single-ended data, including **adapter removal**, **quality trimming**, and **filtering of reads based on length**. Trimming low-quality bases and removing adapter sequences can significantly improve the quality of downstream analyses, such as assembly and variant calling. For more information about trimmomatic, visit the [trimmomatic GitHub page](http://www.usadellab.org/cms/?page=trimmomatic).

@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.24">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mery Touceda-Suárez">
+<meta name="dcterms.date" content="2025-12-08">
+
+<title>Arguments</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="03_arguments_files/libs/clipboard/clipboard.min.js"></script>
+<script src="03_arguments_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="03_arguments_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="03_arguments_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="03_arguments_files/libs/quarto-html/popper.min.js"></script>
+<script src="03_arguments_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="03_arguments_files/libs/quarto-html/anchor.min.js"></script>
+<link href="03_arguments_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="03_arguments_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="03_arguments_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="03_arguments_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="03_arguments_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#getting-data-into-your-script-arguments" id="toc-getting-data-into-your-script-arguments" class="nav-link active" data-scroll-target="#getting-data-into-your-script-arguments">Getting data into your script: Arguments</a></li>
+  <li><a href="#command-line-arguments" id="toc-command-line-arguments" class="nav-link" data-scroll-target="#command-line-arguments">Command line arguments</a></li>
+  <li><a href="#providing-default-argument-values" id="toc-providing-default-argument-values" class="nav-link" data-scroll-target="#providing-default-argument-values">Providing default argument values</a></li>
+  <li><a href="#environmental-arguments" id="toc-environmental-arguments" class="nav-link" data-scroll-target="#environmental-arguments">Environmental arguments</a></li>
+  <li><a href="#required-and-optional-arguments" id="toc-required-and-optional-arguments" class="nav-link" data-scroll-target="#required-and-optional-arguments">Required and optional arguments</a></li>
+  <li><a href="#named-arguments-to-the-rescue" id="toc-named-arguments-to-the-rescue" class="nav-link" data-scroll-target="#named-arguments-to-the-rescue">Named Arguments To The Rescue</a>
+  <ul class="collapse">
+  <li><a href="#using-getopts-for-named-arguments" id="toc-using-getopts-for-named-arguments" class="nav-link" data-scroll-target="#using-getopts-for-named-arguments">Using getopts for Named Arguments</a></li>
+  <li><a href="#best-practices-for-named-arguments" id="toc-best-practices-for-named-arguments" class="nav-link" data-scroll-target="#best-practices-for-named-arguments">Best Practices for Named Arguments</a></li>
+  </ul></li>
+  <li><a href="#reading-a-configuration-file" id="toc-reading-a-configuration-file" class="nav-link" data-scroll-target="#reading-a-configuration-file">Reading a configuration file</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  <li><a href="#homework" id="toc-homework" class="nav-link" data-scroll-target="#homework">Homework</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Arguments</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mery Touceda-Suárez </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="getting-data-into-your-script-arguments" class="level2">
+<h2 class="anchored" data-anchor-id="getting-data-into-your-script-arguments">Getting data into your script: Arguments</h2>
+<p>Arguments are inputs provided to a command or script at the time of its execution. These arguments allow users to control the behavior of the command or script and specify the data it should operate on.</p>
+</section>
+<section id="command-line-arguments" class="level2">
+<h2 class="anchored" data-anchor-id="command-line-arguments">Command line arguments</h2>
+<p>Command line arguments, also called positional arguments, are the simplest way to pass data to your script. They’re called “positional” because their meaning is determined by their position in the command line. Bash provides several special variables that give you access to these arguments:</p>
+<ul>
+<li><code>$#</code>: The number (think “#” == number) of arguments</li>
+<li><code>$@</code>: All the arguments in a single string</li>
+<li><code>$0</code>: The name of the script</li>
+<li><code>$1</code>, <code>$2</code>: The first argument, the second argument, etc.</li>
+</ul>
+<p>These variables are automatically set by the shell when your script runs. You don’t need to declare them or initialize them—they’re always available. Let’s create a simple script to see how they work:</p>
+<p>args.sh</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat <span class="at">-n</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Num of args    : </span><span class="dt">\"</span><span class="va">$#</span><span class="dt">\"</span><span class="st">"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"String of args : </span><span class="dt">\"</span><span class="va">$@</span><span class="dt">\"</span><span class="st">"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Name of program: </span><span class="dt">\"</span><span class="va">$0</span><span class="dt">\"</span><span class="st">"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"First arg      : </span><span class="dt">\"</span><span class="va">$1</span><span class="dt">\"</span><span class="st">"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Second arg     : </span><span class="dt">\"</span><span class="va">$2</span><span class="dt">\"</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This script simply prints out the values of these special variables so you can see what’s happening. Let’s test it with different numbers of arguments:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./args.sh</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Num</span> of args    : <span class="st">"0"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">String</span> of args : <span class="st">""</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Name</span> of program: <span class="st">"./args.sh"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">First</span> arg      : <span class="st">""</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Second</span> arg     : <span class="st">""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When we run the script with no arguments, <span class="math inline">\(# is 0 and the argument variables are empty strings. This is important to know because if your script expects arguments, you'll need to check for this case.
+```bash\)</span> ./args.sh foo Num of args : “1” String of args : “foo” Name of program: “./args.sh” First arg : “foo” Second arg : “”</p>
+<pre><code>With one argument, $1 contains "foo" but $2 is still empty. Notice that accessing an argument that wasn't provided doesn't cause an error—it just gives you an empty string.
+```bash
+$ ./args.sh foo bar
+Num of args    : "2"
+String of args : "foo bar"
+Name of program: "./args.sh"
+First arg      : "foo"
+Second arg     : "bar"</code></pre>
+<p>Now both $1 and $2 are populated. The $@ variable contains both arguments separated by a space, which is useful when you want to pass all arguments to another command.</p>
+<p>Here’s a practical example that actually uses an argument to do something useful:</p>
+<p>hello3.sh</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Hello, </span><span class="va">$1</span><span class="st">!"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This script takes whatever you pass as the first argument and includes it in the greeting:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./hello3.sh Captain</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello,</span> Captain!</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This pattern of using $1, $2, etc. works well for simple scripts with just a few arguments. But as your scripts grow more complex, you’ll quickly find that managing many positional arguments becomes unwieldy. What if the user forgets an argument? What if they put them in the wrong order? We’ll address these issues in the following sections.</p>
+</section>
+<section id="providing-default-argument-values" class="level2">
+<h2 class="anchored" data-anchor-id="providing-default-argument-values">Providing default argument values</h2>
+<p>In the real world, not every user will provide every argument your script could use. Rather than forcing users to always specify every single value, you can provide sensible defaults for optional arguments. This makes your scripts much friendlier to use—users only need to specify the values that differ from the common case.</p>
+<p>Bash provides parameter expansion syntax for this purpose. The most common form is $<code>{variable:-default}</code>, which means “use the value of variable if it’s set and not empty, otherwise use this default value.” This is non-destructive—it doesn’t actually change the variable, it just provides a fallback value for this one use.</p>
+<p>Let’s see this in action with a greeting script that defaults to “World” if no name is provided:</p>
+<p>greet_default.sh</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="va">NAME</span><span class="op">=</span><span class="va">${1</span><span class="op">:-</span><span class="st">"World"</span><span class="va">}</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Hello, </span><span class="va">$NAME</span><span class="st">!"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now the script works whether or not the user provides a name:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./greet_default.sh</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello,</span> World!</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./greet_default.sh Alice</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Hello,</span> Alice!</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is much better than the previous version that would print “Hello, !” if no argument was given. The user experience is improved because the script does something reasonable by default.</p>
+<p>There’s a related syntax, <code>${variable:=default}</code>, which not only provides a default but also assigns it to the variable. This is useful when you want to ensure the variable has a value for later use in the script:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">:</span> <span class="va">${OUTPUT_DIR</span><span class="op">:=</span><span class="st">"./output"</span><span class="va">}</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Output directory: </span><span class="va">$OUTPUT_DIR</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>:</code> command is a no-op (it does nothing), but it forces bash to evaluate the parameter expansion. This idiom is commonly used at the top of scripts to set up default values for variables that might come from arguments or environment variables.</p>
+<p>You can also use conditional logic to provide defaults, which gives you more flexibility:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bash#!/usr/bin/env</span> bash</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$1</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">NAME</span><span class="op">=</span><span class="st">"World"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">NAME</span><span class="op">=</span><span class="st">"</span><span class="va">$1</span><span class="st">"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Hello, </span><span class="va">$NAME</span><span class="st">!"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This approach is more verbose but sometimes clearer, especially when the default value needs to be computed or when you want to provide different messages based on whether the argument was provided.</p>
+</section>
+<section id="environmental-arguments" class="level2">
+<h2 class="anchored" data-anchor-id="environmental-arguments">Environmental arguments</h2>
+<p>Environment variables provide another channel for passing information to your scripts. Unlike command line arguments, which are explicitly provided each time you run the script, environment variables are set in the shell environment and persist across multiple commands. They’re particularly useful for configuration that applies to many different programs or scripts in a session.</p>
+<p>Your shell already sets many environment variables automatically. Common ones include <code>$USER</code> (your username), <code>$HOME</code> (your home directory), and <code>$PATH</code> (where the shell looks for commands). Let’s see how to access these in a script:</p>
+<p>env_example.sh</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"User: </span><span class="va">$USER</span><span class="st">"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Home: </span><span class="va">$HOME</span><span class="st">"</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Path: </span><span class="va">$PATH</span><span class="st">"</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Custom var: </span><span class="va">$MY_VAR</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The syntax for accessing environment variables is identical to accessing regular shell variables—just use the dollar sign followed by the variable name:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> export MY_VAR=<span class="st">"custom_value"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./env_example.sh</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">User:</span> your_username</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Home:</span> /home/your_username</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Path:</span> /usr/local/bin:/usr/bin:/bin</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Custom</span> var: custom_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>export</code> command makes a variable available to child processes (like your script). Without <code>export</code>, the variable would only exist in the current shell and wouldn’t be visible to the script.</p>
+</div>
+</div>
+<p>You can also set environment variables for just a single command execution without affecting your shell environment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> MY_VAR=<span class="st">"temporary_value"</span> ./env_example.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This syntax is useful for one-off runs or when testing different configurations. The variable is only set for the duration of that one command.</p>
+<p>Environment variables are particularly powerful when combined with default values. This pattern allows scripts to be configured through the environment while still working with sensible defaults:</p>
+<p>deploy.sh</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="va">ENVIRONMENT</span><span class="op">=</span><span class="va">${ENVIRONMENT</span><span class="op">:-</span><span class="st">"development"</span><span class="va">}</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="va">PORT</span><span class="op">=</span><span class="va">${PORT</span><span class="op">:-</span>8080<span class="va">}</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="va">DEBUG</span><span class="op">=</span><span class="va">${DEBUG</span><span class="op">:-</span>false<span class="va">}</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Deploying to: </span><span class="va">$ENVIRONMENT</span><span class="st">"</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Port: </span><span class="va">$PORT</span><span class="st">"</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Debug mode: </span><span class="va">$DEBUG</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now you can run the script with defaults, or configure it through environment variables:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./deploy.sh</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Deploying</span> to: development</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Port:</span> 8080</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Debug</span> mode: false</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ENVIRONMENT=production PORT=3000 ./deploy.sh</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Deploying</span> to: production</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Port:</span> 3000</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Debug</span> mode: false</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This approach is common in modern application deployment, where environment variables configure things like database connections, API keys, and feature flags. It follows the twelve-factor app methodology, which recommends storing configuration in the environment rather than in code.</p>
+</section>
+<section id="required-and-optional-arguments" class="level2">
+<h2 class="anchored" data-anchor-id="required-and-optional-arguments">Required and optional arguments</h2>
+<p>As your scripts become more sophisticated, you’ll need to distinguish between required arguments (without which the script cannot function) and optional arguments (which have reasonable defaults). Good scripts validate their inputs early and provide clear error messages when something is wrong. This prevents cryptic errors later and helps users understand how to use your script correctly. The simplest validation is checking whether a required argument was provided. We can use the -z test, which returns true if a string is empty:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="va">SOURCE</span><span class="op">=</span><span class="va">$1</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="va">DEST</span><span class="op">=</span><span class="va">$2</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$SOURCE</span><span class="st">"</span> <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$DEST</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Error: Missing required arguments"</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Usage: </span><span class="va">$0</span><span class="st"> &lt;source&gt; &lt;destination&gt;"</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-f</span> <span class="st">"</span><span class="va">$SOURCE</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Error: Source file '</span><span class="va">$SOURCE</span><span class="st">' does not exist"</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="st">"</span><span class="va">$SOURCE</span><span class="st">"</span> <span class="st">"</span><span class="va">$DEST</span><span class="st">"</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"File copied successfully"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This script validates both that the arguments are provided and that the source file actually exists before attempting the copy. The exit 1 command terminates the script with a non-zero exit code, which by convention indicates an error.</p>
+<p>Testing this script:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./copy_file.sh</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Error:</span> Missing required arguments</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Usage:</span> ./copy_file.sh <span class="op">&lt;</span>source<span class="op">&gt;</span> <span class="op">&lt;</span>destination<span class="op">&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./copy_file.sh file.txt backup.txt</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="ex">File</span> copied successfully</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Notice how the error message includes a usage statement showing the correct syntax. This is crucial for usability—when a script fails, users need to know what they did wrong and how to fix it. Including <code>$0</code> (the script name) in the usage message makes it accurate even if the script is renamed or called from a different location.</p>
+<p>You can mix required and optional arguments by checking for the required ones first:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="va">INPUT</span><span class="op">=</span><span class="va">$1</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="va">OUTPUT</span><span class="op">=</span><span class="va">${2</span><span class="op">:-</span><span class="st">"output.txt"</span><span class="va">}</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="va">VERBOSE</span><span class="op">=</span><span class="va">${3</span><span class="op">:-</span>false<span class="va">}</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$INPUT</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Error: Input file is required"</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Processing </span><span class="va">$INPUT</span><span class="st"> -&gt; </span><span class="va">$OUTPUT</span><span class="st">"</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="bu">[</span> <span class="st">"</span><span class="va">$VERBOSE</span><span class="st">"</span> <span class="ot">=</span> <span class="st">"true"</span> <span class="bu">]</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span> <span class="st">"Verbose mode enabled"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This pattern works, but it has a significant limitation: all arguments must be provided in the exact order the script expects. If you want verbose mode but the default output file, you’d have to write <code>./script.sh input.txt output.txt true</code>, explicitly providing the default. This quickly becomes tedious and error-prone, which is why we need named arguments for anything beyond the simplest scripts.</p>
+<p><br></p>
+</section>
+<section id="named-arguments-to-the-rescue" class="level2">
+<h2 class="anchored" data-anchor-id="named-arguments-to-the-rescue">Named Arguments To The Rescue</h2>
+<p>By this point, you may be thinking that scripts are getting awfully complicated just to allow for a combination of required and optional arguments all given in a particular order. You can manage with 1-3 positional arguments, but after that, we really need to have named arguments and/or flags to indicate how we want to run the program.</p>
+<p>Named arguments fundamentally change how users interact with your script. Instead of memorizing the correct order of arguments, users specify what each value represents with a flag. A named argument might be <code>-f mouse.fa</code> to indicate the value for the <code>-f</code> flag (probably “file”) is <code>mouse.fa</code>, whereas a simple flag like <code>-v</code> might be a yes/no (“Boolean”) indicator that we do or do not want “verbose” mode. You’ve encountered these with programs like <code>ls -l</code> to indicate you want the “long” directory listing or ps <code>-u $USER</code> to indicate the value for <code>-u</code> is the $USER variable.</p>
+<p>The best thing about named arguments is that they can be provided in any order:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./named.sh <span class="at">-n</span> Patch <span class="at">-g</span> <span class="st">"Good Boy"</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Good</span> Boy, Patch!</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./named.sh <span class="at">-g</span> <span class="st">"Good Boy"</span> <span class="at">-n</span> Patch</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Good</span> Boy, Patch!</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Both invocations produce the same result because the flags tell the script what each value means. Some flags may have values (like <code>-n Patch</code>), some may be simple boolean flags (like <code>-v</code> for verbose), and you can easily provide good defaults to make it easy for the user to provide the bare minimum information to run your program. This is the standard pattern used by professional Unix tools, and users will find your scripts immediately familiar if you follow these conventions.</p>
+<section id="using-getopts-for-named-arguments" class="level3">
+<h3 class="anchored" data-anchor-id="using-getopts-for-named-arguments">Using getopts for Named Arguments</h3>
+<p>The <code>getopts</code> built-in command is bash’s standard tool for parsing named arguments. It handles all the tedious work of parsing flags, extracting their values, and detecting errors. Here’s a complete example that demonstrates the key patterns:</p>
+<p>named.sh</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-u</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="va">GREETING</span><span class="op">=</span><span class="st">""</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="va">NAME</span><span class="op">=</span><span class="st">"Stranger"</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="va">EXCITED</span><span class="op">=</span>0</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span><span class="fu"> USAGE()</span> <span class="kw">{</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">printf</span> <span class="st">"Usage:\n  %s -g GREETING [-e] [-n NAME]\n\n"</span> <span class="va">$(</span><span class="fu">basename</span> <span class="va">$0)</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Required arguments:"</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">" -g GREETING"</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Options:"</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">" -n NAME (</span><span class="va">$NAME</span><span class="st">)"</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">" -e Print exclamation mark"</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> <span class="va">${1</span><span class="op">:-</span>0<span class="va">}</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="kw">[[</span> <span class="va">$#</span> <span class="ot">-eq</span> 0 <span class="kw">]]</span> <span class="kw">&amp;&amp;</span> <span class="ex">USAGE</span> 1</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">getopts</span> <span class="op">:</span>g<span class="op">:</span>n<span class="op">:</span>eh <span class="va">OPT</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="va">$OPT</span> <span class="kw">in</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="ss">h</span><span class="kw">)</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>      <span class="ex">USAGE</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>      <span class="cf">;;</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="ss">e</span><span class="kw">)</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>      <span class="va">EXCITED</span><span class="op">=</span>1</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>      <span class="cf">;;</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    <span class="ss">g</span><span class="kw">)</span></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>      <span class="va">GREETING</span><span class="op">=</span><span class="st">"</span><span class="va">$OPTARG</span><span class="st">"</span></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>      <span class="cf">;;</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    <span class="ss">n</span><span class="kw">)</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>      <span class="va">NAME</span><span class="op">=</span><span class="st">"</span><span class="va">$OPTARG</span><span class="st">"</span></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>      <span class="cf">;;</span></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>    <span class="ss">:</span><span class="kw">)</span></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>      <span class="bu">echo</span> <span class="st">"Error: Option -</span><span class="va">$OPTARG</span><span class="st"> requires an argument."</span></span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>      <span class="bu">exit</span> 1</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>      <span class="cf">;;</span></span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>    <span class="dt">\?</span><span class="kw">)</span></span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>      <span class="bu">echo</span> <span class="st">"Error: Invalid option: -</span><span class="va">${OPTARG</span><span class="op">:-</span><span class="st">""</span><span class="va">}</span><span class="st">"</span></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>      <span class="bu">exit</span> 1</span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>  <span class="cf">esac</span></span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a><span class="kw">[[</span> <span class="ot">-z</span> <span class="st">"</span><span class="va">$GREETING</span><span class="st">"</span> <span class="kw">]]</span> <span class="kw">&amp;&amp;</span> <span class="ex">USAGE</span> 1</span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a><span class="va">PUNCTUATION</span><span class="op">=</span><span class="st">"."</span></span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a><span class="kw">[[</span> <span class="va">$EXCITED</span> <span class="ot">-ne</span> 0 <span class="kw">]]</span> <span class="kw">&amp;&amp;</span> <span class="va">PUNCTUATION</span><span class="op">=</span><span class="st">"!"</span></span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span><span class="va">$GREETING</span><span class="st">, </span><span class="va">$NAME$PUNCTUATION</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Let’s break down what’s happening here</strong>. The set <code>-u</code> at the top makes bash exit if we try to use an undefined variable, which catches typos and logic errors. The USAGE function prints help text and exits with a status code (defaulting to 0 for success). Using a function for this is good practice because we can call it from multiple places. The line <code>[[ $# -eq 0 ]] &amp;&amp; USAGE 1</code> checks if no arguments were provided and shows usage if so. This is a common pattern—if someone runs your script with no arguments at all, they probably want to know how to use it. The real work happens in the <code>while getopts :g:n:eh OPT; do</code> loop. Let’s understand that option string <code>:g:n:eh</code>:</p>
+<p>The leading : enables silent error reporting mode (we’ll handle errors ourselves) - <code>g</code>: means <code>-g</code> requires an argument (the colon indicates a value is expected) - <code>n</code>: means <code>-n</code> requires an argument - <code>e</code>: means <code>-e</code> is a boolean flag (no colon, no value) - <code>h</code>: means <code>-h</code> is a boolean flag for help</p>
+<p>The <code>case</code> statement handles each option. When <code>getopts</code> finds an option that takes a value, it puts that value in the special variable <code>$OPTARG</code>. For boolean flags, we just set a variable to indicate the flag was present. The special cases <code>:)</code> and <code>\?)</code> handle errors—when an option is missing its required argument, or when an unknown option is provided.</p>
+<p>When run without arguments or with the <code>-h</code> flag, it produces a help message:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./named.sh</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Usage:</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">named.sh</span> <span class="at">-g</span> GREETING <span class="pp">[-</span><span class="ss">e</span><span class="pp">]</span> [-n NAME]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Required</span> arguments:</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">-g</span> GREETING</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Options:</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">-n</span> NAME <span class="er">(</span><span class="ex">Stranger</span><span class="kw">)</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a> <span class="ex">-e</span> Print exclamation mark</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The script just got much longer, but it’s also much more flexible and user-friendly. This template can serve as the foundation for many different shell scripts. Both the <code>h</code> and <code>e</code> arguments are simple flags with no values:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./named.sh <span class="at">-n</span> Patch <span class="at">-g</span> <span class="st">"Good Boy"</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Good</span> Boy, Patch.</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./named.sh <span class="at">-n</span> Patch <span class="at">-g</span> <span class="st">"Good Boy"</span> <span class="at">-e</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Good</span> Boy, Patch!</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./named.sh <span class="at">-g</span> <span class="st">"Good Boy"</span> <span class="at">-e</span> <span class="at">-n</span> Patch</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Good</span> Boy, Patch!</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>All three invocations with different argument orders produce the correct results. This flexibility is why named arguments are essential for any script that will be used by others or maintained over time.</p>
+</section>
+<section id="best-practices-for-named-arguments" class="level3">
+<h3 class="anchored" data-anchor-id="best-practices-for-named-arguments">Best Practices for Named Arguments</h3>
+<p>When building scripts with named arguments, follow these conventions to make them intuitive and maintainable:</p>
+<ul>
+<li>Use meaningful single-letter options: Common conventions include <code>-i</code> for input, <code>-o</code> for output, <code>-v</code> for verbose, <code>-f</code> for file or format, <code>-h</code> for help. Users familiar with Unix tools will immediately understand these without reading documentation.</li>
+<li>Always provide a help option (<code>-h</code>) that displays usage information. Users should never have to read your source code to figure out how to use your script. The help message should include the basic syntax, explain required vs optional arguments, show default values, and ideally provide one or two examples.</li>
+<li>Show default values in your usage message so users know what happens if they don’t specify an option. This is why the example above shows <code>NAME (Stranger)</code> —it tells users that if they don’t provide <code>-n</code>, the name will be “Stranger.”</li>
+<li>Validate all inputs after parsing the options. Check that required arguments were provided, that files exist, that numeric values are in valid ranges, and that enum-like options are from the allowed set. Fail fast with clear error messages.</li>
+<li>Set sensible defaults so users only need to specify what differs from the common case. If 90% of the time your script processes CSV files, make CSV the default format so users only need to specify <code>-f json</code> when they want something different.</li>
+<li>Exit with appropriate status codes: Use <code>exit 0</code> for success and <code>exit 1</code> (or other non-zero values) for various error conditions. This allows your script to be used in pipelines and automated systems that check exit codes.</li>
+</ul>
+<hr>
+<p><br></p>
+</section>
+</section>
+<section id="reading-a-configuration-file" class="level2">
+<h2 class="anchored" data-anchor-id="reading-a-configuration-file">Reading a configuration file</h2>
+<p>Configuration files provide another layer of flexibility beyond command-line arguments and environment variables. They’re particularly useful for complex applications with many settings, for configurations that should persist across multiple runs, or when you want to maintain different configurations for different environments (development, staging, production).</p>
+<p>A configuration file is typically a simple text file with variable assignments. The beauty of bash is that you can directly source these files to load the variables into your script:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bash#</span> Application configuration</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="va">APP_NAME</span><span class="op">=</span><span class="st">"MyApp"</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="va">APP_VERSION</span><span class="op">=</span><span class="st">"1.0.0"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="va">LOG_LEVEL</span><span class="op">=</span><span class="st">"INFO"</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_HOST</span><span class="op">=</span><span class="st">"localhost"</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_PORT</span><span class="op">=</span>5432</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The simplest way to use a configuration file is with the source command, which reads and executes the file in the current shell context:</p>
+<p>read_config.sh</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="va">CONFIG_FILE</span><span class="op">=</span><span class="va">${1</span><span class="op">:-</span><span class="st">"config.conf"</span><span class="va">}</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-f</span> <span class="st">"</span><span class="va">$CONFIG_FILE</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Error: Configuration file '</span><span class="va">$CONFIG_FILE</span><span class="st">' not found"</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="st">"</span><span class="va">$CONFIG_FILE</span><span class="st">"</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Application: </span><span class="va">$APP_NAME</span><span class="st"> v</span><span class="va">$APP_VERSION</span><span class="st">"</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Log Level: </span><span class="va">$LOG_LEVEL</span><span class="st">"</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Database: </span><span class="va">$DATABASE_HOST</span><span class="st">:</span><span class="va">$DATABASE_PORT</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This works beautifully because the configuration file is just valid bash syntax. When you source it, all the variable assignments become available to your script. You can even include comments in the config file (lines starting with #) to document what each setting does.</p>
+<p>For production scripts, you’ll want to be more robust about configuration handling. Here’s a pattern that combines defaults, config files, and validation: app_with_config.sh</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="va">CONFIG_FILE</span><span class="op">=</span><span class="st">"app.conf"</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set defaults</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="va">PORT</span><span class="op">=</span><span class="va">${PORT</span><span class="op">:-</span>8080<span class="va">}</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="va">WORKERS</span><span class="op">=</span><span class="va">${WORKERS</span><span class="op">:-</span>4<span class="va">}</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="va">LOG_LEVEL</span><span class="op">=</span><span class="va">${LOG_LEVEL</span><span class="op">:-</span><span class="st">"INFO"</span><span class="va">}</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Load config file if it exists</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-f</span> <span class="st">"</span><span class="va">$CONFIG_FILE</span><span class="st">"</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Loading configuration from </span><span class="va">$CONFIG_FILE</span><span class="st">"</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">source</span> <span class="st">"</span><span class="va">$CONFIG_FILE</span><span class="st">"</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"No config file found, using defaults"</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Validate configuration</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="st">"</span><span class="va">$PORT</span><span class="st">"</span> <span class="ot">-lt</span> 1024 <span class="bu">]</span> <span class="kw">||</span> <span class="bu">[</span> <span class="st">"</span><span class="va">$PORT</span><span class="st">"</span> <span class="ot">-gt</span> 65535 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Error: Invalid port number </span><span class="va">$PORT</span><span class="st">"</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Starting application..."</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Port: </span><span class="va">$PORT</span><span class="st">"</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Workers: </span><span class="va">$WORKERS</span><span class="st">"</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Log Level: </span><span class="va">$LOG_LEVEL</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This script demonstrates a layered configuration approach: first set defaults in the script, then load values from a config file if present (which can override the defaults), then validate that the final values make sense. This gives users flexibility in how they configure the application while ensuring it always has valid values.</p>
+<p>You can test this with an app.conf file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># app.conf</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="va">PORT</span><span class="op">=</span>3000</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="va">WORKERS</span><span class="op">=</span>8</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="va">LOG_LEVEL</span><span class="op">=</span><span class="st">"DEBUG"</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Running</span> the script:</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="ex">bash$</span> ./app_with_config.sh</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Loading</span> configuration from app.conf</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Starting</span> application...</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Port:</span> 3000</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Workers:</span> 8</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Log</span> Level: DEBUG</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This approach scales well. You can maintain different configuration files for different environments (<code>dev.conf</code>, <code>prod.conf</code>) and simply pass the appropriate file as an argument or environment variable. The combination of config files, environment variables, defaults, and command-line arguments gives users maximum flexibility in how they configure your scripts.</p>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<p>After completing this training, you should understand these fundamental concepts about shell script arguments:</p>
+<p><strong>1. Positional arguments are simple but limited</strong>: The variables <code>$1</code>, <code>$2</code>, <code>$3</code>, etc. provide the easiest way to accept input, but they require users to remember the exact order of arguments. They work well for scripts with 1-3 arguments but become unwieldy beyond that. Always check if required positional arguments are provided using <code>[ -z "$1" ]</code> or similar tests.</p>
+<p><strong>2. Default values make scripts user-friendly</strong>: Using the syntax <code>${variable:-default}</code> allows your scripts to work out of the box while still being configurable. This dramatically improves the user experience because people only need to specify values that differ from the common case. Every optional argument should have a sensible default.</p>
+<p><strong>3. Environment variables enable persistent configuration</strong>: Unlike command-line arguments that must be provided each time, environment variables persist across multiple commands in a session. They’re ideal for settings like database connections, API keys, or feature flags. The combination of environment variables with defaults (<code>VARIABLE=${VARIABLE:-default}</code>) gives users flexibility in how they configure your scripts.</p>
+<p><strong>4. Named arguments are essential for complex scripts</strong>: The <code>getopts</code> command lets you parse flags like <code>-i input.txt</code> or <code>-v</code> for verbose mode. Named arguments can be provided in any order, making your scripts much more intuitive to use. Once you have more than 3 arguments or a mix of required and optional parameters, named arguments become necessary.</p>
+<p><strong>5. Validation and error messages are not optional</strong>: Professional scripts always validate their inputs and provide clear, helpful error messages when something is wrong. Check that required arguments are provided, that files exist, that numeric values are in valid ranges. A good error message should explain what went wrong and show the correct usage syntax.</p>
+<p><strong>6. Configuration files separate settings from code</strong>: For complex applications with many settings, configuration files let users maintain different configurations (development, staging, production) without modifying the script itself. Using <code>source config.conf</code> makes loading configuration trivial in bash.</p>
+<p><strong>7. Layer your configuration for maximum flexibility</strong>: The most robust scripts combine all these approaches: defaults in the script, values from a config file, environment variables, and command-line arguments. Each layer can override the previous one, giving users control at multiple levels while ensuring the script always has valid values.</p>
+</section>
+<section id="homework" class="level2">
+<h2 class="anchored" data-anchor-id="homework">Homework</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Homework Exercises
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="exercise-1-file-backup-script-with-defaults" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1-file-backup-script-with-defaults">Exercise 1: File Backup Script with Defaults</h3>
+<p>Create a script called <code>backup.sh</code> that backs up files with the following requirements:</p>
+<ul>
+<li>Takes a source file as the first positional argument (required)</li>
+<li>Takes a backup directory as the second positional argument (optional, defaults to <code>./backups</code>)</li>
+<li>Takes a timestamp flag as the third argument (optional, defaults to <code>false</code>)</li>
+<li>If the timestamp flag is “true”, append the current date/time to the backup filename</li>
+<li>Create the backup directory if it doesn’t exist</li>
+<li>Validate that the source file exists before attempting to back it up</li>
+<li>Print a success message showing where the backup was created</li>
+</ul>
+<p><strong>Example usage:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./backup.sh important.txt</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Backed</span> up important.txt to ./backups/important.txt</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./backup.sh important.txt /tmp/backups true</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Backed</span> up important.txt to /tmp/backups/important_20231208_143022.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Hints:</strong> Use <code>mkdir -p</code> to create directories, <code>date +%Y%m%d_%H%M%S</code> for timestamps, and parameter expansion for defaults.</p>
+</section>
+<section id="exercise-2-system-information-reporter" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2-system-information-reporter">Exercise 2: System Information Reporter</h3>
+<p>Create a script called <code>sysinfo.sh</code> that reports system information with named arguments:</p>
+<ul>
+<li><code>-u</code> flag: Show user information (username, home directory, current shell)</li>
+<li><code>-d</code> flag: Show disk usage for the home directory</li>
+<li><code>-m</code> flag: Show memory usage</li>
+<li><code>-h</code> flag: Show help/usage information</li>
+<li>Support multiple flags in a single run (e.g., <code>./sysinfo.sh -u -m</code> shows both user and memory info)</li>
+<li>If no flags are provided, show an error and display usage</li>
+</ul>
+<p><strong>Example usage:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./sysinfo.sh <span class="at">-h</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Usage:</span> sysinfo.sh <span class="pp">[</span><span class="ss">OPTIONS</span><span class="pp">]</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Show</span> system information</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Options:</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-u</span>    Show user information</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-d</span>    Show disk usage</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-m</span>    Show memory usage</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-h</span>    Show this help message</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./sysinfo.sh <span class="at">-u</span> <span class="at">-m</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="ex">===</span> User Information ===</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Username:</span> alice</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="ex">Home:</span> /home/alice</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Shell:</span> /bin/bash</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="ex">===</span> Memory Usage ===</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="ex">[output</span> from free <span class="at">-h</span> or similar]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Hints:</strong> Use <code>getopts</code> with flags only (no colons in the option string). Use commands like <code>whoami</code>, <code>df -h $HOME</code>, and <code>free -h</code>. Use boolean variables to track which flags were set.</p>
+</section>
+<section id="exercise-3-csv-processor-with-configuration" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3-csv-processor-with-configuration">Exercise 3: CSV Processor with Configuration</h3>
+<p>Create a script called <code>process_csv.sh</code> that processes CSV files with multiple configuration methods:</p>
+<ul>
+<li>Required: Input file via <code>-i</code> flag</li>
+<li>Optional: Output file via <code>-o</code> flag (default: <code>output.csv</code>)</li>
+<li>Optional: Delimiter via <code>-d</code> flag (default: <code>,</code>)</li>
+<li>Optional: Skip header via <code>-s</code> flag (boolean, default: false)</li>
+<li>Support loading defaults from a <code>csv_config.conf</code> file if it exists</li>
+<li>Support overriding config file values with environment variables</li>
+<li>Command-line flags should override everything else</li>
+<li>Validate that the input file exists and is readable</li>
+<li>For this exercise, the “processing” can be simple (e.g., counting lines, showing first few lines, or converting delimiter)</li>
+</ul>
+<p><strong>Example usage:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat csv_config.conf</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="va">OUTPUT_FILE</span><span class="op">=</span><span class="st">"processed.csv"</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="va">DELIMITER</span><span class="op">=</span><span class="st">"|"</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="va">SKIP_HEADER</span><span class="op">=</span>true</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./process_csv.sh <span class="at">-i</span> data.csv</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Processing</span> data.csv...</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Output:</span> processed.csv</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Delimiter:</span> <span class="kw">|</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Skip</span> header: true</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./process_csv.sh <span class="at">-i</span> data.csv <span class="at">-o</span> custom.csv <span class="at">-d</span> <span class="st">";"</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Processing</span> data.csv...</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="ex">Output:</span> custom.csv</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Delimiter:</span> <span class="kw">;</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="ex">Skip</span> header: true</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Hints:</strong> Load config first, then check environment variables, then parse command-line options. Use <code>test -r file</code> to check if a file is readable.</p>
+</section>
+<section id="exercise-4-multi-function-tool-challenge" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4-multi-function-tool-challenge">Exercise 4: Multi-Function Tool (Challenge)</h3>
+<p>Create a script called <code>tool.sh</code> that performs different operations based on a subcommand (like git, which has <code>git commit</code>, <code>git push</code>, etc.):</p>
+<ul>
+<li>First argument is the subcommand: <code>greet</code>, <code>calculate</code>, or <code>files</code></li>
+<li><code>greet</code> subcommand: Takes <code>-n NAME</code> (required) and <code>-t TIME</code> (optional: morning, afternoon, evening) and prints an appropriate greeting</li>
+<li><code>calculate</code> subcommand: Takes two numbers as positional arguments and an operation via <code>-op</code> flag (add, subtract, multiply, divide)</li>
+<li><code>files</code> subcommand: Takes a directory via <code>-d</code> (default: current directory) and an extension via <code>-e</code> (default: all files) and lists matching files</li>
+<li>Show appropriate help for each subcommand when <code>-h</code> is used</li>
+</ul>
+<p><strong>Example usage:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./tool.sh greet <span class="at">-n</span> Alice <span class="at">-t</span> morning</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Good</span> morning, Alice!</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./tool.sh calculate 10 5 <span class="at">-op</span> divide</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="ex">2</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./tool.sh files <span class="at">-d</span> /tmp <span class="at">-e</span> txt</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="ex">/tmp/notes.txt</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="ex">/tmp/readme.txt</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Hints:</strong> Use <code>shift</code> to consume the subcommand argument, then process remaining arguments normally. Use separate functions for each subcommand. This exercise combines everything you’ve learned about arguments.</p>
+</section>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

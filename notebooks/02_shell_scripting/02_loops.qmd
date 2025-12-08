@@ -30,7 +30,19 @@ for item in car truck ukulele; do echo $item; done
 ```
 :::
 
-There are 4 special words in the syntax of a For Loop in Unix languages: for, in, do, and done.
+We can also do multiple things within the body of the loop (the lines between the special words do and done). Here we’ll add another line that also writes the words into a file we’ll call “words.txt”:
+```bash 
+for item in car truck ukulele
+do
+  echo $item
+  echo $item >> words.txt
+done
+```
+Now we created a new file that holds these words. 
+
+
+There are 4 special words in the syntax of a For Loop in Unix languages: `for`, `in`, `do`, and `done`.
+
 | Magic word | Purpose |
 |:-----------|:--------|
 | `for` | Set the loop variable name |
@@ -38,13 +50,471 @@ There are 4 special words in the syntax of a For Loop in Unix languages: for, in
 | `do` | Specify what we want to do with each item |
 | `done` | Tell the computer we are done telling it what to do with each item |
 
+
+### Looping over files
+
+Often we want to perform actions on all files matching a certain pattern. We can use wildcards with for loops:
+
+```bash
+for FILE in *.sh; do echo "FILE = $FILE"; done
+```
+
+This might output:
+```
+FILE = args.sh
+FILE = args2.sh
+FILE = args3.sh
+FILE = basic.sh
+FILE = hello.sh
+```
+
+Here's a more complete script example that lists all files in a directory:
+
+```bash
+#!/bin/bash
+
+set -u
+
+DIR=${1:-$PWD}
+
+if [[ ! -d "$DIR" ]]; then
+    echo "$DIR is not a directory"
+    exit 1
+fi
+
+i=0
+for FILE in $DIR/*; do
+    let i++
+    printf "%3d: %s\n" $i "$FILE"
+done
+```
+
+On line 5, we default `DIR` to the current working directory which we can find with the environmental variable `$PWD` (print working directory). We check on line 7 that the argument is actually a directory with the `-d` test (`man test`). The rest should look familiar.
+
+Here it is in action:
+```bash
+$ ./for.sh | head
+  1: /Users/mtouced/Desktop
+  2: /Users/mtouced/Documents
+  3: /Users/mtouced/Downloads
+  4: /Users/mtouced/for.sh
+  5: /Users/mtouced/Globus
+  6: /Users/mtouced/Library
+  7: /Users/mtouced/Movies
+  8: /Users/mtouced/Music
+  9: /Users/mtouced/Pictures
+ 10: /Users/mtouced/Public
+
+```
+
+
+### Reading lines from a file
+
+You will see many examples of using `for` to read from a file like so:
+
+```bash
+#!/usr/bin/env bash
+
+FILE=${1:-'srr.txt'}
+for LINE in $(cat "$FILE"); do
+    echo "LINE \"$LINE\""
+done
+```
+
+If `srr.txt` contains:
+```
+SRR3115965
+SRR516222
+SRR919365
+```
+
+Running the script produces:
+```
+LINE "SRR3115965"
+LINE "SRR516222"
+LINE "SRR919365"
+```
+
+:::{.callout-warning}
+This approach can break badly when the file contains more than one "word" per line (as defined by the `$IFS` [input field separator]).
+
+For example the `01_unix/example.txt` file contains the Wikipedia entry for the city of Vigo. If we try to print each line using the previous script we will get only the first word in every line.
+
+```bash
+$ ./for_file.sh example.txt | head
+LINE "Vigo"
+LINE "Vigo"
+LINE "(Galician:"
+LINE "[ˈbiɣʊ],"
+LINE "locally"
+LINE "[ˈbiħʊ])"
+LINE "is"
+LINE "a"
+LINE "city"
+LINE "and"
+```
+
+For more robust line-by-line file reading, consider using a `while read` loop instead (covered in the next section). 
+:::
+
 ## While loops
+The proper way to read a file line-by-line is with `while`. Unlike the `for` loop approach shown earlier, `while` properly handles lines with multiple words and preserves whitespace.
+
+### Basic while loop for reading files
+
+If we try the `while` function with `01_unix/example.txt`:
+```bash
+#!/usr/bin/env bash
+
+FILE=${1:-'srr.txt'}
+while read -r LINE; do
+  echo "LINE \"$LINE\""
+done < "$FILE"
+```
+
+This would be the output: 
+```bash
+$ ./while.sh example.txt| head
+LINE "Vigo"
+LINE "Vigo (Galician: [ˈbiɣʊ], locally [ˈbiħʊ]) is a city and municipality in Spain, in the autonomous community of Galicia in the province of Pontevedra, and the capital of the comarca of Vigo. Located in the northwest of the Iberian Peninsula, it sits on the southern shore of an inlet of the Atlantic Ocean, the Ria de Vigo, the southernmost of the Rías Baixas."
+LINE ""
+LINE "The municipality, with an area of 109.06 km2 (42.11 sq mi) and a population of 295,523 in 2024 including rural parishes, is the most populous municipality in Galicia, and the 14th-most-populous in Spain. The area of the municipality includes the Cíes Islands, part of the Atlantic Islands of Galicia National Park."
+LINE ""
+LINE "Vigo is one of the region's primary economic agents, owing to the French Stellantis Vigo plant and to its port.[3] Close to the Portugal–Spain border, Vigo is part of the Galicia–North Portugal Euroregion. The European Fisheries Control Agency is headquartered in Vigo."
+LINE ""
+LINE "History"
+LINE "In the Early Middle Ages, the small village of Vigo was part of the territory of Galician-speaking neighbouring towns, particularly Tui, and suffered several Viking raids. However, its number of inhabitants was so small that, historically, it was not considered a real town until around the 15th century, when the earliest records began."
+LINE ""
+```
+
+
+:::{.callout-tip}
+The `-r` flag with `read` prevents backslash escaping, which means backslashes in the input are treated as literal characters rather than escape sequences. This is almost always what you want when reading files.
+:::
+
+### Splitting lines into fields
+
+Another advantage of `while` is that it can break each line into multiple fields automatically. Here's an example with a tab-delimited file:
+
+```bash
+#!/usr/bin/env bash
+
+FILE=${1:-'data.txt'}
+while IFS=$'\t' read -r FIELD1 FIELD2 FIELD3; do
+  echo "Field 1: $FIELD1"
+  echo "Field 2: $FIELD2"
+  echo "Field 3: $FIELD3"
+  echo "---"
+done < "$FILE"
+```
+
+If `data.txt` contains:
+```
+apple	red	fruit
+carrot	orange	vegetable
+blueberry	blue	fruit
+```
+
+The output would be:
+```
+Field 1: apple
+Field 2: red
+Field 3: fruit
+---
+Field 1: carrot
+Field 2: orange
+Field 3: vegetable
+---
+Field 1: blueberry
+Field 2: blue
+Field 3: fruit
+---
+```
+
+The `IFS=$'\t'` sets the Internal Field Separator to tab, so `read` splits each line on tabs.
+
+### While loop with conditions
+
+While loops aren't just for reading files - they can run as long as a condition is true:
+
+```bash
+#!/usr/bin/env bash
+
+COUNTER=1
+while [ $COUNTER -le 5 ]; do
+  echo "Count: $COUNTER"
+  ((COUNTER++))
+done
+```
+
+This outputs:
+```
+Count: 1
+Count: 2
+Count: 3
+Count: 4
+Count: 5
+```
+
+:::{.callout-note}
+### For vs While: When to use which?
+
+- Use **for loops** when you know the list of items you want to iterate over (files, numbers, array elements)
+- Use **while loops** when:
+  - Reading files line-by-line (especially with multiple words per line)
+  - You need to continue until a condition is met
+  - Processing input streams or command output
+:::
+
 
 ## Saving results in files
+When working with loops, you'll often need to store intermediate results or the output of commands for further processing. There are several ways to handle this, from simple redirection to using temporary files.
 
-## Getting data into your script: Arguments
-### Providing default arguments
-### Environmental arguments
-### Required and optional arguments
+### Basic file output with redirection
 
-## Reading a configuration file
+The simplest way to save loop output is using redirection operators:
+
+```bash
+#!/usr/bin/env bash
+
+# Overwrite file (creates new or replaces existing)
+for NUM in {1..5}; do
+  echo "Number: $NUM"
+done > output.txt
+
+# Append to file (adds to existing content)
+for NUM in {6..10}; do
+  echo "Number: $NUM"
+done >> output.txt
+```
+
+:::{.callout-note}
+- `>` creates a new file or overwrites an existing one
+- `>>` appends to an existing file or creates a new one if it doesn't exist
+:::
+
+### Using temporary files for intermediate results
+
+Often you'll want to save the results of a command (like `find`, `grep`, or `awk`) into a temporary file, then iterate over those results. This is particularly useful when the command is expensive to run or when you need to process the results multiple times.
+
+Here's an example that counts sequences in FASTA files:
+
+```bash
+#!/usr/bin/env bash
+
+set -u
+
+if [[ $# -ne 1 ]]; then
+    printf "Usage: %s DIR\n" "$(basename "$0")"
+    exit 1
+fi
+
+DIR=$1
+TMP=$(mktemp)
+find "$DIR" -type f -name \*.fa > "$TMP"
+NUM_FILES=$(wc -l "$TMP" | awk '{print $1}')
+
+if [[ $NUM_FILES -lt 1 ]]; then
+    echo "Found no .fa files in $DIR"
+    rm "$TMP"
+    exit 1
+fi
+
+NUM_SEQS=0
+while read -r FILE; do
+    NUM_SEQ=$(grep -c '^>' "$FILE")
+    NUM_SEQS=$((NUM_SEQS + NUM_SEQ))
+    printf "%10d %s\n" "$NUM_SEQ" "$(basename "$FILE")"
+done < "$TMP"
+
+rm "$TMP"
+
+echo "Done, found $NUM_SEQS sequences in $NUM_FILES files."
+```
+
+Running this script:
+```bash
+$ ./count-fa.sh ../problems
+        23 anthrax.fa
+         9 burk.fa
+Done, found 32 sequences in 2 files.
+```
+
+Let's break down what's happening:
+
+1. **Line 11**: `mktemp` creates a temporary file with a unique name and returns its path
+2. **Line 12**: `find` searches for all `.fa` files and saves the list to the temporary file
+3. **Line 13**: We count how many files were found
+4. **Lines 21-25**: We read each filename from the temporary file and process it
+5. **Line 27**: Clean up by removing the temporary file
+
+### Understanding the `if` statements
+
+This script uses two **`if` statements** to check conditions before proceeding. An if statement lets your script make decisions - it tests whether something is true or false, and then executes different code based on the result.
+
+**Basic if statement syntax:**
+```bash
+if [[ condition ]]; then
+    # commands to run if condition is true
+fi
+```
+
+**If statement with an else:**
+```bash
+if [[ condition ]]; then
+    # commands if condition is true
+else
+    # commands if condition is false
+fi
+```
+
+In our FASTA counting script, we have two if statements:
+
+**First if statement (lines 5-8):**
+```bash
+if [[ $# -ne 1 ]]; then
+    printf "Usage: %s DIR\n" "$(basename "$0")"
+    exit 1
+fi
+```
+
+This checks: "Is the number of arguments not equal to 1?" (`$#` counts the arguments, `-ne` means "not equal"). 
+
+- If **true** (wrong number of arguments): Print usage message and exit with error code 1
+- If **false** (correct number of arguments): Continue with the script
+
+> Note: We will see **arguments** in the next training!
+
+
+**Second if statement (lines 15-19):**
+```bash
+if [[ $NUM_FILES -lt 1 ]]; then
+    echo "Found no .fa files in $DIR"
+    rm "$TMP"
+    exit 1
+fi
+```
+
+This checks: "Is the number of files less than 1?" (`-lt` means "less than")
+
+- If **true** (no files found): Print message, clean up temp file, and exit with error code 1
+- If **false** (files were found): Continue processing the files
+
+:::{.callout-note}
+### Common comparison operators
+
+For numbers:
+
+- `-eq`: equal to
+- `-ne`: not equal to
+- `-lt`: less than
+- `-le`: less than or equal to
+- `-gt`: greater than
+- `-ge`: greater than or equal to
+
+For strings:
+
+- `=`: equal to
+- `!=`: not equal to
+- `-z`: string is empty
+- `-n`: string is not empty
+
+For files:
+
+- `-f`: file exists and is a regular file
+- `-d`: directory exists
+- `-r`: file is readable
+- `-w`: file is writable
+- `-x`: file is executable
+:::
+
+:::{.callout-tip}
+### Why use temporary files?
+
+- **Performance**: Run expensive commands once, then iterate over results multiple times
+- **Safety**: Store intermediate results so you can check them before proceeding
+- **Debugging**: Inspect the temporary file to see what data you're working with
+- **Complex workflows**: Break down complicated pipelines into manageable steps
+:::
+
+### Best practices for temporary files
+
+```bash
+#!/usr/bin/env bash
+
+# Create a temporary file
+TMP=$(mktemp)
+
+# Always clean up temporary files, even if script exits early
+trap "rm -f $TMP" EXIT
+
+# Use the temporary file
+some_command > "$TMP"
+
+# Process the results
+while read -r LINE; do
+    echo "Processing: $LINE"
+done < "$TMP"
+
+# The trap will automatically remove $TMP when the script exits
+```
+
+The `trap` command ensures your temporary file is deleted even if the script exits unexpectedly (due to an error or interrupt).
+
+### Saving structured output
+
+You can also save structured data for later analysis:
+
+```bash
+#!/usr/bin/env bash
+
+OUTPUT="results.tsv"
+
+# Write header
+echo -e "Filename\tSequences\tSize" > "$OUTPUT"
+
+# Process files and append results
+for FILE in *.fa; do
+    NUM_SEQS=$(grep -c '^>' "$FILE")
+    SIZE=$(wc -c < "$FILE")
+    echo -e "$FILE\t$NUM_SEQS\t$SIZE" >> "$OUTPUT"
+done
+
+echo "Results saved to $OUTPUT"
+```
+
+This creates a tab-delimited file that you could later import into Excel, R, or Python for further analysis.
+
+## Key takeaways
+
+- **For loops** are best for iterating over known lists (files with wildcards, sequences of numbers, array elements)
+- **While loops** are essential for reading files line-by-line, especially when lines contain spaces or special characters
+- Use **temporary files** with `mktemp` to store intermediate results from expensive operations
+- Always **clean up** temporary files using `rm` or the `trap` command
+- **Redirection operators** (`>` and `>>`) let you save loop output directly to files
+- The `-r` flag with `read` prevents backslash interpretation and should almost always be used
+
+
+## Homework assignment
+
+:::{.callout-note}
+## Homework 
+1. **File counter**: Write a script that counts all `.txt` files in a directory and its subdirectories, printing both the total count and listing each file with its line count.
+
+2. **Log parser**: Create a script that reads a log file line-by-line and extracts all lines containing "ERROR", saving them to a new file called `errors.log`. Count how many errors were found.
+
+3. **Batch renamer**: Write a script that uses a for loop to rename all `.jpeg` files in a directory to `.jpg`. Make sure to check if files exist before attempting to rename them.
+
+4. **Data processor**: Create a script that reads a CSV file with three columns (name, score, grade) and:
+   - Calculates the average score
+   - Counts how many students got each grade
+   - Saves a summary to a new file
+
+5. **Temperature file**: Given a temporary file created with `mktemp`, use a while loop with conditions to generate the first 10 Fibonacci numbers and save them to the file, then read and display them.
+:::
+
+:::{.callout-tip}
+### Challenge exercise
+Combine for and while loops: Write a script that finds all `.txt` files in multiple directories (use a for loop over directory names), then for each file found, use a while loop to count specific words. Save results in a structured format showing directory, filename, and word counts.
+:::
+

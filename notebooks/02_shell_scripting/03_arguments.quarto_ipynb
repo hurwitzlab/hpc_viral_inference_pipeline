@@ -1,0 +1,45 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Arguments\"\n",
+        "author: \"Mery Touceda-Suárez\"\n",
+        "date: today\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-depth: 3\n",
+        "    theme: cosmo\n",
+        "    code-fold: false\n",
+        "---\n",
+        "\n",
+        "## Getting data into your script: Arguments\n",
+        "Arguments are inputs provided to a command or script at the time of its execution. These arguments allow users to control the behavior of the command or script and specify the data it should operate on.\n",
+        "\n",
+        "### Providing default arguments\n",
+        "### Environmental arguments\n",
+        "### Required and optional arguments\n",
+        "\n",
+        "## Reading a configuration file\n",
+        "\n",
+        "\n",
+        "```{bash}\n",
+        "pwd\n",
+        "```"
+      ],
+      "id": "e0d6d7d6"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

@@ -79,7 +79,21 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="output" class="level2">
 <h2 class="anchored" data-anchor-id="output">Output</h2>
-<p>The FastQC results will be saved in the specified output directory within the working directory, organized by sample. Each sample will have its own FastQC report files.</p>
+<p>The FastQC results will be saved in the specified output directory organized by sample. Each sample will have its own FastQC report files for for both read pairs, typically named as follows:</p>
+<ul>
+<li>&lt;samplename&gt;_clean_1_fastqc.html<br>
+</li>
+<li>samplename_clean_1_fastqc.zip</li>
+<li>samplename_clean_2_fastqc.html</li>
+<li>samplename_clean_2_fastqc.html<br>
+</li>
+<li>samplename_clean_2_fastqc.zip</li>
+</ul>
+<p>The html files can be opened in a web browser to visualize the quality metrics, while the zip files contain the raw data used to generate the reports for further analysis if needed.</p>
+<p>You can use <a href="https://github.com/MultiQC/MultiQC">MultiQC</a> to aggregate FastQC reports across multiple samples into a single report for easier comparison and visualization.</p>
+<section id="improve-this" class="level4">
+<h4 class="anchored" data-anchor-id="improve-this">IMPROVE THIS!!!</h4>
+</section>
 </section>
 <section id="about-fastqc" class="level2">
 <h2 class="anchored" data-anchor-id="about-fastqc">About FastQC</h2>
