@@ -94,27 +94,10 @@ If you want to edit or preview the materials while working on them:
 4. Use the preview pane to see rendered output alongside your code
 5. Press `Ctrl+Shift+K` (or `Cmd+Shift+K` on Mac) to render the document
 
-### Option 3: Render with Quarto CLI
+Here is more information on using Quarto with VS Code: [Quarto in VS Code](https://quarto.org/docs/get-started/vscode.html)
 
-To render the Quarto documents yourself:
 
-1. Install [Quarto](https://quarto.org/docs/get-started/)
-2. Clone this repository:
-   ```bash
-   git clone https://github.com/hurwitzlab/brc_hazel_training.git
-   cd brc_hazel_training
-   ```
-3. Render individual documents:
-   ```bash
-   quarto render document.qmd
-   ```
-4. Or render all documents:
-   ```bash
-   quarto render
-   ```
-5. Open the generated HTML files in your browser
-
-### Option 4: Use RStudio
+### Option 3: Use RStudio
 
 If you're familiar with RStudio:
 
@@ -122,7 +105,7 @@ If you're familiar with RStudio:
 2. Open the `.qmd` files in RStudio
 3. Click the "Render" button to preview documents
 
-### Option 5: View raw files on GitHub
+### Option 4: View raw files on GitHub (Not recommended)
 
 You can view the raw Quarto markdown files directly on GitHub, though formatting and code output won't be rendered.
 
