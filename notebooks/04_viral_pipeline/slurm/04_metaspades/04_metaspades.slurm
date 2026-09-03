@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==================================================
-# metaSPAdes Job Script for Hazel HPC
+# metaSPAdes Job Script for SLURM HPC clusters
 # ==================================================
 # This script runs metaSPAdes for metagenomic assembly of reads into contigs
 # using an Apptainer Container
@@ -17,14 +17,14 @@ module load apptainer
 # Print job start information
 echo "=================================================="
 echo "Job started: $(date)"
-echo "Job ID: $LSB_JOBID"
+echo "Job ID: $SLURM_JOB_ID"
 echo "Running on host: $(hostname)"
 echo "Working directory: $(pwd)"
 echo "=================================================="
 
 # Source config file and get sample name from input list based on job array index
 source ./config.sh
-export SAMPLE=`head -n +${LSB_JOBINDEX} $IN_LIST | tail -n 1`
+export SAMPLE=`head -n +${SLURM_ARRAY_TASK_ID} $IN_LIST | tail -n 1`
 
 
 # --------------------------------------------------
@@ -49,8 +49,8 @@ fi
 
 echo "Running metaSPAdes on sample: ${SAMPLE}"
 
-# -t (threads) should match the -n value requested above
-# -m (memory, GB) should match the rusage[mem=] value requested above
+# -t (threads) should match the --cpus-per-task value requested above
+# -m (memory, GB) should match the --mem value requested above
 apptainer exec $BIND ${METASPADES_SIF} metaspades.py \
     --meta \
     -1 ${IN_DIR}/${SAMPLE}_R1.fastq.gz \

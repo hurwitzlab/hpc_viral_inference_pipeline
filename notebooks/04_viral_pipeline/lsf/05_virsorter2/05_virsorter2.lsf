@@ -50,12 +50,13 @@ fi
 
 echo "Running VirSorter2 on sample: ${SAMPLE}"
 
+# -j (threads) should match the -n value requested above
 apptainer exec $BIND ${VIRSORTER_SIF} virsorter run -w ${OUT_DIR}/${SAMPLE}_virsorter2_output \
     -i ${IN_DIR}/${SAMPLE}_metaspades_output/${SAMPLE}_contigs.fasta \
     --include-groups $GROUPS \
     --min-length $MIN_LEN \
     --min-score $MIN_SCORE \
-    -j $CPUS \                                 # number of threads, make sure it matches the -n value above
+    -j $CPUS \
     all \
     --prep-for-dramv
 

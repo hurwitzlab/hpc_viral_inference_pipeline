@@ -63,10 +63,11 @@ fi
 
 echo "Running CheckV on sample: ${SAMPLE}"
 
+# -t (threads) should match the -n value requested above
 apptainer exec $BIND ${CHECKV_SIF} checkv end_to_end \
     "${IN_DIR}/${SAMPLE}_virsorter2_output/${SAMPLE}_virsorter2_cat-1-2.fasta" \
     "${OUT_DIR}/${SAMPLE}_checkv_output" \
-    -t $CPUS \                                      # number of threads, make sure it matches the -n value above
+    -t $CPUS \
     -d $CHECKV_DB
 
 # Check if CheckV completed successfully

@@ -57,12 +57,14 @@ apptainer exec $BIND ${DRAMV_SIF} dramv annotate $IN_DIR/final-viral-combined-fo
     --threads $CPUS \
     --database_dir $DRAMV_DB_DIR
 
+# --min_score: minimum score to consider a viral contig high-quality
+# --min_completeness: minimum completeness percentage to consider a viral contig high-quality
 apptainer exec $BIND ${DRAMV_SIF} dramv distill -i ${OUT_DIR}/${SAMPLE}_dramv_output/annotations.tsv \
     -o ${OUT_DIR}/${SAMPLE}_dramv_distilled \
     --min_contig_size $MIN_CONTIG_SIZE \
-    --min_score $MIN_SCORE \                     # minimum score to consider a viral contig high-quality    
-    --min_completeness $MIN_COMPLETENESS                  # minimum completeness percentage to consider a viral contig high-quality
-    
+    --min_score $MIN_SCORE \
+    --min_completeness $MIN_COMPLETENESS
+
 
 # Check if DRAM-v completed successfully
 if [ $? -eq 0 ]; then

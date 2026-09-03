@@ -1,9 +1,10 @@
 #!/bin/bash
 # ==================================================
-# metaSPAdes Job Script for Hazel HPC
+# FastQC Job Script for SLURM HPC clusters
 # ==================================================
-# This script runs metaSPAdes for metagenomic assembly of reads into contigs
+# This script runs FastQC quality control on sequencing data
 # using an Apptainer Container
+
 
 # --------------------------------------------------
 # Load modules here
@@ -17,14 +18,14 @@ module load apptainer
 # Print job start information
 echo "=================================================="
 echo "Job started: $(date)"
-echo "Job ID: $LSB_JOBID"
+echo "Job ID: $SLURM_JOB_ID"
 echo "Running on host: $(hostname)"
 echo "Working directory: $(pwd)"
 echo "=================================================="
 
 # Source config file and get sample name from input list based on job array index
 source ./config.sh
-export SAMPLE=`head -n +${LSB_JOBINDEX} $IN_LIST | tail -n 1`
+export SAMPLE=`head -n +${SLURM_ARRAY_TASK_ID} $IN_LIST | tail -n 1`
 
 
 # --------------------------------------------------
@@ -32,8 +33,8 @@ export SAMPLE=`head -n +${LSB_JOBINDEX} $IN_LIST | tail -n 1`
 # --------------------------------------------------
 
 # Check if container exists
-if [ ! -f "${METASPADES_SIF}" ]; then
-    echo "ERROR: Container not found at ${METASPADES_SIF}"
+if [ ! -f "${FASTQC_SIF}" ]; then
+    echo "ERROR: Container not found at ${FASTQC_SIF}"
     exit 1
 fi
 
@@ -44,28 +45,21 @@ if [ ! -d "${IN_DIR}" ]; then
 fi
 
 # --------------------------------------------------
-# Execute metaSPAdes
+# Execute FastQC
 # --------------------------------------------------
 
-echo "Running metaSPAdes on sample: ${SAMPLE}"
+echo "Running FastQC on sample: ${SAMPLE}"
 
-# -t (threads) should match the -n value requested above
-# -m (memory, GB) should match the rusage[mem=] value requested above
-apptainer exec $BIND ${METASPADES_SIF} metaspades.py \
-    --meta \
-    -1 ${IN_DIR}/${SAMPLE}_R1.fastq.gz \
-    -2 ${IN_DIR}/${SAMPLE}_R2.fastq.gz \
-    -o ${OUT_DIR}/${SAMPLE}_metaspades_output \
-    -t $CPUS \
-    -m $MEM \
-    --min-contig-length $MIN_CONTIG_LEN \
-    -k $K_VALUES
+apptainer exec ${FASTQC_SIF} fastqc \
+    --threads 2 \
+    --outdir ${OUT_DIR} \
+    ${IN_DIR}/${SAMPLE}_*.fastq*
 
-# Check if metaSPAdes completed successfully
+# Check if FastQC completed successfully
 if [ $? -eq 0 ]; then
-    echo "metaSPAdes completed successfully"
+    echo "FastQC completed successfully"
 else
-    echo "ERROR: metaSPAdes failed with exit code $?"
+    echo "ERROR: FastQC failed with exit code $?"
     exit 1
 fi
 

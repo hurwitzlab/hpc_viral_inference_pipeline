@@ -1,13 +1,15 @@
 #!/bin/bash
 # ==================================================
-# metaSPAdes Job Script for Hazel HPC
+# DRAMV Job Script for SLURM HPC clusters
 # ==================================================
-# This script runs metaSPAdes for metagenomic assembly of reads into contigs
+# This script runs DRAM-v for viral protein annotation
 # using an Apptainer Container
+
 
 # --------------------------------------------------
 # Load modules here
 # --------------------------------------------------
+
 module load apptainer
 
 # --------------------------------------------------
@@ -17,14 +19,14 @@ module load apptainer
 # Print job start information
 echo "=================================================="
 echo "Job started: $(date)"
-echo "Job ID: $LSB_JOBID"
+echo "Job ID: $SLURM_JOB_ID"
 echo "Running on host: $(hostname)"
 echo "Working directory: $(pwd)"
 echo "=================================================="
 
 # Source config file and get sample name from input list based on job array index
 source ./config.sh
-export SAMPLE=`head -n +${LSB_JOBINDEX} $IN_LIST | tail -n 1`
+export SAMPLE=`head -n +${SLURM_ARRAY_TASK_ID} $IN_LIST | tail -n 1`
 
 
 # --------------------------------------------------
@@ -32,8 +34,8 @@ export SAMPLE=`head -n +${LSB_JOBINDEX} $IN_LIST | tail -n 1`
 # --------------------------------------------------
 
 # Check if container exists
-if [ ! -f "${METASPADES_SIF}" ]; then
-    echo "ERROR: Container not found at ${METASPADES_SIF}"
+if [ ! -f "${DRAMV_SIF}" ]; then
+    echo "ERROR: Container not found at ${DRAMV_SIF}"
     exit 1
 fi
 
@@ -44,28 +46,30 @@ if [ ! -d "${IN_DIR}" ]; then
 fi
 
 # --------------------------------------------------
-# Execute metaSPAdes
+# Execute DRAM-v
 # --------------------------------------------------
 
-echo "Running metaSPAdes on sample: ${SAMPLE}"
+echo "Running DRAM-v on sample: ${SAMPLE}"
 
-# -t (threads) should match the -n value requested above
-# -m (memory, GB) should match the rusage[mem=] value requested above
-apptainer exec $BIND ${METASPADES_SIF} metaspades.py \
-    --meta \
-    -1 ${IN_DIR}/${SAMPLE}_R1.fastq.gz \
-    -2 ${IN_DIR}/${SAMPLE}_R2.fastq.gz \
-    -o ${OUT_DIR}/${SAMPLE}_metaspades_output \
-    -t $CPUS \
-    -m $MEM \
-    --min-contig-length $MIN_CONTIG_LEN \
-    -k $K_VALUES
+apptainer exec $BIND ${DRAMV_SIF} dramv annotate $IN_DIR/final-viral-combined-for-dramv.fa -v $IN_DIR/viral-affi-contigs-for-dramv.tab \
+    -o ${OUT_DIR}/${SAMPLE}_dramv_output \
+    --min_contig_size $MIN_CONTIG_SIZE \
+    --threads $CPUS \
+    --database_dir $DRAMV_DB_DIR
 
-# Check if metaSPAdes completed successfully
+# --min_score: minimum score to consider a viral contig high-quality
+# --min_completeness: minimum completeness percentage to consider a viral contig high-quality
+apptainer exec $BIND ${DRAMV_SIF} dramv distill -i ${OUT_DIR}/${SAMPLE}_dramv_output/annotations.tsv \
+    -o ${OUT_DIR}/${SAMPLE}_dramv_distilled \
+    --min_contig_size $MIN_CONTIG_SIZE \
+    --min_score $MIN_SCORE \
+    --min_completeness $MIN_COMPLETENESS
+
+# Check if DRAM-v completed successfully
 if [ $? -eq 0 ]; then
-    echo "metaSPAdes completed successfully"
+    echo "DRAM-v completed successfully"
 else
-    echo "ERROR: metaSPAdes failed with exit code $?"
+    echo "ERROR: DRAM-v failed with exit code $?"
     exit 1
 fi
 

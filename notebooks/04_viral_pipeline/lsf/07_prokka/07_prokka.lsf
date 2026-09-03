@@ -63,10 +63,11 @@ fi
 
 echo "Running Prokka on sample: ${SAMPLE}"
 
+# --cpus should match the -n value requested above
 apptainer exec $BIND ${PROKKA_SIF} prokka \
     --outdir "${OUT_DIR}/${SAMPLE}_prokka_output" \
     --prefix "${SAMPLE}_prokka" \
-    --cpus $CPUS \                                   # number of CPUs, make sure it matches the -n value above
+    --cpus $CPUS \
     --kingdom $KINGDOM \
     --addgenes \
     --force \

@@ -1,9 +1,10 @@
 #!/bin/bash
 # ==================================================
-# metaSPAdes Job Script for Hazel HPC
+# VirSorter2 Job Script for SLURM HPC clusters
 # ==================================================
-# This script runs metaSPAdes for metagenomic assembly of reads into contigs
+# This script runs VirSorter2 for viral sequence identification from contigs
 # using an Apptainer Container
+
 
 # --------------------------------------------------
 # Load modules here
@@ -17,14 +18,14 @@ module load apptainer
 # Print job start information
 echo "=================================================="
 echo "Job started: $(date)"
-echo "Job ID: $LSB_JOBID"
+echo "Job ID: $SLURM_JOB_ID"
 echo "Running on host: $(hostname)"
 echo "Working directory: $(pwd)"
 echo "=================================================="
 
 # Source config file and get sample name from input list based on job array index
 source ./config.sh
-export SAMPLE=`head -n +${LSB_JOBINDEX} $IN_LIST | tail -n 1`
+export SAMPLE=`head -n +${SLURM_ARRAY_TASK_ID} $IN_LIST | tail -n 1`
 
 
 # --------------------------------------------------
@@ -32,8 +33,8 @@ export SAMPLE=`head -n +${LSB_JOBINDEX} $IN_LIST | tail -n 1`
 # --------------------------------------------------
 
 # Check if container exists
-if [ ! -f "${METASPADES_SIF}" ]; then
-    echo "ERROR: Container not found at ${METASPADES_SIF}"
+if [ ! -f "${VIRSORTER_SIF}" ]; then
+    echo "ERROR: Container not found at ${VIRSORTER_SIF}"
     exit 1
 fi
 
@@ -44,28 +45,26 @@ if [ ! -d "${IN_DIR}" ]; then
 fi
 
 # --------------------------------------------------
-# Execute metaSPAdes
+# Execute VirSorter2
 # --------------------------------------------------
 
-echo "Running metaSPAdes on sample: ${SAMPLE}"
+echo "Running VirSorter2 on sample: ${SAMPLE}"
 
-# -t (threads) should match the -n value requested above
-# -m (memory, GB) should match the rusage[mem=] value requested above
-apptainer exec $BIND ${METASPADES_SIF} metaspades.py \
-    --meta \
-    -1 ${IN_DIR}/${SAMPLE}_R1.fastq.gz \
-    -2 ${IN_DIR}/${SAMPLE}_R2.fastq.gz \
-    -o ${OUT_DIR}/${SAMPLE}_metaspades_output \
-    -t $CPUS \
-    -m $MEM \
-    --min-contig-length $MIN_CONTIG_LEN \
-    -k $K_VALUES
+# -j (threads) should match the --cpus-per-task value requested above
+apptainer exec $BIND ${VIRSORTER_SIF} virsorter run -w ${OUT_DIR}/${SAMPLE}_virsorter2_output \
+    -i ${IN_DIR}/${SAMPLE}_metaspades_output/${SAMPLE}_contigs.fasta \
+    --include-groups $GROUPS \
+    --min-length $MIN_LEN \
+    --min-score $MIN_SCORE \
+    -j $CPUS \
+    all \
+    --prep-for-dramv
 
-# Check if metaSPAdes completed successfully
+# Check if VirSorter2 completed successfully
 if [ $? -eq 0 ]; then
-    echo "metaSPAdes completed successfully"
+    echo "VirSorter2 completed successfully"
 else
-    echo "ERROR: metaSPAdes failed with exit code $?"
+    echo "ERROR: VirSorter2 failed with exit code $?"
     exit 1
 fi
 
